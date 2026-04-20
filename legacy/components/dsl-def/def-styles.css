@@ -1,0 +1,326 @@
+/* DEF Syntax Highlighting Styles */
+
+/* Container styling */
+.def-section {
+  margin-top: 12px;
+  border: 1px solid var(--panel-border, #ddd);
+  border-radius: 8px;
+  background: var(--panel-bg, #fff);
+}
+
+.def-section .preview-header {
+  padding: 12px 16px;
+  background: var(--bg-muted, #f8f9fa);
+  border-bottom: 1px solid var(--panel-border, #ddd);
+  border-radius: 8px 8px 0 0;
+}
+
+.def-section .preview-title {
+  font-weight: 600;
+  margin: 0;
+  color: var(--text, #333);
+}
+
+/* DEF textarea styling */
+#scenario-def-editor {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  border: none;
+  border-radius: 0 0 8px 8px;
+  background: var(--panel-bg, #fff);
+  color: var(--text, #333);
+  padding: 16px;
+  resize: vertical;
+  min-height: 300px;
+}
+
+#scenario-def-editor:focus {
+  outline: 2px solid var(--primary, #007bff);
+  outline-offset: -2px;
+}
+
+/* Syntax highlighting colors - Light theme */
+.def-syntax-keyword { 
+  color: #0066cc; 
+  font-weight: bold; 
+}
+
+.def-syntax-string { 
+  color: #008800; 
+}
+
+.def-syntax-number { 
+  color: #cc6600; 
+}
+
+.def-syntax-comment { 
+  color: #888; 
+  font-style: italic; 
+}
+
+.def-syntax-function { 
+  color: #6600cc; 
+}
+
+.def-syntax-property { 
+  color: #0088cc; 
+}
+
+.def-syntax-operator { 
+  color: #666; 
+}
+
+.def-syntax-bracket { 
+  color: #000; 
+  font-weight: bold; 
+}
+
+/* Dark theme syntax highlighting */
+.dark .def-syntax-keyword { 
+  color: #569cd6; 
+}
+
+.dark .def-syntax-string { 
+  color: #ce9178; 
+}
+
+.dark .def-syntax-number { 
+  color: #b5cea8; 
+}
+
+.dark .def-syntax-comment { 
+  color: #6a9955; 
+}
+
+.dark .def-syntax-function { 
+  color: #dcdcaa; 
+}
+
+.dark .def-syntax-property { 
+  color: #9cdcfe; 
+}
+
+.dark .def-syntax-operator { 
+  color: #d4d4d4; 
+}
+
+.dark .def-syntax-bracket { 
+  color: #ffd700; 
+}
+
+/* DEF buttons styling */
+.def-section .btn {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.def-section .btn[data-action="def-validate"] {
+  background: var(--success, #28a745);
+  border-color: var(--success, #28a745);
+  color: white;
+}
+
+.def-section .btn[data-action="def-save"] {
+  background: var(--primary, #007bff);
+  border-color: var(--primary, #007bff);
+  color: white;
+}
+
+.def-section .btn[data-action="def-reload"] {
+  background: var(--info, #17a2b8);
+  border-color: var(--info, #17a2b8);
+  color: white;
+}
+
+.def-section .btn[data-action="def-import"] {
+  background: var(--secondary, #6c757d);
+  border-color: var(--secondary, #6c757d);
+  color: white;
+}
+
+/* DEF source select */
+#def-source-select {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--panel-border, #ddd);
+  border-radius: 4px;
+  background: var(--panel-bg, #fff);
+  color: var(--text, #333);
+}
+
+#def-source-badge {
+  font-size: 11px;
+  color: var(--text-muted, #666);
+}
+
+/* +/- Button styling for objects/functions */
+.btn-add-object,
+.btn-remove-object,
+.btn-add-function,
+.btn-remove-function {
+  font-size: 12px;
+  padding: 2px 8px;
+  margin-left: 4px;
+  border-radius: 3px;
+  min-width: 28px;
+}
+
+.btn-add-object,
+.btn-add-function {
+  background: var(--success, #28a745);
+  border-color: var(--success, #28a745);
+  color: white;
+}
+
+.btn-add-object:hover,
+.btn-add-function:hover {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-remove-object,
+.btn-remove-function {
+  background: var(--danger, #dc3545);
+  border-color: var(--danger, #dc3545);
+  color: white;
+}
+
+.btn-remove-object:hover,
+.btn-remove-function:hover {
+  background: #c82333;
+  border-color: #bd2130;
+}
+
+/* Select styling in sentence parts */
+.sentence-part {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: var(--bg-muted, #f8f9fa);
+  border-radius: 6px;
+}
+
+.sentence-part .object-select,
+.sentence-part .function-select {
+  font-size: 13px;
+  padding: 4px 8px;
+  border: 1px solid var(--panel-border, #ddd);
+  border-radius: 4px;
+  background: var(--panel-bg, #fff);
+  min-width: 120px;
+}
+
+.sentence-part .sentence-text {
+  font-size: 13px;
+  color: var(--text-muted, #666);
+  font-weight: 500;
+}
+
+/* Highlight layer positioning */
+.def-highlight-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: transparent;
+  color: transparent;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+/* Ensure textarea is above highlight layer */
+#scenario-def-editor {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+/* Container needs relative positioning for highlight layer */
+.def-editor-container {
+  position: relative;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .def-section .preview-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .def-section .preview-header .d-flex {
+    flex-wrap: wrap;
+  }
+  
+  .def-section .btn {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  
+  .sentence-part {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .sentence-part .object-select,
+  .sentence-part .function-select {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+/* Animation for button interactions */
+.btn-add-object,
+.btn-add-function,
+.btn-remove-object,
+.btn-remove-function {
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-add-object:active,
+.btn-add-function:active {
+  transform: scale(0.95);
+  background: #1e7e34;
+}
+
+.btn-remove-object:active,
+.btn-remove-function:active {
+  transform: scale(0.95);
+  background: #bd2130;
+}
+
+/* Focus states */
+.def-section .btn:focus,
+#def-source-select:focus,
+.sentence-part .object-select:focus,
+.sentence-part .function-select:focus {
+  outline: 2px solid var(--primary, #007bff);
+  outline-offset: 2px;
+}
+
+/* Success/error states for DEF validation */
+.def-section.def-valid {
+  border-color: var(--success, #28a745);
+}
+
+.def-section.def-invalid {
+  border-color: var(--danger, #dc3545);
+}
+
+.def-section.def-valid .preview-header {
+  background: color-mix(in srgb, var(--success, #28a745) 10%, var(--bg-muted, #f8f9fa));
+}
+
+.def-section.def-invalid .preview-header {
+  background: color-mix(in srgb, var(--danger, #dc3545) 10%, var(--bg-muted, #f8f9fa));
+}
