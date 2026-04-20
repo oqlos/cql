@@ -1,0 +1,444 @@
+/* OQL Step Renderer Styles */
+
+.oql-renderer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 24px;
+  font-family: var(--font-display);
+}
+
+.oql-renderer-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-bottom: 1px solid var(--border);
+}
+
+.oql-renderer-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.oql-renderer-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.oql-renderer-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.oql-meta-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(59, 130, 246, 0.04);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.oql-meta-tag {
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.06);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.oql-steps-topbar {
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.oql-steps-topbar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.oql-steps-topbar-list li {
+  cursor: pointer;
+  user-select: none;
+  min-width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.oql-steps-topbar-list li:hover {
+  background: var(--bg-card-hover);
+}
+
+.oql-steps-topbar-list li.active {
+  outline: 2px solid rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.oql-goal-strip {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.oql-goal-strip-header,
+.oql-goal-strip-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 70px 70px 70px 70px 60px;
+  column-gap: 0;
+}
+
+.oql-goal-strip-header {
+  background: rgba(30, 41, 59, 0.6);
+  border-bottom: 1px solid var(--border);
+}
+
+.oql-goal-strip-row {
+  background: var(--bg-card);
+}
+
+.oql-goal-cell {
+  font-size: 12px;
+  line-height: 1.3;
+  padding: 8px 10px;
+  border-right: 1px solid var(--border);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oql-goal-cell:last-child { border-right: none; }
+
+.oql-goal-strip-header .oql-goal-cell {
+  font-weight: 700;
+  color: var(--text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 10px;
+}
+
+.oql-goal-cell.min { text-align: right; color: #38bdf8; }
+.oql-goal-cell.max { text-align: right; color: #fb923c; }
+.oql-goal-cell.val { text-align: right; }
+.oql-goal-cell.result { text-align: center; }
+.oql-goal-cell.steps { text-align: center; }
+
+.oql-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  min-height: 200px;
+}
+
+.oql-sidebar {
+  background: rgba(30, 41, 59, 0.3);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.oql-sidebar-meta-header {
+  display: grid;
+  grid-template-columns: 36px 60px 1fr 1fr;
+  background: rgba(30, 41, 59, 0.6);
+  border-bottom: 1px solid var(--border);
+}
+
+.oql-sidebar-cell {
+  font-size: 10px;
+  padding: 4px 6px;
+  border-right: 1px solid var(--border);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oql-sidebar-cell:last-child { border-right: none; }
+
+.oql-sidebar-meta-header .oql-sidebar-cell {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.oql-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.oql-step-row {
+  display: grid;
+  grid-template-columns: 36px 60px 1fr 1fr;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.4);
+  transition: background 0.1s ease;
+}
+
+.oql-step-row:hover {
+  background: var(--bg-card-hover);
+}
+
+.oql-step-row.active {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.oql-step-row .oql-sidebar-cell {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.oql-step-row .oql-sidebar-cell.type {
+  font-weight: 700;
+}
+
+.oql-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.oql-step-row.set .oql-sidebar-cell.type { color: #4ade80; }
+.oql-step-row.wait .oql-sidebar-cell.type { color: #94a3b8; }
+.oql-step-row.if-check .oql-sidebar-cell.type { color: #c084fc; }
+.oql-step-row.save .oql-sidebar-cell.type { color: #a78bfa; }
+.oql-step-row.log .oql-sidebar-cell.type { color: #60a5fa; }
+.oql-step-row.assert .oql-sidebar-cell.type { color: #fb923c; }
+.oql-step-row.api .oql-sidebar-cell.type { color: #fbbf24; }
+.oql-step-row.func-call .oql-sidebar-cell.type { color: #2dd4bf; }
+
+.oql-main {
+  padding: 12px 16px;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.oql-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.oql-thresholds-section {
+  margin-bottom: 16px;
+}
+
+.oql-thresholds-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1a1a2e;
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.oql-thresholds-table th {
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+  color: var(--text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  background: #252542;
+}
+
+.oql-thresholds-table th.th-min { text-align: right; }
+.oql-thresholds-table th.th-max { text-align: right; }
+
+.oql-thresholds-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.5);
+}
+
+.oql-thresholds-table .td-param { color: var(--text-primary); }
+.oql-thresholds-table .td-unit { color: var(--text-muted); text-align: center; }
+.oql-thresholds-table .td-min { color: #38bdf8; text-align: right; }
+.oql-thresholds-table .td-max { color: #fb923c; text-align: right; }
+
+.oql-step-detail {
+  margin-bottom: 16px;
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.oql-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.oql-detail-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.oql-detail-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.oql-detail-value {
+  font-size: 12px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.oql-detail-raw {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  word-break: break-all;
+}
+
+.oql-detail-value.oql-ok { color: #4ade80; }
+.oql-detail-value.oql-err { color: #f87171; }
+.oql-detail-value.oql-min { color: #38bdf8; }
+.oql-detail-value.oql-max { color: #fb923c; }
+
+.oql-goal-steps-section {
+  margin-top: 8px;
+}
+
+.oql-goal-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.oql-goal-step {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+  flex-wrap: wrap;
+}
+
+.oql-goal-step:hover {
+  background: var(--bg-card-hover);
+}
+
+.oql-goal-step.active {
+  outline: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.oql-goal-step.set { background: rgba(74, 222, 128, 0.06); border-left: 3px solid #4ade80; }
+.oql-goal-step.wait { background: rgba(148, 163, 184, 0.06); border-left: 3px solid #94a3b8; }
+.oql-goal-step.if-check { background: rgba(192, 132, 252, 0.06); border-left: 3px solid #c084fc; }
+.oql-goal-step.save { background: rgba(167, 139, 250, 0.06); border-left: 3px solid #a78bfa; }
+.oql-goal-step.log { background: rgba(96, 165, 250, 0.06); border-left: 3px solid #60a5fa; }
+.oql-goal-step.assert { background: rgba(251, 146, 60, 0.06); border-left: 3px solid #fb923c; }
+.oql-goal-step.api { background: rgba(251, 191, 36, 0.06); border-left: 3px solid #fbbf24; }
+.oql-goal-step.func-call { background: rgba(45, 212, 191, 0.06); border-left: 3px solid #2dd4bf; }
+.oql-goal-step.comment { background: rgba(100, 116, 139, 0.04); border-left: 3px solid #475569; }
+
+.oql-goal-step .step-type {
+  font-weight: 700;
+  min-width: 56px;
+  color: var(--text-primary);
+}
+
+.oql-goal-step .step-param { color: #60a5fa; }
+.oql-goal-step .step-val { color: #4ade80; }
+.oql-goal-step .step-op { color: #f472b6; font-weight: 700; }
+.oql-goal-step .step-unit { color: var(--text-muted); }
+.oql-goal-step .step-msg { color: var(--text-secondary); font-style: italic; }
+.oql-goal-step .step-comment { color: #475569; font-style: italic; }
+
+.step-correct-badge {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.step-error-badge {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+  font-weight: 600;
+}
+
+.oql-report-export-btn {
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.oql-report-export-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+@media (max-width: 900px) {
+  .oql-layout {
+    grid-template-columns: 1fr;
+  }
+  .oql-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    max-height: 250px;
+  }
+}
