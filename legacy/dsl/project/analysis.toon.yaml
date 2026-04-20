@@ -1,0 +1,81 @@
+# code2llm | 24f 1517L | python:18,typescript:4,shell:1,javascript:1 | 2026-04-15
+# CC̄=2.3 | critical:0/61 | dups:0 | cycles:10
+
+HEALTH[10]:
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._refresh -> frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._onAction -> frontend.src.main.DslEditorApp._refresh -> frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._onAction -> frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._onAction -> frontend.src.main.DslEditorApp.showCreateForm -> frontend.src.main.DslEditorApp._refresh -> frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._onAction -> frontend.src.main.DslEditorApp.showCreateForm -> frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._onAction -> frontend.src.main.DslEditorApp._doDelete -> frontend.src.main.DslEditorApp._refresh -> frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._onAction -> frontend.src.main.DslEditorApp._doDelete -> frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._doDelete -> frontend.src.main.DslEditorApp._refresh -> frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.
+  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -> frontend.src.main.DslEditorApp._doDelete -> frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.
+
+REFACTOR[1]:
+  1. break 10 circular dependencies
+
+PIPELINES[47]:
+  [1] Src [init]: init → _refresh → loadSchema → error → ...(1 more)
+      PURITY: 100% pure
+  [2] Src [response]: response
+      PURITY: 100% pure
+  [3] Src [target]: target → _refresh → loadSchema → error → ...(1 more)
+      PURITY: 100% pure
+  [4] Src [li]: li → showDetails
+      PURITY: 100% pure
+  [5] Src [editor]: editor
+      PURITY: 100% pure
+
+LAYERS:
+  frontend/                       CC̄=4.6    ←in:0  →out:0
+  │ main.ts                    386L  2C   20m  CC=12     ←0
+  │ vite.config.ts              27L  0C    0m  CC=0.0    ←0
+  │
+  core/                           CC̄=1.6    ←in:0  →out:0
+  │ index.ts                   173L  0C    9m  CC=3      ←0
+  │ types.ts                   171L  15C    0m  CC=0.0    ←0
+  │ event_store                 14L  0C    0m  CC=0.0    ←0
+  │
+  client/                         CC̄=1.2    ←in:0  →out:0
+  │ __init__                   156L  6C   24m  CC=2      ←0
+  │
+  api/                            CC̄=1.0    ←in:0  →out:0
+  │ __init__                    75L  0C    8m  CC=1      ←0
+  │
+  ./                              CC̄=0.0    ←in:0  →out:0
+  │ main                        50L  0C    0m  CC=0.0    ←0
+  │ project.sh                  35L  0C    0m  CC=0.0    ←0
+  │ nfo_config                  31L  0C    0m  CC=0.0    ←0
+  │
+  interpreter/                    CC̄=0.0    ←in:0  →out:0
+  │ __init__                    38L  0C    0m  CC=0.0    ←0
+  │ models                      27L  0C    0m  CC=0.0    ←0
+  │ base                        25L  0C    0m  CC=0.0    ←0
+  │ firmware_adapter            19L  0C    0m  CC=0.0    ←0
+  │ iql                         18L  0C    0m  CC=0.0    ←0
+  │ cli                         13L  0C    0m  CC=0.0    ←0
+  │ __main__                    11L  0C    0m  CC=0.0    ←0
+  │ parser                       9L  0C    0m  CC=0.0    ←0
+  │ interpreter                  9L  0C    0m  CC=0.0    ←0
+  │ __init__                     1L  0C    0m  CC=0.0    ←0
+  │
+  maps/                           CC̄=0.0    ←in:0  →out:0
+  │ example-map.js             175L  0C    0m  CC=0.0    ←0
+  │
+  models/                         CC̄=0.0    ←in:0  →out:0
+  │ __init__                    14L  0C    0m  CC=0.0    ←0
+  │
+  server/                         CC̄=0.0    ←in:0  →out:0
+  │ event-server                11L  0C    0m  CC=0.0    ←0
+  │
+  cli/                            CC̄=0.0    ←in:0  →out:0
+  │ dsl-shell                   29L  0C    0m  CC=0.0    ←0
+  │
+
+COUPLING: no cross-package imports detected
+
+EXTERNAL:
+  validation: run `vallm batch .` → validation.toon
+  duplication: run `redup scan .` → duplication.toon

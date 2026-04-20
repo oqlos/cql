@@ -1,0 +1,9 @@
+# redup/duplication | 0 groups | 18f 550L | 2026-04-15
+
+SUMMARY:
+  files_scanned: 18
+  total_lines:   550
+  dup_groups:    0
+  dup_fragments: 0
+  saved_lines:   0
+  scan_ms:       3309

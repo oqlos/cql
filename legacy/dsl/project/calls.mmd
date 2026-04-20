@@ -1,0 +1,42 @@
+flowchart LR
+    subgraph frontend__src
+        frontend__src__main__DslEditorApp__alert["alert"]
+        frontend__src__main__DslEditorApp__init["init"]
+        frontend__src__main__DslEditorApp__target["target"]
+        frontend__src__main__DslEditorApp__setupEventListeners["setupEventListeners"]
+        frontend__src__main__DslEditorApp__loadSchema["loadSchema"]
+        frontend__src__main__DslEditorApp___onAction["_onAction"]
+        frontend__src__main__DslEditorApp__formData["formData"]
+        frontend__src__main__DslEditorApp__showCreateForm["showCreateForm"]
+        frontend__src__main__DslEditorApp__data["data"]
+        frontend__src__main__DslEditorApp__renderList["renderList"]
+        frontend__src__main__DslEditorApp__error["error"]
+        frontend__src__main__DslEditorApp__render["render"]
+        frontend__src__main__DslEditorApp__li["li"]
+        frontend__src__main__DslEditorApp__showDetails["showDetails"]
+        frontend__src__main__DslEditorApp___refresh["_refresh"]
+        frontend__src__main__DslEditorApp___doDelete["_doDelete"]
+    end
+    frontend__src__main__DslEditorApp__init --> frontend__src__main__DslEditorApp___refresh
+    frontend__src__main__DslEditorApp___refresh --> frontend__src__main__DslEditorApp__loadSchema
+    frontend__src__main__DslEditorApp___refresh --> frontend__src__main__DslEditorApp__render
+    frontend__src__main__DslEditorApp___refresh --> frontend__src__main__DslEditorApp__setupEventListeners
+    frontend__src__main__DslEditorApp___onAction --> frontend__src__main__DslEditorApp___refresh
+    frontend__src__main__DslEditorApp___onAction --> frontend__src__main__DslEditorApp__showCreateForm
+    frontend__src__main__DslEditorApp___onAction --> frontend__src__main__DslEditorApp___doDelete
+    frontend__src__main__DslEditorApp__loadSchema --> frontend__src__main__DslEditorApp__error
+    frontend__src__main__DslEditorApp__render --> frontend__src__main__DslEditorApp__renderList
+    frontend__src__main__DslEditorApp__render --> frontend__src__main__DslEditorApp__setupEventListeners
+    frontend__src__main__DslEditorApp__setupEventListeners --> frontend__src__main__DslEditorApp___refresh
+    frontend__src__main__DslEditorApp__setupEventListeners --> frontend__src__main__DslEditorApp___onAction
+    frontend__src__main__DslEditorApp__setupEventListeners --> frontend__src__main__DslEditorApp___doDelete
+    frontend__src__main__DslEditorApp__setupEventListeners --> frontend__src__main__DslEditorApp__showDetails
+    frontend__src__main__DslEditorApp__target --> frontend__src__main__DslEditorApp___refresh
+    frontend__src__main__DslEditorApp__li --> frontend__src__main__DslEditorApp__showDetails
+    frontend__src__main__DslEditorApp__formData --> frontend__src__main__DslEditorApp__alert
+    frontend__src__main__DslEditorApp__formData --> frontend__src__main__DslEditorApp___refresh
+    frontend__src__main__DslEditorApp__data --> frontend__src__main__DslEditorApp__alert
+    frontend__src__main__DslEditorApp__data --> frontend__src__main__DslEditorApp___refresh
+    frontend__src__main__DslEditorApp__error --> frontend__src__main__DslEditorApp__alert
+    frontend__src__main__DslEditorApp___doDelete --> frontend__src__main__DslEditorApp__alert
+    frontend__src__main__DslEditorApp___doDelete --> frontend__src__main__DslEditorApp___refresh

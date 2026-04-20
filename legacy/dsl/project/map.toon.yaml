@@ -1,0 +1,103 @@
+# dsl | 24f 1517L | shell:1,typescript:4,python:18,javascript:1 | 2026-04-15
+# stats: 61 func | 0 cls | 24 mod | CC̄=2.3 | critical:0 | cycles:0
+# alerts[1]: fan-out DslEditorApp.showCreateForm=14
+# hotspots[5]: DslEditorApp.showCreateForm fan=14; DslEditorApp.setupEventListeners fan=8; DslEditorApp.formData fan=5; DslEditorApp.data fan=5; replay fan=5
+# evolution: CC̄ 2.5→2.3 (improved -0.2)
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[24]:
+  api/__init__.py,75
+  cli/dsl-shell.py,29
+  client/__init__.py,156
+  core/index.ts,173
+  core/event_store.py,14
+  core/types.ts,171
+  frontend/src/main.ts,386
+  frontend/vite.config.ts,27
+  interpreter/__init__.py,1
+  interpreter/__main__.py,11
+  interpreter/base.py,25
+  interpreter/cql/__init__.py,38
+  interpreter/cql/cli.py,13
+  interpreter/cql/interpreter.py,9
+  interpreter/cql/models.py,27
+  interpreter/cql/parser.py,9
+  interpreter/firmware_adapter.py,19
+  interpreter/iql.py,18
+  main.py,50
+  maps/example-map.js,175
+  models/__init__.py,14
+  nfo_config.py,31
+  project.sh,35
+  server/event-server.py,11
+D:
+  frontend/src/main.ts:
+    e: DslSchema,DslEditorApp
+    DslSchema:
+    DslEditorApp: init(-1),_refresh(-1),_onAction(-1),loadSchema(-1),response(-1),render(-1),app(-1),renderList(-1),setupEventListeners(-1),app(-1),target(-1),li(-1),showCreateForm(-1),editor(-1),formData(-1),data(-1),endpoint(-1),response(-1),alert(-1),error(-1),alert(-1),alert(-1),showDetails(-1),editor(-1),_doDelete(-1),endpoint(-1),response(-1),alert(-1),error(-1),alert(-1),alert(-1),app(-1)
+  core/index.ts:
+    e: dsl,exec,run,navigate,startRecording,stopRecording,replay,session,connect
+    dsl()
+    exec()
+    run()
+    navigate()
+    startRecording()
+    stopRecording()
+    replay()
+    session()
+    connect()
+  client/__init__.py:
+    e: DslFunction,DslObject,DslParam,DslUnit,Variable,DslClient,create_client
+    DslFunction:
+    DslObject:
+    DslParam:
+    DslUnit:
+    Variable:
+    DslClient: __init__(1),_get(1),_post(2),_delete(1),health(0),list_functions(0),get_function(1),create_function(0),delete_function(1),list_objects(0),get_object(1),create_object(0),delete_object(1),list_params(0),create_param(0),list_units(0),create_unit(0),list_variables(0),create_variable(0),get_schema(0),close(0),__enter__(0),__exit__(0)  # Client for DSL Service API...
+    create_client(base_url)
+  api/__init__.py:
+    e: health,list_functions,list_objects,list_params,list_units,list_variables,get_schema,create_tables
+    health()
+    list_functions()
+    list_objects()
+    list_params()
+    list_units()
+    list_variables()
+    get_schema()
+    create_tables()
+  project.sh:
+  frontend/vite.config.ts:
+    i: node:url,vite
+  nfo_config.py:
+  interpreter/iql.py:
+  interpreter/__init__.py:
+  interpreter/__main__.py:
+  interpreter/firmware_adapter.py:
+  interpreter/cql/cli.py:
+  main.py:
+  interpreter/cql/__init__.py:
+  interpreter/cql/parser.py:
+  interpreter/cql/models.py:
+  interpreter/cql/interpreter.py:
+  interpreter/base.py:
+  maps/example-map.js:
+  core/types.ts:
+    e: ApiCommand,ActionCommand,ComponentDefinition,ComponentCommand,UIState,StateCommand,ProcessStep,ProcessDefinition,ProcessInstance,ProcessCommand,SessionRecording,SessionCommand,ReplayCommand,DslExecutionContext,DslExecutionResult
+    ApiCommand:
+    ActionCommand:
+    ComponentDefinition:
+    ComponentCommand:
+    UIState:
+    StateCommand:
+    ProcessStep:
+    ProcessDefinition:
+    ProcessInstance:
+    ProcessCommand:
+    SessionRecording:
+    SessionCommand:
+    ReplayCommand:
+    DslExecutionContext:
+    DslExecutionResult:
+  core/event_store.py:
+  models/__init__.py:
+  server/event-server.py:
+  cli/dsl-shell.py:

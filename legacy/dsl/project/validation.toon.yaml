@@ -1,0 +1,36 @@
+# vallm batch | 61f | 27✓ 3⚠ 4✗ | 2026-04-15
+
+SUMMARY:
+  scanned: 61  passed: 27 (44.3%)  warnings: 3  errors: 4  unsupported: 29
+
+WARNINGS[3]{path,score}:
+  frontend/vite.config.ts,0.67
+    issues[2]{rule,severity,message,line}:
+      js.import.resolvable,warning,Module 'vite' not found,2
+      js.import.resolvable,warning,Module 'node:url' not found,3
+  frontend/src/main.ts,0.97
+    issues[1]{rule,severity,message,line}:
+      complexity.lizard_length,warning,render: 150 lines exceeds limit 100,64
+  tests/test_interpreters.py,0.98
+    issues[1]{rule,severity,message,line}:
+      complexity.maintainability,warning,Low maintainability index: 11.4 (threshold: 20),
+
+ERRORS[4]{path,score}:
+  cli/dsl-shell.py,0.57
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'oql.shell' not found,8
+  interpreter/iql.py,0.57
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'testql.interpreter' not found,7
+  tests/test_dsl.py,0.57
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'dsl' not found,9
+  nfo_config.py,0.89
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'shared.nfo_config_factory' not found,17
+
+UNSUPPORTED[4]{bucket,count}:
+  *.md,10
+  *.txt,2
+  *.example,1
+  other,16

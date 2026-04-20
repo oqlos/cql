@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>code2llm Analysis Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --border: #475569;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #22c55e;
+            --warning: #eab308;
+            --error: #ef4444;
+        }
+        
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f8fafc;
+                --surface: #ffffff;
+                --surface-hover: #f1f5f9;
+                --border: #e2e8f0;
+                --text: #1e293b;
+                --text-muted: #64748b;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        .search {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .search input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            color: var(--text);
+            font-size: 0.875rem;
+            outline: none;
+        }
+        
+        .search input:focus {
+            border-color: var(--accent);
+        }
+        
+        .search input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .file-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+        
+        .file-group {
+            margin-bottom: 1rem;
+        }
+        
+        .file-group-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            padding: 0.5rem 0.75rem;
+            font-weight: 600;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background 0.15s;
+            font-size: 0.875rem;
+        }
+        
+        .file-item:hover {
+            background: var(--surface-hover);
+        }
+        
+        .file-item.active {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .file-item.active .file-meta {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .file-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .file-name {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+        
+        .empty-state {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        
+        /* Main content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .content-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .content-title h2 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .content-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            background: var(--surface-hover);
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            color: var(--text);
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.15s;
+        }
+        
+        .btn:hover {
+            background: var(--border);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+        
+        .content-body {
+            flex: 1;
+            overflow: auto;
+            padding: 1.5rem;
+        }
+        
+        .welcome {
+            max-width: 600px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+        
+        .welcome h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        pre {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        /* Markdown rendered content styles */
+        .markdown-content {
+            line-height: 1.6;
+            max-width: 100%;
+        }
+        
+        .markdown-content h1, .markdown-content h2, .markdown-content h3,
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .markdown-content h1 { font-size: 1.75rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+        .markdown-content h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+        .markdown-content h3 { font-size: 1.25rem; }
+        .markdown-content h4 { font-size: 1.1rem; }
+        
+        .markdown-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .markdown-content ul, .markdown-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .markdown-content li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .markdown-content code {
+            background: var(--surface);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875em;
+        }
+        
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .markdown-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .markdown-content th, .markdown-content td {
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+        
+        .markdown-content th {
+            background: var(--surface);
+            font-weight: 600;
+        }
+        
+        .markdown-content tr:nth-child(even) {
+            background: var(--surface-hover);
+        }
+        
+        .markdown-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .markdown-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+        
+        .markdown-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 1.5rem 0;
+        }
+        
+        /* Mermaid diagram styles */
+        .mermaid-content {
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .mermaid-content .mermaid {
+            background: transparent;
+        }
+        
+        /* Image preview styles */
+        .image-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .image-preview img {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                max-height: 40vh;
+            }
+            
+            .file-list {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 0.25rem;
+                padding: 0.5rem;
+            }
+            
+            .file-group {
+                display: flex;
+                flex-direction: row;
+                margin: 0;
+            }
+            
+            .file-group-title {
+                display: none;
+            }
+            
+            .file-item {
+                flex-direction: column;
+                min-width: 80px;
+                padding: 0.5rem;
+                text-align: center;
+            }
+            
+            .file-info {
+                display: none;
+            }
+            
+            .file-size {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="header">
+                <h1>🔍 code2llm</h1>
+                <p>Analysis Results Browser</p>
+            </div>
+            <div class="search">
+                <input type="text" id="search" placeholder="Search files..." oninput="filterFiles(this.value)">
+            </div>
+            <div class="file-list" id="fileList">
+                <!-- Files will be rendered here -->
+            </div>
+        </aside>
+        
+        <main class="content">
+            <div class="content-header">
+                <div class="content-title">
+                    <span id="contentIcon">📁</span>
+                    <h2 id="contentTitle">Welcome</h2>
+                </div>
+                <div class="content-actions" id="contentActions">
+                    <!-- Actions will be rendered here -->
+                </div>
+            </div>
+            <div class="content-body" id="contentBody">
+                <div class="welcome">
+                    <h2>Analysis Results</h2>
+                    <p>Select a file from the sidebar to view its contents. This interface works on GitHub Pages without any server required.</p>
+                    <div class="stats-grid" id="statsGrid">
+                        <!-- Stats will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize mermaid
+        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+        
+        const files = [{"name": "calls.png", "rel_path": "calls.png", "path": "calls.png", "size": "73.0KB", "icon": "🖼️", "type": "image", "type_name": "Image", "content": "[Binary file]", "is_subdir": false}, {"name": "compact_flow.png", "rel_path": "compact_flow.png", "path": "compact_flow.png", "size": "9.4KB", "icon": "🖼️", "type": "image", "type_name": "Image", "content": "[Binary file]", "is_subdir": false}, {"name": "flow.png", "rel_path": "flow.png", "path": "flow.png", "size": "15.6KB", "icon": "🖼️", "type": "image", "type_name": "Image", "content": "[Binary file]", "is_subdir": false}, {"name": "README.md", "rel_path": "README.md", "path": "README.md", "size": "9.3KB", "icon": "📝", "type": "markdown", "type_name": "Markdown", "content": "# code2llm - Generated Analysis Files\n\nThis directory contains the complete analysis of your project generated by `code2llm`. Each file serves a specific purpose for understanding, refactoring, and documenting your codebase.\n\n## 📁 Generated Files Overview\n\nWhen you run `code2llm ./ -f all`, the following files are created:\n\n### 🎯 Core Analysis Files\n\n| File | Format | Purpose | Key Insights |\n|------|--------|---------|--------------|\n| `evolution.toon.yaml` | **YAML** | **📋 Refactoring queue** - Prioritized improvements | 0 refactoring actions needed |\n| `map.toon.yaml` | **YAML** | **🗺️ Structural map + project header** - Modules, imports, exports, signatures, stats, alerts, hotspots, trend | Project architecture overview |\n\n### 🤖 LLM-Ready Documentation\n\n| File | Format | Purpose | Use Case |\n|------|--------|---------|----------|\n| `prompt.txt` | **Text** | **📝 Ready-to-send prompt** - Lists all files with instructions | Attach to LLM conversation as context guide |\n| `context.md` | **Markdown** | **📖 LLM narrative** - Architecture summary | Paste into ChatGPT/Claude for code analysis |\n\n### 📊 Visualizations\n\n| File | Format | Purpose | Description |\n|------|--------|---------|-------------|\n| `flow.mmd` | **Mermaid** | **🔄 Control flow diagram** | Function call paths with complexity styling |\n| `calls.mmd` | **Mermaid** | **📞 Call graph** | Function dependencies (edges only) |\n| `compact_flow.mmd` | **Mermaid** | **📦 Module overview** | Aggregated module-level view |\n\n## 🚀 Quick Start Commands\n\n### Basic Analysis\n```bash\n# Quick health check (TOON format only)\ncode2llm ./ -f toon\n\n# Generate all formats (what created these files)\ncode2llm ./ -f all\n\n# LLM-ready context only\ncode2llm ./ -f context\n```\n\n### Performance Options\n```bash\n# Fast analysis for large projects\ncode2llm ./ -f toon --strategy quick\n\n# Memory-limited analysis\ncode2llm ./ -f all --max-memory 500\n\n# Skip PNG generation (faster)\ncode2llm ./ -f all --no-png\n```\n\n### Refactoring Focus\n```bash\n# Get refactoring recommendations\ncode2llm ./ -f evolution\n\n# Focus on specific code smells\ncode2llm ./ -f toon --refactor --smell god_function\n\n# Data flow analysis\ncode2llm ./ -f flow --data-flow\n```\n\n## 📖 Understanding Each File\n\n### `analysis.toon` - Health Diagnostics\n**Purpose**: Quick overview of code health issues\n**Key sections**:\n- **HEALTH**: Critical issues (🔴) and warnings (🟡)\n- **REFACTOR**: Prioritized refactoring actions\n- **COUPLING**: Module dependencies and potential cycles\n- **LAYERS**: Package complexity metrics\n- **FUNCTIONS**: High-complexity functions (CC ≥ 10)\n- **CLASSES**: Complex classes needing attention\n\n**Example usage**:\n```bash\n# View health issues\ncat analysis.toon | head -30\n\n# Check refactoring priorities\ngrep \"REFACTOR\" analysis.toon\n```\n\n### `evolution.toon.yaml` - Refactoring Queue\n**Purpose**: Step-by-step refactoring plan\n**Key sections**:\n- **NEXT**: Immediate actions to take\n- **RISKS**: Potential breaking changes\n- **METRICS-TARGET**: Success criteria\n\n**Example usage**:\n```bash\n# Get refactoring plan\ncat evolution.toon.yaml\n\n# Track progress\ngrep \"NEXT\" evolution.toon.yaml\n```\n\n### `flow.toon` - Legacy Data Flow Analysis\n**Purpose**: Understand data movement through the system (legacy / explicit opt-in)\n**Key sections**:\n- **PIPELINES**: Data processing chains\n- **CONTRACTS**: Function input/output contracts\n- **SIDE_EFFECTS**: Functions with external impacts\n\n**Example usage**:\n```bash\n# Find data pipelines\ngrep \"PIPELINES\" flow.toon\n\n# Identify side effects\ngrep \"SIDE_EFFECTS\" flow.toon\n```\n\n### `map.toon.yaml` - Structural Map + Project Header\n**Purpose**: High-level architecture overview plus compact project header\n**Key sections**:\n- **MODULES**: All modules with basic stats\n- **IMPORTS**: Dependency relationships\n- **EXPORTS**: Public API surface and signatures\n- **HEADER**: Stats, alerts, hotspots, evolution trend\n\n**Example usage**:\n```bash\n# See project structure\ncat map.toon.yaml | head -50\n\n# Find public APIs\ngrep \"SIGNATURES\" map.toon.yaml\n```\n\n### `project.toon.yaml` - Compact Analysis View\n**Purpose**: Compact module view generated from project.yaml data\n**Status**: Legacy view generated on demand from unified project.yaml\n\n**Example usage**:\n```bash\n# View compact project structure\ncat project.toon.yaml | head -30\n\n# Find largest files\ngrep -E \"^  .*[0-9]{3,}$\" project.toon.yaml | sort -t',' -k2 -n -r | head -10\n```\n\n### `prompt.txt` - Ready-to-Send LLM Prompt\n**Purpose**: Pre-formatted prompt listing all generated files for LLM conversation\n**Generation**: Written when `code2llm` runs with a source path and requests `-f all` (including `--no-chunk`) or `code2logic`\n**Contents**:\n- **Files section**: Lists all existing generated files with descriptions, including `project.toon.yaml` when generated by `-f all`\n- **Source files section**: Highlights important source files such as `cli_exports/orchestrator.py`\n- **Missing section**: Shows which files weren't generated (if any)\n- **Task section**: Refactoring brief with concrete execution instructions, not just analysis\n- **Priority Order section**: State-dependent refactoring priorities, starting with blockers and then architecture cleanup\n- **Requirements section**: Guidelines for suggested changes\n\n**Example usage**:\n```bash\n# View the prompt\ncat prompt.txt\n\n# Copy to clipboard and paste into ChatGPT/Claude\ncat prompt.txt | pbcopy  # macOS\ncat prompt.txt | xclip -sel clip  # Linux\n```\n\n### `context.md` - LLM Narrative\n**Purpose**: Ready-to-paste context for AI assistants\n**Key sections**:\n- **Overview**: Project statistics\n- **Architecture**: Module breakdown\n- **Entry Points**: Public interfaces\n- **Patterns**: Design patterns detected\n\n**Example usage**:\n```bash\n# Copy to clipboard for LLM\ncat context.md | pbcopy  # macOS\ncat context.md | xclip -sel clip  # Linux\n\n# Use with Claude/ChatGPT for code analysis\n```\n\n### Visualization Files (`*.mmd`, `*.png`)\n**Purpose**: Visual understanding of code structure\n**Files**:\n- `flow.mmd` - Detailed control flow with complexity colors\n- `calls.mmd` - Simple call graph\n- `compact_flow.mmd` - High-level module view\n- `*.png` - Pre-rendered images\n\n**Example usage**:\n```bash\n# View diagrams\nopen flow.png  # macOS\nxdg-open flow.png  # Linux\n\n# Edit in Mermaid Live Editor\n# Copy content of .mmd files to https://mermaid.live\n```\n\n## 🔍 Common Analysis Patterns\n\n### 1. Code Health Assessment\n```bash\n# Quick health check\ncode2llm ./ -f toon\ncat analysis.toon | grep -E \"(HEALTH|REFACTOR)\"\n```\n\n### 2. Refactoring Planning\n```bash\n# Get refactoring queue\ncode2llm ./ -f evolution\ncat evolution.toon.yaml\n\n# Focus on specific issues\ncode2llm ./ -f toon --refactor --smell god_function\n```\n\n### 3. LLM Assistance\n```bash\n# Generate context for AI\ncode2llm ./ -f context\ncat context.md\n\n# Use with Claude: \"Based on this context, help me refactor the god modules\"\n```\n\n### 4. Team Documentation\n```bash\n# Generate all docs for team\ncode2llm ./ -f all -o ./docs/\n\n# Create visual diagrams\nopen docs/flow.png\n```\n\n## 📊 Interpreting Metrics\n\n### Complexity Metrics (CC)\n- **🔴 Critical (≥5.0)**: Immediate refactoring needed\n- **🟠 High (3.0-4.9)**: Consider refactoring\n- **🟡 Medium (1.5-2.9)**: Monitor complexity\n- **🟢 Low (0.1-1.4)**: Acceptable\n- **⚪ Basic (0.0)**: Simple functions\n\n### Module Health\n- **GOD Module**: Too large (>500 lines, >20 methods)\n- **HUB**: High fan-out (calls many modules)\n- **FAN-IN**: High incoming dependencies\n- **CYCLES**: Circular dependencies\n\n### Data Flow Indicators\n- **PIPELINE**: Sequential data processing\n- **CONTRACT**: Clear input/output specification\n- **SIDE_EFFECT**: External state modification\n\n## 🛠️ Integration Examples\n\n### CI/CD Pipeline\n```bash\n#!/bin/bash\n# Analyze code quality in CI\ncode2llm ./ -f toon -o ./analysis\nif grep -q \"🔴 GOD\" ./analysis/analysis.toon; then\n    echo \"❌ God modules detected\"\n    exit 1\nfi\n```\n\n### Pre-commit Hook\n```bash\n#!/bin/sh\n# .git/hooks/pre-commit\ncode2llm ./ -f toon -o ./temp_analysis\nif grep -q \"🔴\" ./temp_analysis/analysis.toon; then\n    echo \"⚠️  Critical issues found. Review before committing.\"\nfi\nrm -rf ./temp_analysis\n```\n\n### Documentation Generation\n```bash\n# Generate docs for README\ncode2llm ./ -f context -o ./docs/\necho \"## Architecture\" >> README.md\ncat docs/context.md >> README.md\n```\n\n## 📚 Next Steps\n\n1. **Review `analysis.toon`** - Identify critical issues\n2. **Check `evolution.toon.yaml`** - Plan refactoring priorities\n3. **Use `context.md`** - Get LLM assistance for complex changes\n4. **Reference visualizations** - Understand system architecture\n5. **Track progress** - Re-run analysis after changes\n\n## 🔧 Advanced Usage\n\n### Custom Analysis\n```bash\n# Deep analysis with all insights\ncode2llm ./ -m hybrid -f all --max-depth 15 -v\n\n# Performance-optimized\ncode2llm ./ -m static -f toon --strategy quick\n\n# Refactoring-focused\ncode2llm ./ -f toon,evolution --refactor\n```\n\n### Output Customization\n```bash\n# Separate output directories\ncode2llm ./ -f all -o ./analysis-$(date +%Y%m%d)\n\n# Split YAML into multiple files\ncode2llm ./ -f yaml --split-output\n\n# Separate orphaned functions\ncode2llm ./ -f yaml --separate-orphans\n```\n\n---\n\n**Generated by**: `code2llm ./ -f all --readme`  \n**Analysis Date**: 2026-04-15  \n**Total Functions**: 61  \n**Total Classes**: 23  \n**Modules**: 24  \n\nFor more information about code2llm, visit: https://github.com/tom-sapletta/code2llm\n", "is_subdir": false}, {"name": "context.md", "rel_path": "context.md", "path": "context.md", "size": "9.0KB", "icon": "📝", "type": "markdown", "type_name": "Markdown", "content": "# System Architecture Analysis\n\n## Overview\n\n- **Project**: /home/tom/github/maskservice/c2004/dsl\n- **Primary Language**: python\n- **Languages**: python: 18, typescript: 4, shell: 1, javascript: 1\n- **Analysis Mode**: static\n- **Total Functions**: 61\n- **Total Classes**: 23\n- **Modules**: 24\n- **Entry Points**: 50\n\n## Architecture by Module\n\n### frontend.src.main\n- **Functions**: 32\n- **Classes**: 2\n- **File**: `main.ts`\n\n### client\n- **Functions**: 24\n- **Classes**: 6\n- **File**: `__init__.py`\n\n### core\n- **Functions**: 9\n- **File**: `index.ts`\n\n### api\n- **Functions**: 8\n- **File**: `__init__.py`\n\n### core.types\n- **Functions**: 0\n- **Classes**: 15\n- **File**: `types.ts`\n\n## Key Entry Points\n\nMain execution flows into the system:\n\n### frontend.src.main.DslEditorApp.formData\n- **Calls**: frontend.src.main.fetch, frontend.src.main.stringify, frontend.src.main.DslEditorApp.alert, frontend.src.main.DslEditorApp._refresh, frontend.src.main.json\n\n### frontend.src.main.DslEditorApp.data\n- **Calls**: frontend.src.main.fetch, frontend.src.main.stringify, frontend.src.main.DslEditorApp.alert, frontend.src.main.DslEditorApp._refresh, frontend.src.main.json\n\n### core.replay\n- **Calls**: core.getDslRuntime, core.getSessionRecorder, core.getSession, core.getSessionPlayer, core.play\n\n### core.session\n- **Calls**: core.getDslRuntime, core.getSessionPlayer, core.play\n\n### client.DslClient._get\n- **Calls**: self.client.get, response.raise_for_status, response.json\n\n### client.DslClient._post\n- **Calls**: self.client.post, response.raise_for_status, response.json\n\n### client.DslClient._delete\n- **Calls**: self.client.delete, response.raise_for_status, response.json\n\n### core.exec\n- **Calls**: core.getDslRuntime, core.execute\n\n### core.run\n- **Calls**: core.getDslRuntime, core.executeScript\n\n### core.navigate\n- **Calls**: core.getDslRuntime, core.execute\n\n### core.startRecording\n- **Calls**: core.getDslRuntime, core.getSessionRecorder\n\n### core.stopRecording\n- **Calls**: core.getDslRuntime, core.getSessionRecorder\n\n### core.connect\n- **Calls**: core.getDslRuntime, core.connectToCli\n\n### client.DslClient.__init__\n- **Calls**: base_url.rstrip, httpx.Client\n\n### client.DslClient.list_functions\n- **Calls**: self._get, DslFunction\n\n### client.DslClient.get_function\n- **Calls**: self._get, DslFunction\n\n### client.DslClient.create_function\n- **Calls**: self._post, DslFunction\n\n### client.DslClient.list_objects\n- **Calls**: self._get, DslObject\n\n### client.DslClient.get_object\n- **Calls**: self._get, DslObject\n\n### client.DslClient.create_object\n- **Calls**: self._post, DslObject\n\n### client.DslClient.list_params\n- **Calls**: self._get, DslParam\n\n### client.DslClient.create_param\n- **Calls**: self._post, DslParam\n\n### client.DslClient.list_units\n- **Calls**: self._get, DslUnit\n\n### client.DslClient.create_unit\n- **Calls**: self._post, DslUnit\n\n### client.DslClient.list_variables\n- **Calls**: self._get, Variable\n\n### client.DslClient.create_variable\n- **Calls**: self._post, Variable\n\n### frontend.src.main.DslEditorApp.init\n- **Calls**: frontend.src.main.DslEditorApp._refresh\n\n### frontend.src.main.DslEditorApp.response\n- **Calls**: frontend.src.main.fetch\n\n### frontend.src.main.DslEditorApp.target\n- **Calls**: frontend.src.main.DslEditorApp._refresh\n\n### frontend.src.main.DslEditorApp.li\n- **Calls**: frontend.src.main.DslEditorApp.showDetails\n\n## Process Flows\n\nKey execution flows identified:\n\n### Flow 1: formData\n```\nformData [frontend.src.main.DslEditorApp]\n  └─> alert\n  └─> _refresh\n      └─> loadSchema\n          └─> error\n      └─> render\n```\n\n### Flow 2: data\n```\ndata [frontend.src.main.DslEditorApp]\n  └─> alert\n  └─> _refresh\n      └─> loadSchema\n          └─> error\n      └─> render\n```\n\n### Flow 3: replay\n```\nreplay [core]\n```\n\n### Flow 4: session\n```\nsession [core]\n```\n\n### Flow 5: _get\n```\n_get [client.DslClient]\n```\n\n### Flow 6: _post\n```\n_post [client.DslClient]\n```\n\n### Flow 7: _delete\n```\n_delete [client.DslClient]\n```\n\n### Flow 8: exec\n```\nexec [core]\n```\n\n### Flow 9: run\n```\nrun [core]\n```\n\n### Flow 10: navigate\n```\nnavigate [core]\n```\n\n## Key Classes\n\n### frontend.src.main.DslEditorApp\n- **Methods**: 32\n- **Key Methods**: frontend.src.main.DslEditorApp.init, frontend.src.main.DslEditorApp._refresh, frontend.src.main.DslEditorApp._onAction, frontend.src.main.DslEditorApp.loadSchema, frontend.src.main.DslEditorApp.response, frontend.src.main.DslEditorApp.render, frontend.src.main.DslEditorApp.app, frontend.src.main.DslEditorApp.renderList, frontend.src.main.DslEditorApp.setupEventListeners, frontend.src.main.DslEditorApp.app\n\n### client.DslClient\n> Client for DSL Service API\n- **Methods**: 23\n- **Key Methods**: client.DslClient.__init__, client.DslClient._get, client.DslClient._post, client.DslClient._delete, client.DslClient.health, client.DslClient.list_functions, client.DslClient.get_function, client.DslClient.create_function, client.DslClient.delete_function, client.DslClient.list_objects\n\n### frontend.src.main.DslSchema\n- **Methods**: 0\n\n### core.types.ApiCommand\n- **Methods**: 0\n\n### core.types.ActionCommand\n- **Methods**: 0\n\n### core.types.ComponentDefinition\n- **Methods**: 0\n\n### core.types.ComponentCommand\n- **Methods**: 0\n\n### core.types.UIState\n- **Methods**: 0\n\n### core.types.StateCommand\n- **Methods**: 0\n\n### core.types.ProcessStep\n- **Methods**: 0\n\n### core.types.ProcessDefinition\n- **Methods**: 0\n\n### core.types.ProcessInstance\n- **Methods**: 0\n\n### core.types.ProcessCommand\n- **Methods**: 0\n\n### core.types.SessionRecording\n- **Methods**: 0\n\n### core.types.SessionCommand\n- **Methods**: 0\n\n### core.types.ReplayCommand\n- **Methods**: 0\n\n### core.types.DslExecutionContext\n- **Methods**: 0\n\n### core.types.DslExecutionResult\n- **Methods**: 0\n\n### client.DslFunction\n- **Methods**: 0\n\n### client.DslObject\n- **Methods**: 0\n\n## Data Transformation Functions\n\nKey functions that process and transform data:\n\n## Behavioral Patterns\n\n### state_machine_DslClient\n- **Type**: state_machine\n- **Confidence**: 0.70\n- **Functions**: client.DslClient.__init__, client.DslClient._get, client.DslClient._post, client.DslClient._delete, client.DslClient.health\n\n## Public API Surface\n\nFunctions exposed as public API (no underscore prefix):\n\n- `frontend.src.main.DslEditorApp.showCreateForm` - 14 calls\n- `frontend.src.main.DslEditorApp.setupEventListeners` - 8 calls\n- `frontend.src.main.DslEditorApp.formData` - 5 calls\n- `frontend.src.main.DslEditorApp.data` - 5 calls\n- `core.replay` - 5 calls\n- `frontend.src.main.DslEditorApp.loadSchema` - 4 calls\n- `frontend.src.main.DslEditorApp.render` - 3 calls\n- `frontend.src.main.DslEditorApp.showDetails` - 3 calls\n- `core.session` - 3 calls\n- `frontend.src.main.DslEditorApp.renderList` - 2 calls\n- `core.exec` - 2 calls\n- `core.run` - 2 calls\n- `core.navigate` - 2 calls\n- `core.startRecording` - 2 calls\n- `core.stopRecording` - 2 calls\n- `core.connect` - 2 calls\n- `client.DslClient.list_functions` - 2 calls\n- `client.DslClient.get_function` - 2 calls\n- `client.DslClient.create_function` - 2 calls\n- `client.DslClient.list_objects` - 2 calls\n- `client.DslClient.get_object` - 2 calls\n- `client.DslClient.create_object` - 2 calls\n- `client.DslClient.list_params` - 2 calls\n- `client.DslClient.create_param` - 2 calls\n- `client.DslClient.list_units` - 2 calls\n- `client.DslClient.create_unit` - 2 calls\n- `client.DslClient.list_variables` - 2 calls\n- `client.DslClient.create_variable` - 2 calls\n- `frontend.src.main.DslEditorApp.init` - 1 calls\n- `frontend.src.main.DslEditorApp.response` - 1 calls\n- `frontend.src.main.DslEditorApp.target` - 1 calls\n- `frontend.src.main.DslEditorApp.li` - 1 calls\n- `frontend.src.main.DslEditorApp.editor` - 1 calls\n- `frontend.src.main.DslEditorApp.endpoint` - 1 calls\n- `frontend.src.main.DslEditorApp.error` - 1 calls\n- `core.dsl` - 1 calls\n- `api.health` - 1 calls\n- `api.list_functions` - 1 calls\n- `api.list_objects` - 1 calls\n- `api.list_params` - 1 calls\n\n## System Interactions\n\nHow components interact:\n\n```mermaid\ngraph TD\n    formData --> fetch\n    formData --> stringify\n    formData --> alert\n    formData --> _refresh\n    formData --> json\n    data --> fetch\n    data --> stringify\n    data --> alert\n    data --> _refresh\n    data --> json\n    replay --> getDslRuntime\n    replay --> getSessionRecorder\n    replay --> getSession\n    replay --> getSessionPlayer\n    replay --> play\n    session --> getDslRuntime\n    session --> getSessionPlayer\n    session --> play\n    _get --> get\n    _get --> raise_for_status\n    _get --> json\n    _post --> post\n    _post --> raise_for_status\n    _post --> json\n    _delete --> delete\n    _delete --> raise_for_status\n    _delete --> json\n    exec --> getDslRuntime\n    exec --> execute\n    run --> getDslRuntime\n```\n\n## Reverse Engineering Guidelines\n\n1. **Entry Points**: Start analysis from the entry points listed above\n2. **Core Logic**: Focus on classes with many methods\n3. **Data Flow**: Follow data transformation functions\n4. **Process Flows**: Use the flow diagrams for execution paths\n5. **API Surface**: Public API functions reveal the interface\n\n## Context for LLM\n\nMaintain the identified architectural patterns and public API surface when suggesting changes.", "is_subdir": false}, {"name": "calls.mmd", "rel_path": "calls.mmd", "path": "calls.mmd", "size": "3.3KB", "icon": "📈", "type": "mermaid", "type_name": "Mermaid", "content": "flowchart LR\n    subgraph frontend__src\n        frontend__src__main__DslEditorApp__alert[&quot;alert&quot;]\n        frontend__src__main__DslEditorApp__init[&quot;init&quot;]\n        frontend__src__main__DslEditorApp__target[&quot;target&quot;]\n        frontend__src__main__DslEditorApp__setupEventListeners[&quot;setupEventListeners&quot;]\n        frontend__src__main__DslEditorApp__loadSchema[&quot;loadSchema&quot;]\n        frontend__src__main__DslEditorApp___onAction[&quot;_onAction&quot;]\n        frontend__src__main__DslEditorApp__formData[&quot;formData&quot;]\n        frontend__src__main__DslEditorApp__showCreateForm[&quot;showCreateForm&quot;]\n        frontend__src__main__DslEditorApp__data[&quot;data&quot;]\n        frontend__src__main__DslEditorApp__renderList[&quot;renderList&quot;]\n        frontend__src__main__DslEditorApp__error[&quot;error&quot;]\n        frontend__src__main__DslEditorApp__render[&quot;render&quot;]\n        frontend__src__main__DslEditorApp__li[&quot;li&quot;]\n        frontend__src__main__DslEditorApp__showDetails[&quot;showDetails&quot;]\n        frontend__src__main__DslEditorApp___refresh[&quot;_refresh&quot;]\n        frontend__src__main__DslEditorApp___doDelete[&quot;_doDelete&quot;]\n    end\n    frontend__src__main__DslEditorApp__init --&gt; frontend__src__main__DslEditorApp___refresh\n    frontend__src__main__DslEditorApp___refresh --&gt; frontend__src__main__DslEditorApp__loadSchema\n    frontend__src__main__DslEditorApp___refresh --&gt; frontend__src__main__DslEditorApp__render\n    frontend__src__main__DslEditorApp___refresh --&gt; frontend__src__main__DslEditorApp__setupEventListeners\n    frontend__src__main__DslEditorApp___onAction --&gt; frontend__src__main__DslEditorApp___refresh\n    frontend__src__main__DslEditorApp___onAction --&gt; frontend__src__main__DslEditorApp__showCreateForm\n    frontend__src__main__DslEditorApp___onAction --&gt; frontend__src__main__DslEditorApp___doDelete\n    frontend__src__main__DslEditorApp__loadSchema --&gt; frontend__src__main__DslEditorApp__error\n    frontend__src__main__DslEditorApp__render --&gt; frontend__src__main__DslEditorApp__renderList\n    frontend__src__main__DslEditorApp__render --&gt; frontend__src__main__DslEditorApp__setupEventListeners\n    frontend__src__main__DslEditorApp__setupEventListeners --&gt; frontend__src__main__DslEditorApp___refresh\n    frontend__src__main__DslEditorApp__setupEventListeners --&gt; frontend__src__main__DslEditorApp___onAction\n    frontend__src__main__DslEditorApp__setupEventListeners --&gt; frontend__src__main__DslEditorApp___doDelete\n    frontend__src__main__DslEditorApp__setupEventListeners --&gt; frontend__src__main__DslEditorApp__showDetails\n    frontend__src__main__DslEditorApp__target --&gt; frontend__src__main__DslEditorApp___refresh\n    frontend__src__main__DslEditorApp__li --&gt; frontend__src__main__DslEditorApp__showDetails\n    frontend__src__main__DslEditorApp__formData --&gt; frontend__src__main__DslEditorApp__alert\n    frontend__src__main__DslEditorApp__formData --&gt; frontend__src__main__DslEditorApp___refresh\n    frontend__src__main__DslEditorApp__data --&gt; frontend__src__main__DslEditorApp__alert\n    frontend__src__main__DslEditorApp__data --&gt; frontend__src__main__DslEditorApp___refresh\n    frontend__src__main__DslEditorApp__error --&gt; frontend__src__main__DslEditorApp__alert\n    frontend__src__main__DslEditorApp___doDelete --&gt; frontend__src__main__DslEditorApp__alert\n    frontend__src__main__DslEditorApp___doDelete --&gt; frontend__src__main__DslEditorApp___refresh\n", "is_subdir": false}, {"name": "compact_flow.mmd", "rel_path": "compact_flow.mmd", "path": "compact_flow.mmd", "size": "204B", "icon": "📈", "type": "mermaid", "type_name": "Mermaid", "content": "flowchart TD\n    api[&quot;api&lt;br/&gt;8 funcs&quot;]\n    client[&quot;client&lt;br/&gt;1 funcs&quot;]\n    client__DslClient[&quot;client.DslClient&lt;br/&gt;23 funcs&quot;]\n    core[&quot;core&lt;br/&gt;9 funcs&quot;]\n    frontend__src[&quot;frontend.src&lt;br/&gt;20 funcs&quot;]\n", "is_subdir": false}, {"name": "flow.mmd", "rel_path": "flow.mmd", "path": "flow.mmd", "size": "2.3KB", "icon": "📈", "type": "mermaid", "type_name": "Mermaid", "content": "flowchart TD\n\n    %% Entry points (blue)\n    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff\n\n    subgraph CLI\n        client__DslClient___get[&quot;_get&quot;]\n        client__DslClient___post[&quot;_post&quot;]\n        client__DslClient___delete[&quot;_delete&quot;]\n        client__DslClient__health[&quot;health&quot;]\n        client__DslClient__list_functions[&quot;list_functions&quot;]\n        client__DslClient__get_function[&quot;get_function&quot;]\n        client__DslClient__create_function[&quot;create_function&quot;]\n        client__DslClient__delete_function[&quot;delete_function&quot;]\n        client__DslClient__list_objects[&quot;list_objects&quot;]\n        client__DslClient__get_object[&quot;get_object&quot;]\n        client__DslClient__create_object[&quot;create_object&quot;]\n        client__DslClient__delete_object[&quot;delete_object&quot;]\n        client__DslClient__list_params[&quot;list_params&quot;]\n        client__DslClient__create_param[&quot;create_param&quot;]\n        client__DslClient__list_units[&quot;list_units&quot;]\n        ...[&quot;+8 more&quot;]\n    end\n\n    subgraph Core\n        frontend__src__main__DslEditorApp__init[&quot;init&quot;]\n        frontend__src__main__DslEditorApp___refresh[&quot;_refresh&quot;]\n        frontend__src__main__DslEditorApp___onAction[&quot;_onAction&quot;]\n        frontend__src__main__DslEditorApp__response[&quot;response&quot;]\n        frontend__src__main__DslEditorApp__render(&quot;render CC=9&quot;)\n        frontend__src__main__DslEditorApp__app[&quot;app&quot;]\n        frontend__src__main__DslEditorApp__setupEventListeners(&quot;setupEventListeners CC=12&quot;)\n        frontend__src__main__DslEditorApp__target[&quot;target&quot;]\n        frontend__src__main__DslEditorApp__li[&quot;li&quot;]\n        frontend__src__main__DslEditorApp__showCreateForm(&quot;showCreateForm CC=8&quot;)\n        frontend__src__main__DslEditorApp__editor[&quot;editor&quot;]\n        frontend__src__main__DslEditorApp__formData[&quot;formData&quot;]\n        frontend__src__main__DslEditorApp__data[&quot;data&quot;]\n        frontend__src__main__DslEditorApp__endpoint[&quot;endpoint&quot;]\n        frontend__src__main__DslEditorApp__alert[&quot;alert&quot;]\n        ...[&quot;+17 more&quot;]\n    end\n\n    class frontend__src__main__DslEditorApp__init,frontend__src__main__DslEditorApp__response,frontend__src__main__DslEditorApp__app,frontend__src__main__DslEditorApp__target,frontend__src__main__DslEditorApp__li,frontend__src__main__DslEditorApp__editor,frontend__src__main__DslEditorApp__formData,frontend__src__main__DslEditorApp__data,frontend__src__main__DslEditorApp__endpoint,core__dsl entry\n", "is_subdir": false}, {"name": "prompt.txt", "rel_path": "prompt.txt", "path": "prompt.txt", "size": "2.9KB", "icon": "📄", "type": "text", "type_name": "Text", "content": "You are an AI assistant helping me understand and improve a codebase.\nUse the attached/generated files as the authoritative context.\nYour goal is to refactor the project based on these files, not just summarize it.\n\nwe are in project path: .\n\nFiles for analysis:\n\nNote: project/validation.toon.yaml and project/duplication.toon.yaml are generated by external tools (vallm and redup)\n- project/analysis.toon.yaml  (Health diagnostics - complexity metrics, god modules, coupling issues, refactoring priorities) [5KB]\n- project/map.toon.yaml  (Structural map - files, sizes, imports, exports, signatures, project header) [3KB]\n- project/evolution.toon.yaml  (Refactoring queue - ranked actions by impact/effort, risks, metrics targets, history) [1KB]\n- project/project.toon.yaml  (Compact project overview - generated from project.yaml data) [1KB]\n- project/context.md  (LLM narrative - architecture summary and project context) [9KB]\n- project/README.md  (Generated documentation - overview and usage guide) [9KB]\n\nTask:\n- Treat this prompt as a refactoring brief: identify the highest-priority changes and prepare concrete edits.\n- Use the file set to decide whether the first pass should focus on correctness, duplication, complexity reduction, or architecture cleanup.\n- If you can safely implement the refactor, do it; otherwise give an exact file-by-file change plan and test plan.\n- Use analysis.toon.yaml to locate high-CC functions and god modules that should be split first.\n- Keep module boundaries intact and update imports/exports according to map.toon.yaml.\n- Use evolution.toon.yaml as the execution backlog and work from the top-ranked items.\n- Keep project.toon.yaml aligned with the refactored architecture.\n\nPriority Order:\nP1 — Split or simplify the highest-CC / god modules identified in analysis.toon.yaml.\nP1 — Preserve module boundaries and update imports/exports according to map.toon.yaml.\nP2 — Keep the compact project overview in project.toon.yaml aligned with the refactor.\nP2 — Execute the highest-impact items from evolution.toon.yaml in order of benefit/risk.\n\nFocus Areas for Analysis:\n1. **Code Health Analysis** - Review complexity metrics, god modules, coupling issues from analysis.toon.yaml\n2. **Structural Map** - Use map.toon.yaml to inspect imports, exports, signatures, and the project header\n3. **Refactoring Priorities** - Examine ranked refactoring actions and risk assessment from evolution.toon.yaml\n4. **Project Overview** - Review the compact project overview from project.toon.yaml\n\nAnalysis Strategy:\n- Start with analysis.toon.yaml for health metrics, then map.toon.yaml for structure and signatures\n- Review evolution.toon.yaml for action priorities and next steps\n- Compare the compact project overview in project.toon.yaml with the main analysis files\n\nConstraints:\n- Prefer minimal, incremental changes.\n- Maintain full backward compatibility.\n- Base recommendations on concrete metrics from the provided files.\n- If uncertain, ask clarifying questions.\n", "is_subdir": false}, {"name": "analysis.toon.yaml", "rel_path": "analysis.toon.yaml", "path": "analysis.toon.yaml", "size": "5.9KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# code2llm | 24f 1517L | python:18,typescript:4,shell:1,javascript:1 | 2026-04-15\n# CC̄=2.3 | critical:0/61 | dups:0 | cycles:10\n\nHEALTH[10]:\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._refresh -&gt; frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._onAction -&gt; frontend.src.main.DslEditorApp._refresh -&gt; frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._onAction -&gt; frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._onAction -&gt; frontend.src.main.DslEditorApp.showCreateForm -&gt; frontend.src.main.DslEditorApp._refresh -&gt; frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._onAction -&gt; frontend.src.main.DslEditorApp.showCreateForm -&gt; frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._onAction -&gt; frontend.src.main.DslEditorApp._doDelete -&gt; frontend.src.main.DslEditorApp._refresh -&gt; frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._onAction -&gt; frontend.src.main.DslEditorApp._doDelete -&gt; frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._doDelete -&gt; frontend.src.main.DslEditorApp._refresh -&gt; frontend.src.main.DslEditorApp.render. This indicates high coupling and may lead to infinite recursion or initialization issues.\n  🔴 CYCLE Circular dependency detected: frontend.src.main.DslEditorApp.setupEventListeners -&gt; frontend.src.main.DslEditorApp._doDelete -&gt; frontend.src.main.DslEditorApp._refresh. This indicates high coupling and may lead to infinite recursion or initialization issues.\n\nREFACTOR[1]:\n  1. break 10 circular dependencies\n\nPIPELINES[47]:\n  [1] Src [init]: init → _refresh → loadSchema → error → ...(1 more)\n      PURITY: 100% pure\n  [2] Src [response]: response\n      PURITY: 100% pure\n  [3] Src [target]: target → _refresh → loadSchema → error → ...(1 more)\n      PURITY: 100% pure\n  [4] Src [li]: li → showDetails\n      PURITY: 100% pure\n  [5] Src [editor]: editor\n      PURITY: 100% pure\n\nLAYERS:\n  frontend/                       CC̄=4.6    ←in:0  →out:0\n  │ main.ts                    386L  2C   20m  CC=12     ←0\n  │ vite.config.ts              27L  0C    0m  CC=0.0    ←0\n  │\n  core/                           CC̄=1.6    ←in:0  →out:0\n  │ index.ts                   173L  0C    9m  CC=3      ←0\n  │ types.ts                   171L  15C    0m  CC=0.0    ←0\n  │ event_store                 14L  0C    0m  CC=0.0    ←0\n  │\n  client/                         CC̄=1.2    ←in:0  →out:0\n  │ __init__                   156L  6C   24m  CC=2      ←0\n  │\n  api/                            CC̄=1.0    ←in:0  →out:0\n  │ __init__                    75L  0C    8m  CC=1      ←0\n  │\n  ./                              CC̄=0.0    ←in:0  →out:0\n  │ main                        50L  0C    0m  CC=0.0    ←0\n  │ project.sh                  35L  0C    0m  CC=0.0    ←0\n  │ nfo_config                  31L  0C    0m  CC=0.0    ←0\n  │\n  interpreter/                    CC̄=0.0    ←in:0  →out:0\n  │ __init__                    38L  0C    0m  CC=0.0    ←0\n  │ models                      27L  0C    0m  CC=0.0    ←0\n  │ base                        25L  0C    0m  CC=0.0    ←0\n  │ firmware_adapter            19L  0C    0m  CC=0.0    ←0\n  │ iql                         18L  0C    0m  CC=0.0    ←0\n  │ cli                         13L  0C    0m  CC=0.0    ←0\n  │ __main__                    11L  0C    0m  CC=0.0    ←0\n  │ parser                       9L  0C    0m  CC=0.0    ←0\n  │ interpreter                  9L  0C    0m  CC=0.0    ←0\n  │ __init__                     1L  0C    0m  CC=0.0    ←0\n  │\n  maps/                           CC̄=0.0    ←in:0  →out:0\n  │ example-map.js             175L  0C    0m  CC=0.0    ←0\n  │\n  models/                         CC̄=0.0    ←in:0  →out:0\n  │ __init__                    14L  0C    0m  CC=0.0    ←0\n  │\n  server/                         CC̄=0.0    ←in:0  →out:0\n  │ event-server                11L  0C    0m  CC=0.0    ←0\n  │\n  cli/                            CC̄=0.0    ←in:0  →out:0\n  │ dsl-shell                   29L  0C    0m  CC=0.0    ←0\n  │\n\nCOUPLING: no cross-package imports detected\n\nEXTERNAL:\n  validation: run `vallm batch .` → validation.toon\n  duplication: run `redup scan .` → duplication.toon\n", "is_subdir": false}, {"name": "duplication.toon.yaml", "rel_path": "duplication.toon.yaml", "path": "duplication.toon.yaml", "size": "187B", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# redup/duplication | 0 groups | 18f 1766L | 2026-04-15\n\nSUMMARY:\n  files_scanned: 18\n  total_lines:   1766\n  dup_groups:    0\n  dup_fragments: 0\n  saved_lines:   0\n  scan_ms:       2634\n", "is_subdir": false}, {"name": "evolution.toon.yaml", "rel_path": "evolution.toon.yaml", "path": "evolution.toon.yaml", "size": "1.4KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# code2llm/evolution | 61 func | 4f | 2026-04-15\n\nNEXT[0]: no refactoring needed\n\nRISKS[0]: none\n\nMETRICS-TARGET:\n  CC̄:          2.3 → ≤1.6\n  max-CC:      12 → ≤6\n  god-modules: 0 → 0\n  high-CC(≥15): 0 → ≤0\n  hub-types:   0 → ≤0\n\nPATTERNS (language parser shared logic):\n  _extract_declarations() in base.py — unified extraction for:\n    - TypeScript: interfaces, types, classes, functions, arrow funcs\n    - PHP: namespaces, traits, classes, functions, includes\n    - Ruby: modules, classes, methods, requires\n    - C++: classes, structs, functions, #includes\n    - C#: classes, interfaces, methods, usings\n    - Java: classes, interfaces, methods, imports\n    - Go: packages, functions, structs\n    - Rust: modules, functions, traits, use statements\n\n  Shared regex patterns per language:\n    - import: language-specific import/require/using patterns\n    - class: class/struct/trait declarations with inheritance\n    - function: function/method signatures with visibility\n    - brace_tracking: for C-family languages ({ })\n    - end_keyword_tracking: for Ruby (module/class/def...end)\n\n  Benefits:\n    - Consistent extraction logic across all languages\n    - Reduced code duplication (~70% reduction in parser LOC)\n    - Easier maintenance: fix once, apply everywhere\n    - Standardized FunctionInfo/ClassInfo models\n\nHISTORY:\n  prev CC̄=2.5 → now CC̄=2.3\n", "is_subdir": false}, {"name": "map.toon.yaml", "rel_path": "map.toon.yaml", "path": "map.toon.yaml", "size": "3.6KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# dsl | 24f 1517L | shell:1,typescript:4,python:18,javascript:1 | 2026-04-15\n# stats: 61 func | 0 cls | 24 mod | CC̄=2.3 | critical:0 | cycles:0\n# alerts[1]: fan-out DslEditorApp.showCreateForm=14\n# hotspots[5]: DslEditorApp.showCreateForm fan=14; DslEditorApp.setupEventListeners fan=8; DslEditorApp.formData fan=5; DslEditorApp.data fan=5; replay fan=5\n# evolution: CC̄ 2.5→2.3 (improved -0.2)\n# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods\nM[24]:\n  api/__init__.py,75\n  cli/dsl-shell.py,29\n  client/__init__.py,156\n  core/index.ts,173\n  core/event_store.py,14\n  core/types.ts,171\n  frontend/src/main.ts,386\n  frontend/vite.config.ts,27\n  interpreter/__init__.py,1\n  interpreter/__main__.py,11\n  interpreter/base.py,25\n  interpreter/cql/__init__.py,38\n  interpreter/cql/cli.py,13\n  interpreter/cql/interpreter.py,9\n  interpreter/cql/models.py,27\n  interpreter/cql/parser.py,9\n  interpreter/firmware_adapter.py,19\n  interpreter/iql.py,18\n  main.py,50\n  maps/example-map.js,175\n  models/__init__.py,14\n  nfo_config.py,31\n  project.sh,35\n  server/event-server.py,11\nD:\n  frontend/src/main.ts:\n    e: DslSchema,DslEditorApp\n    DslSchema:\n    DslEditorApp: init(-1),_refresh(-1),_onAction(-1),loadSchema(-1),response(-1),render(-1),app(-1),renderList(-1),setupEventListeners(-1),app(-1),target(-1),li(-1),showCreateForm(-1),editor(-1),formData(-1),data(-1),endpoint(-1),response(-1),alert(-1),error(-1),alert(-1),alert(-1),showDetails(-1),editor(-1),_doDelete(-1),endpoint(-1),response(-1),alert(-1),error(-1),alert(-1),alert(-1),app(-1)\n  core/index.ts:\n    e: dsl,exec,run,navigate,startRecording,stopRecording,replay,session,connect\n    dsl()\n    exec()\n    run()\n    navigate()\n    startRecording()\n    stopRecording()\n    replay()\n    session()\n    connect()\n  client/__init__.py:\n    e: DslFunction,DslObject,DslParam,DslUnit,Variable,DslClient,create_client\n    DslFunction:\n    DslObject:\n    DslParam:\n    DslUnit:\n    Variable:\n    DslClient: __init__(1),_get(1),_post(2),_delete(1),health(0),list_functions(0),get_function(1),create_function(0),delete_function(1),list_objects(0),get_object(1),create_object(0),delete_object(1),list_params(0),create_param(0),list_units(0),create_unit(0),list_variables(0),create_variable(0),get_schema(0),close(0),__enter__(0),__exit__(0)  # Client for DSL Service API...\n    create_client(base_url)\n  api/__init__.py:\n    e: health,list_functions,list_objects,list_params,list_units,list_variables,get_schema,create_tables\n    health()\n    list_functions()\n    list_objects()\n    list_params()\n    list_units()\n    list_variables()\n    get_schema()\n    create_tables()\n  project.sh:\n  frontend/vite.config.ts:\n    i: node:url,vite\n  nfo_config.py:\n  interpreter/iql.py:\n  interpreter/__init__.py:\n  interpreter/__main__.py:\n  interpreter/firmware_adapter.py:\n  interpreter/cql/cli.py:\n  main.py:\n  interpreter/cql/__init__.py:\n  interpreter/cql/parser.py:\n  interpreter/cql/models.py:\n  interpreter/cql/interpreter.py:\n  interpreter/base.py:\n  maps/example-map.js:\n  core/types.ts:\n    e: ApiCommand,ActionCommand,ComponentDefinition,ComponentCommand,UIState,StateCommand,ProcessStep,ProcessDefinition,ProcessInstance,ProcessCommand,SessionRecording,SessionCommand,ReplayCommand,DslExecutionContext,DslExecutionResult\n    ApiCommand:\n    ActionCommand:\n    ComponentDefinition:\n    ComponentCommand:\n    UIState:\n    StateCommand:\n    ProcessStep:\n    ProcessDefinition:\n    ProcessInstance:\n    ProcessCommand:\n    SessionRecording:\n    SessionCommand:\n    ReplayCommand:\n    DslExecutionContext:\n    DslExecutionResult:\n  core/event_store.py:\n  models/__init__.py:\n  server/event-server.py:\n  cli/dsl-shell.py:\n", "is_subdir": false}, {"name": "project.toon.yaml", "rel_path": "project.toon.yaml", "path": "project.toon.yaml", "size": "1.8KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# dsl | 61 func | 4f | 2094L | python | 2026-04-15\n\nHEALTH:\n  CC̄=2.3  critical=2 (limit:10)  dup=0  cycles=10\n\nALERTS[1]:\n  !   high_fan_out     DslEditorApp.showCreateForm = 14 (limit:10)\n\nMODULES[24] (top by size):\n  M[frontend/src/main.ts] 386L C:2 F:20 CC↑12 D:0 (typescript)\n  M[maps/example-map.js] 175L C:0 F:0 CC↑0 D:0 (javascript)\n  M[core/index.ts] 173L C:0 F:9 CC↑3 D:0 (typescript)\n  M[core/types.ts] 171L C:15 F:0 CC↑0 D:0 (typescript)\n  M[client/__init__.py] 156L C:6 F:24 CC↑2 D:0 (python)\n  M[api/__init__.py] 75L C:0 F:8 CC↑1 D:0 (python)\n  M[main.py] 50L C:0 F:0 CC↑0 D:0 (python)\n  M[interpreter/cql/__init__.py] 38L C:0 F:0 CC↑0 D:0 (python)\n  M[project.sh] 35L C:0 F:0 CC↑0 D:0 (shell)\n  M[nfo_config.py] 31L C:0 F:0 CC↑0 D:0 (python)\n  M[cli/dsl-shell.py] 29L C:0 F:0 CC↑0 D:0 (python)\n  M[frontend/vite.config.ts] 27L C:0 F:0 CC↑0 D:0 (typescript)\n  M[interpreter/cql/models.py] 27L C:0 F:0 CC↑0 D:0 (python)\n  M[interpreter/base.py] 25L C:0 F:0 CC↑0 D:0 (python)\n  M[interpreter/firmware_adapter.py] 19L C:0 F:0 CC↑0 D:0 (python)\n  LANGS: python:18/typescript:4/javascript:1/shell:1\n\nHOTSPOTS[1]:\n  ★ DslEditorApp.showCreateForm fan=14  // Orchestrates 14 calls\n\nREFACTOR[3]:\n  [1] M/L Break circular dependency: frontend.src.main.DslEditorApp.setupEventListeners → frontend.src.main.DslEditorApp._refresh → frontend.src.main.DslEditorApp.render\n  [2] M/L Break circular dependency: frontend.src.main.DslEditorApp.setupEventListeners → frontend.src.main.DslEditorApp._refresh\n  [3] M/L Break circular dependency: frontend.src.main.DslEditorApp.setupEventListeners → frontend.src.main.DslEditorApp._onAction → frontend.src.main.DslEditorApp._refresh → frontend.src.main.DslEditorApp.render\n\nEVOLUTION:\n  2026-04-15 CC̄=2.3 crit=2 2094L // Automated analysis\n", "is_subdir": false}, {"name": "validation.toon.yaml", "rel_path": "validation.toon.yaml", "path": "validation.toon.yaml", "size": "1.2KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# vallm batch | 61f | 28✓ 3⚠ 3✗ | 2026-04-15\n\nSUMMARY:\n  scanned: 61  passed: 28 (45.9%)  warnings: 3  errors: 3  unsupported: 29\n\nWARNINGS[3]{path,score}:\n  frontend/vite.config.ts,0.67\n    issues[2]{rule,severity,message,line}:\n      js.import.resolvable,warning,Module 'vite' not found,2\n      js.import.resolvable,warning,Module 'node:url' not found,3\n  frontend/src/main.ts,0.97\n    issues[1]{rule,severity,message,line}:\n      complexity.lizard_length,warning,render: 150 lines exceeds limit 100,64\n  tests/test_interpreters.py,0.98\n    issues[1]{rule,severity,message,line}:\n      complexity.maintainability,warning,Low maintainability index: 12.0 (threshold: 20),\n\nERRORS[3]{path,score}:\n  tests/test_dsl.py,0.57\n    issues[1]{rule,severity,message,line}:\n      python.import.resolvable,error,Module 'dsl' not found,9\n  nfo_config.py,0.89\n    issues[1]{rule,severity,message,line}:\n      python.import.resolvable,error,Module 'shared.nfo_config_factory' not found,17\n  cli/dsl-shell.py,0.95\n    issues[2]{rule,severity,message,line}:\n      python.import.resolvable,error,Module 'websockets' not found,22\n      python.import.resolvable,error,Module 'dsl.core.event_store' not found,34\n\nUNSUPPORTED[4]{bucket,count}:\n  *.md,10\n  *.txt,2\n  *.example,1\n  other,16\n", "is_subdir": false}];
+        let currentFile = null;
+
+        function renderFileList(filter = '') {
+            const list = document.getElementById('fileList');
+            const filtered = files.filter(f => 
+                f.name.toLowerCase().includes(filter.toLowerCase()) ||
+                f.path.toLowerCase().includes(filter.toLowerCase())
+            );
+            
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="empty-state">No files found</div>';
+                return;
+            }
+            
+            // Group by type
+            const groups = {};
+            for (const file of filtered) {
+                const type = file.type_name;
+                if (!groups[type]) groups[type] = [];
+                groups[type].push(file);
+            }
+            
+            let html = '';
+            for (const [typeName, groupFiles] of Object.entries(groups)) {
+                html += `
+                    <div class="file-group">
+                        <div class="file-group-title">${typeName} Files (${groupFiles.length})</div>
+                        ${groupFiles.map(f => `
+                            <div class="file-item ${currentFile?.name === f.name ? 'active' : ''}" 
+                                 onclick="selectFile('${f.name}')">
+                                <span class="file-icon">${f.icon}</span>
+                                <div class="file-info">
+                                    <div class="file-name">${f.name}</div>
+                                    <div class="file-meta">${f.path}</div>
+                                </div>
+                                <span class="file-size">${f.size}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            list.innerHTML = html;
+        }
+
+        function selectFile(name) {
+            const file = files.find(f => f.name === name);
+            if (!file) return;
+            
+            currentFile = file;
+            
+            document.getElementById('contentIcon').textContent = file.icon;
+            document.getElementById('contentTitle').textContent = file.name;
+            
+            // Actions
+            const actions = document.getElementById('contentActions');
+            actions.innerHTML = `
+                <a href="${file.rel_path}" download class="btn">⬇ Download</a>
+                <a href="${file.rel_path}" target="_blank" class="btn btn-primary">↗ Open Raw</a>
+            `;
+            
+            // Content
+            const body = document.getElementById('contentBody');
+            if (file.type === 'markdown') {
+                // Render markdown as HTML using marked.js
+                body.innerHTML = `<div class="markdown-content">${marked.parse(file.content)}</div>`;
+            } else if (file.type === 'html') {
+                // For HTML files, show in iframe for safety
+                body.innerHTML = `<iframe src="${file.rel_path}" style="width:100%;height:100%;border:none;border-radius:0.5rem;"></iframe>`;
+            } else if (file.type === 'image') {
+                // For images, display the actual image
+                body.innerHTML = `<div class="image-preview"><img src="${file.rel_path}" alt="${file.name}" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:0.5rem;"></div>`;
+            } else if (file.type === 'mermaid') {
+                // Render mermaid diagram
+                const diagramId = 'mermaid-diagram-' + Date.now();
+                body.innerHTML = `<div class="mermaid-content"><pre class="mermaid" id="${diagramId}">${file.content}</pre></div>`;
+                // Initialize mermaid on the new element
+                setTimeout(() => {
+                    mermaid.init(undefined, document.getElementById(diagramId));
+                }, 0);
+            } else if (file.type === 'json') {
+                try {
+                    const json = JSON.parse(file.content.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'));
+                    const formatted = JSON.stringify(json, null, 2);
+                    body.innerHTML = `<pre><code class="language-json">${formatted.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+                    hljs.highlightElement(body.querySelector('code'));
+                } catch {
+                    body.innerHTML = `<pre>${file.content}</pre>`;
+                }
+            } else if (file.type === 'yaml') {
+                // YAML with syntax highlighting
+                body.innerHTML = `<pre><code class="language-yaml">${file.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+                hljs.highlightElement(body.querySelector('code'));
+            } else if (file.type === 'toon') {
+                // TOON with simple highlighting (use ini as closest match for key: value format)
+                body.innerHTML = `<pre><code class="language-ini">${file.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+                hljs.highlightElement(body.querySelector('code'));
+            } else if (file.type === 'code') {
+                // Code files with auto-highlighting
+                body.innerHTML = `<pre><code>${file.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+                hljs.highlightElement(body.querySelector('code'));
+            } else {
+                body.innerHTML = `<pre>${file.content}</pre>`;
+            }
+            
+            renderFileList(document.getElementById('search').value);
+        }
+
+        function filterFiles(query) {
+            renderFileList(query);
+        }
+
+        function renderStats() {
+            const stats = {};
+            for (const f of files) {
+                stats[f.type_name] = (stats[f.type_name] || 0) + 1;
+            }
+            
+            const grid = document.getElementById('statsGrid');
+            grid.innerHTML = Object.entries(stats)
+                .sort((a, b) => b[1] - a[1])
+                .map(([type, count]) => `
+                    <div class="stat-card">
+                        <div class="stat-value">${count}</div>
+                        <div class="stat-label">${type}</div>
+                    </div>
+                `).join('');
+        }
+
+        // Initialize
+        renderStats();
+        renderFileList();
+        
+        // Select first file if available
+        if (files.length > 0) {
+            selectFile(files[0].name);
+        }
+    </script>
+</body>
+</html>

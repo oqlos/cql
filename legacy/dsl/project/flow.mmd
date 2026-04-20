@@ -1,0 +1,44 @@
+flowchart TD
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph CLI
+        client__DslClient___get["_get"]
+        client__DslClient___post["_post"]
+        client__DslClient___delete["_delete"]
+        client__DslClient__health["health"]
+        client__DslClient__list_functions["list_functions"]
+        client__DslClient__get_function["get_function"]
+        client__DslClient__create_function["create_function"]
+        client__DslClient__delete_function["delete_function"]
+        client__DslClient__list_objects["list_objects"]
+        client__DslClient__get_object["get_object"]
+        client__DslClient__create_object["create_object"]
+        client__DslClient__delete_object["delete_object"]
+        client__DslClient__list_params["list_params"]
+        client__DslClient__create_param["create_param"]
+        client__DslClient__list_units["list_units"]
+        ...["+8 more"]
+    end
+
+    subgraph Core
+        frontend__src__main__DslEditorApp__init["init"]
+        frontend__src__main__DslEditorApp___refresh["_refresh"]
+        frontend__src__main__DslEditorApp___onAction["_onAction"]
+        frontend__src__main__DslEditorApp__response["response"]
+        frontend__src__main__DslEditorApp__render("render CC=9")
+        frontend__src__main__DslEditorApp__app["app"]
+        frontend__src__main__DslEditorApp__setupEventListeners("setupEventListeners CC=12")
+        frontend__src__main__DslEditorApp__target["target"]
+        frontend__src__main__DslEditorApp__li["li"]
+        frontend__src__main__DslEditorApp__showCreateForm("showCreateForm CC=8")
+        frontend__src__main__DslEditorApp__editor["editor"]
+        frontend__src__main__DslEditorApp__formData["formData"]
+        frontend__src__main__DslEditorApp__data["data"]
+        frontend__src__main__DslEditorApp__endpoint["endpoint"]
+        frontend__src__main__DslEditorApp__alert["alert"]
+        ...["+17 more"]
+    end
+
+    class frontend__src__main__DslEditorApp__init,frontend__src__main__DslEditorApp__response,frontend__src__main__DslEditorApp__app,frontend__src__main__DslEditorApp__target,frontend__src__main__DslEditorApp__li,frontend__src__main__DslEditorApp__editor,frontend__src__main__DslEditorApp__formData,frontend__src__main__DslEditorApp__data,frontend__src__main__DslEditorApp__endpoint,core__dsl entry

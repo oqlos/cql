@@ -1,0 +1,36 @@
+# dsl | 61 func | 4f | 2094L | python | 2026-04-15
+
+HEALTH:
+  CC̄=2.3  critical=2 (limit:10)  dup=0  cycles=10
+
+ALERTS[1]:
+  !   high_fan_out     DslEditorApp.showCreateForm = 14 (limit:10)
+
+MODULES[24] (top by size):
+  M[frontend/src/main.ts] 386L C:2 F:20 CC↑12 D:0 (typescript)
+  M[maps/example-map.js] 175L C:0 F:0 CC↑0 D:0 (javascript)
+  M[core/index.ts] 173L C:0 F:9 CC↑3 D:0 (typescript)
+  M[core/types.ts] 171L C:15 F:0 CC↑0 D:0 (typescript)
+  M[client/__init__.py] 156L C:6 F:24 CC↑2 D:0 (python)
+  M[api/__init__.py] 75L C:0 F:8 CC↑1 D:0 (python)
+  M[main.py] 50L C:0 F:0 CC↑0 D:0 (python)
+  M[interpreter/cql/__init__.py] 38L C:0 F:0 CC↑0 D:0 (python)
+  M[project.sh] 35L C:0 F:0 CC↑0 D:0 (shell)
+  M[nfo_config.py] 31L C:0 F:0 CC↑0 D:0 (python)
+  M[cli/dsl-shell.py] 29L C:0 F:0 CC↑0 D:0 (python)
+  M[frontend/vite.config.ts] 27L C:0 F:0 CC↑0 D:0 (typescript)
+  M[interpreter/cql/models.py] 27L C:0 F:0 CC↑0 D:0 (python)
+  M[interpreter/base.py] 25L C:0 F:0 CC↑0 D:0 (python)
+  M[interpreter/firmware_adapter.py] 19L C:0 F:0 CC↑0 D:0 (python)
+  LANGS: python:18/typescript:4/javascript:1/shell:1
+
+HOTSPOTS[1]:
+  ★ DslEditorApp.showCreateForm fan=14  // Orchestrates 14 calls
+
+REFACTOR[3]:
+  [1] M/L Break circular dependency: frontend.src.main.DslEditorApp.setupEventListeners → frontend.src.main.DslEditorApp._refresh → frontend.src.main.DslEditorApp.render
+  [2] M/L Break circular dependency: frontend.src.main.DslEditorApp.setupEventListeners → frontend.src.main.DslEditorApp._refresh
+  [3] M/L Break circular dependency: frontend.src.main.DslEditorApp.setupEventListeners → frontend.src.main.DslEditorApp._onAction → frontend.src.main.DslEditorApp._refresh → frontend.src.main.DslEditorApp.render
+
+EVOLUTION:
+  2026-04-15 CC̄=2.3 crit=2 2094L // Automated analysis
