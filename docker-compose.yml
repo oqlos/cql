@@ -19,7 +19,7 @@ services:
       - cql-net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.dashboard.rule=Host(`${DOCKER_DOMAIN_TRAEFIK_CQL:-traefik.cql.localhost}`)"
+      - "traefik.http.routers.dashboard.rule=Host(`${DOCKER_DOMAIN_TRAEFIK_CQL:-traefik.cql.oqlos.localhost}`)"
       - "traefik.http.routers.dashboard.service=api@internal"
 
   # ── CQL Editor ──
@@ -42,7 +42,7 @@ services:
       - cql-net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cql.rule=Host(`${DOCKER_DOMAIN_CQL:-cql.localhost}`)"
+      - "traefik.http.routers.cql.rule=Host(`${DOCKER_DOMAIN_CQL:-cql.oqlos.localhost}`)"
       - "traefik.http.routers.cql.entrypoints=web"
       - "traefik.http.routers.cql.priority=10"
       - "traefik.http.services.cql.loadbalancer.server.port=80"

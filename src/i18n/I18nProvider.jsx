@@ -18,6 +18,14 @@ const dictionaries = {
       loadReport: "Load data.json",
     },
     role: { readonly: "Read-only view — editing disabled for current role" },
+    editors: {
+      placeholderHint: "This editor is embedded from maskservice. React re-implementation is in progress — URL params are honored and the backend connection is live.",
+      dslEditorDesc: "Low-level DSL editor for scenario payloads.",
+      funcEditorDesc: "Reusable function definitions shared between scenarios.",
+      libraryEditorDesc: "Scenario templates and per-device libraries.",
+      mapEditorDesc: "Device / signal mappings between scenarios and hardware.",
+      scenarioEditorDesc: "Full visual scenario editor (goals + steps + asserts).",
+    },
   },
   pl: {
     nav: { scenarios: "Scenariusze" },
@@ -36,6 +44,14 @@ const dictionaries = {
       loadReport: "Wczytaj data.json",
     },
     role: { readonly: "Tryb podglądu — edycja zablokowana dla tej roli" },
+    editors: {
+      placeholderHint: "Edytor osadzony z maskservice. Trwa migracja do Reacta — parametry URL i połączenie z backendem działają.",
+      dslEditorDesc: "Niskopoziomowy edytor DSL dla danych scenariusza.",
+      funcEditorDesc: "Definicje funkcji wielokrotnego użytku współdzielone między scenariuszami.",
+      libraryEditorDesc: "Szablony scenariuszy i biblioteki per-urządzenie.",
+      mapEditorDesc: "Mapowania urządzeń/sygnałów między scenariuszami a hardware.",
+      scenarioEditorDesc: "Pełny wizualny edytor scenariusza (cele + kroki + asercje).",
+    },
   },
   de: {
     nav: { scenarios: "Szenarien" },
@@ -54,6 +70,14 @@ const dictionaries = {
       loadReport: "data.json laden",
     },
     role: { readonly: "Nur-Lese-Modus — Bearbeitung für diese Rolle deaktiviert" },
+    editors: {
+      placeholderHint: "Editor aus maskservice eingebettet. React-Neuimplementierung läuft — URL-Parameter und Backend-Verbindung sind aktiv.",
+      dslEditorDesc: "Low-Level DSL-Editor für Szenario-Payloads.",
+      funcEditorDesc: "Wiederverwendbare Funktionsdefinitionen zwischen Szenarien.",
+      libraryEditorDesc: "Szenariovorlagen und gerätespezifische Bibliotheken.",
+      mapEditorDesc: "Geräte-/Signal-Zuordnungen zwischen Szenarien und Hardware.",
+      scenarioEditorDesc: "Vollständiger visueller Szenario-Editor (Ziele + Schritte + Assertions).",
+    },
   },
 };
 
