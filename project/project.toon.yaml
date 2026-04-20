@@ -1,0 +1,51 @@
+# cql | 5071 func | 215f | 50104L | typescript | 2026-04-20
+
+HEALTH:
+  CC̄=3.8  critical=382 (limit:10)  dup=40  cycles=0
+
+ALERTS[20]:
+  !!! cc_exceeded      MapEditorPage.handleVisualEditorClick = 66 (limit:15)
+  !!! cc_exceeded      highlightDsl = 64 (limit:15)
+  !!! cc_exceeded      highlightDsl = 64 (limit:15)
+  !!! cc_exceeded      ScenarioReadModel.apply = 63 (limit:15)
+  !!! cc_exceeded      lines = 62 (limit:15)
+  !!! cc_exceeded      lines = 62 (limit:15)
+  !!! cc_exceeded      handleRemoveFunction = 57 (limit:15)
+  !!! cc_exceeded      parseDsl = 56 (limit:15)
+  !!! cc_exceeded      parseDsl = 56 (limit:15)
+  !!! cc_exceeded      bindContainerUiEvents = 55 (limit:15)
+
+MODULES[250] (top by size):
+  M[legacy/modules/connect-scenario/helpers/def-editor.styles.ts] 1034L C:0 F:1 CC↑1 D:0 (typescript)
+  M[legacy/pages/connect-scenario-scenario-editor.page.ts] 910L C:1 F:104 CC↑53 D:0 (typescript)
+  M[legacy/pages/connect-scenario-library-editor.page.ts] 817L C:1 F:140 CC↑25 D:0 (typescript)
+  M[legacy/pages/connect-scenario-dsl-editor.page.ts] 768L C:1 F:121 CC↑29 D:0 (typescript)
+  M[legacy/modules/connect-scenario/helpers/dsl-editor.styles.ts] 702L C:0 F:1 CC↑1 D:0 (typescript)
+  M[legacy/pages/connect-scenario-map-editor.page.ts] 681L C:2 F:105 CC↑66 D:0 (typescript)
+  M[legacy/components/dsl/dsl-tools.ts] 658L C:1 F:75 CC↑18 D:0 (typescript)
+  M[runtime/dsl-tools.ts] 658L C:1 F:75 CC↑18 D:0 (typescript)
+  M[legacy/components/dsl/dsl-registry.ts] 632L C:1 F:61 CC↑21 D:0 (typescript)
+  M[runtime/dsl-registry.ts] 632L C:1 F:61 CC↑21 D:0 (typescript)
+  M[legacy/modules/connect-scenario/helpers/scenarios.ui-window-handlers.ts] 610L C:0 F:106 CC↑42 D:0 (typescript)
+  M[legacy/modules/connect-scenario/helpers/goal-run.runtime.ts] 584L C:0 F:79 CC↑37 D:0 (typescript)
+  M[legacy/pages/connect-scenario-scenarios.page.ts] 561L C:1 F:91 CC↑26 D:0 (typescript)
+  M[legacy/components/dsl/dsl.validator.ts] 553L C:0 F:50 CC↑11 D:0 (typescript)
+  M[runtime/dsl.validator.ts] 553L C:0 F:50 CC↑11 D:0 (typescript)
+  LANGS: typescript:224/javascript:20/python:5/shell:1
+
+HOTSPOTS[10]:
+  ★ LibraryEditorPage.bindEvents fan=48  // Orchestrates 48 calls
+  ★ LibraryEditorPage.page fan=48  // Orchestrates 48 calls
+  ★ parseDsl fan=41  // Orchestrates 41 calls
+  ★ ScenariosPage.attachEventListeners fan=41  // Orchestrates 41 calls
+  ★ parseDsl fan=41  // Orchestrates 41 calls
+
+REFACTOR[15]:
+  [1] H/L Split highlightDsl (CC=64)
+  [2] H/L Split lines (CC=62)
+  [3] H/L Split fetchRuntimeState (CC=36)
+  [4] H/L Split parseDsl (CC=56)
+  [5] H/L Split bindContainerUiEvents (CC=55)
+
+EVOLUTION:
+  2026-04-20 CC̄=3.8 crit=382 50104L // Automated analysis

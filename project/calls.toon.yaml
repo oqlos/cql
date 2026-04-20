@@ -1,0 +1,320 @@
+# code2llm call graph | /home/tom/github/oqlos/cql
+# nodes: 394 | edges: 500 | modules: 26
+# CC̄=3.8
+
+HUBS[20]:
+  legacy.components.dsl.dsl.serialize.text.isStepType
+    CC=1  in:22  out:0  total:22
+  legacy.components.dsl-def.def-syntax-highlighter.DefEditor.showNotification
+    CC=5  in:17  out:3  total:20
+  legacy.components.dsl.dsl.highlight.legacy.highlightDsl
+    CC=64  in:0  out:19  total:19
+  legacy.components.dsl.dsl-func.parser.match
+    CC=1  in:16  out:2  total:18
+  legacy.components.dsl.dsl.highlight.legacy.lines
+    CC=62  in:0  out:17  total:17
+  legacy.components.dsl-def.def-syntax-highlighter.DefSyntaxHighlighter.highlightCode
+    CC=9  in:4  out:12  total:16
+  legacy.components.dsl-console.dsl-console.component.DslConsoleComponent.setupEventHandlers
+    CC=5  in:1  out:14  total:15
+  legacy.components.dsl.dsl-timer.service.DslTimerService.executeDslCommand
+    CC=13  in:0  out:15  total:15
+  legacy.components.dsl.dsl.exec.toNumber
+    CC=7  in:9  out:5  total:14
+  legacy.components.dsl.dsl.exec.executeAst
+    CC=23  in:1  out:13  total:14
+  legacy.components.dsl.dsl-registry.parsing.executeFuncCode
+    CC=11  in:0  out:14  total:14
+  legacy.components.dsl.dsl-timer.service.DslTimerService.cmd
+    CC=12  in:0  out:14  total:14
+  legacy.components.dsl-log.logger.DslLogger.startPolling
+    CC=15  in:1  out:13  total:14
+  legacy.components.dsl-def.def-syntax-highlighter.DefEditor.parseDef
+    CC=5  in:4  out:9  total:13
+  legacy.components.dsl-def.def-syntax-highlighter.DefEditor.attachButtonHandlers
+    CC=11  in:0  out:12  total:12
+  legacy.components.dsl.dsl.validate.db.validateDslText
+    CC=8  in:2  out:10  total:12
+  legacy.components.dsl-def.def-syntax-highlighter.DefEditor.validateDef
+    CC=6  in:3  out:8  total:11
+  legacy.components.dsl.dsl-func.parser.createFuncStep
+    CC=1  in:11  out:0  total:11
+  legacy.components.dsl-table.dsl-table.component.DslTable.runtimeKeys
+    CC=11  in:3  out:8  total:11
+  legacy.components.dsl.dsl-registry.parsing.handleOut
+    CC=16  in:2  out:9  total:11
+
+MODULES:
+  legacy.components.dsl-console.dsl-console.component  [21 funcs]
+    clearInterval  CC=1  out:1
+    currentCount  CC=2  out:1
+    delegateClick  CC=2  out:1
+    dslConsole  CC=3  out:1
+    getTemplate  CC=1  out:2
+    hide  CC=2  out:1
+    injectStyles  CC=2  out:5
+    makeDraggable  CC=7  out:2
+    refreshLogs  CC=8  out:5
+    render  CC=1  out:7
+  legacy.components.dsl-def.def-syntax-highlighter  [51 funcs]
+    action  CC=5  out:4
+    addFunctionToLibrary  CC=6  out:8
+    addObjectToLibrary  CC=6  out:8
+    arr  CC=3  out:0
+    attachButtonHandlers  CC=11  out:12
+    def  CC=3  out:3
+    defCode  CC=2  out:2
+    defSection  CC=5  out:5
+    errors  CC=1  out:1
+    fn  CC=1  out:1
+  legacy.components.dsl-editor.blocks  [7 funcs]
+    cloneBlock  CC=7  out:6
+    getBlockType  CC=12  out:3
+    isBlock  CC=3  out:1
+    moveBlockDown  CC=6  out:2
+    moveBlockUp  CC=6  out:2
+    nextBlock  CC=5  out:1
+    prevBlock  CC=5  out:1
+  legacy.components.dsl-editor.renderers  [2 funcs]
+    renderConditionBlock  CC=14  out:7
+    renderElseBlock  CC=4  out:6
+  legacy.components.dsl-editor.renderers-helpers  [5 funcs]
+    buildSelect  CC=9  out:6
+    getAddToDefText  CC=5  out:1
+    mapClassToDefKey  CC=13  out:2
+    normalizeSelectList  CC=2  out:1
+    renderSelectOptions  CC=2  out:3
+  legacy.components.dsl-editor.renderers-step-blocks  [3 funcs]
+    buildVarSelectHtml  CC=9  out:6
+    renderDialogBlock  CC=6  out:4
+    renderOutBlock  CC=10  out:7
+  legacy.components.dsl-log.logger  [27 funcs]
+    announced  CC=14  out:10
+    appendToElement  CC=4  out:2
+    clear  CC=2  out:1
+    clearBtn  CC=2  out:2
+    clearInterval  CC=1  out:1
+    connectStream  CC=13  out:11
+    createGoalLogger  CC=3  out:6
+    currentText  CC=1  out:1
+    debug  CC=2  out:1
+    disconnectStream  CC=3  out:4
+  legacy.components.dsl-sim.simulator  [2 funcs]
+    render  CC=24  out:11
+    simulate  CC=3  out:2
+  legacy.components.dsl-sim.state-table  [6 funcs]
+    clearInterval  CC=1  out:1
+    getOriginBadge  CC=12  out:3
+    html  CC=6  out:4
+    render  CC=12  out:10
+    startAutoRefresh  CC=1  out:2
+    stopAutoRefresh  CC=2  out:1
+  legacy.components.dsl-table.dsl-table.component  [10 funcs]
+    add  CC=1  out:1
+    clearInterval  CC=1  out:1
+    dictKeys  CC=3  out:3
+    getValue  CC=15  out:4
+    html  CC=5  out:4
+    render  CC=14  out:10
+    rows  CC=1  out:2
+    runtimeKeys  CC=11  out:8
+    startAutoRefresh  CC=1  out:2
+    stopAutoRefresh  CC=2  out:1
+  legacy.components.dsl.dsl-func.parser  [22 funcs]
+    createFuncStep  CC=1  out:0
+    createMessageParser  CC=2  out:4
+    createOptionalMessageParser  CC=6  out:4
+    createVariableValueParser  CC=2  out:4
+    expandFuncCalls  CC=13  out:6
+    func  CC=8  out:2
+    lineNum  CC=4  out:3
+    lines  CC=4  out:3
+    loadFuncLibraryFromSource  CC=1  out:2
+    match  CC=1  out:2
+  legacy.components.dsl.dsl-registry.execution  [13 funcs]
+    compare  CC=11  out:3
+    compareEquality  CC=10  out:2
+    event  CC=2  out:2
+    executeApi  CC=7  out:5
+    executeFuncMapping  CC=6  out:3
+    executeMapping  CC=11  out:4
+    executeOnBackend  CC=1  out:3
+    executeUi  CC=2  out:4
+    kind  CC=10  out:4
+    relOp  CC=6  out:1
+  legacy.components.dsl.dsl-registry.parsing  [18 funcs]
+    executeFuncCode  CC=11  out:14
+    handleDialog  CC=2  out:4
+    handleFuncCall  CC=2  out:3
+    handleIf  CC=7  out:6
+    handleInfo  CC=2  out:3
+    handleOut  CC=16  out:9
+    handleSet  CC=5  out:9
+    handleTask  CC=2  out:5
+    handleWait  CC=3  out:5
+    isLiteral  CC=1  out:2
+  legacy.components.dsl.dsl-timer.service  [21 funcs]
+    clearAll  CC=2  out:3
+    clearInterval  CC=1  out:1
+    cmd  CC=12  out:14
+    create  CC=5  out:4
+    delete  CC=1  out:1
+    duration  CC=1  out:1
+    executeDslCommand  CC=13  out:15
+    getElapsedMs  CC=3  out:2
+    getElapsedSec  CC=1  out:1
+    getRemainingMs  CC=3  out:3
+  legacy.components.dsl.dsl.engine  [2 funcs]
+    getData  CC=2  out:2
+    initialize  CC=4  out:2
+  legacy.components.dsl.dsl.exec  [40 funcs]
+    accessors  CC=1  out:4
+    calculateAggregateValue  CC=9  out:6
+    cmp  CC=11  out:2
+    createAggregateCalculator  CC=1  out:2
+    createExecutionAccessors  CC=11  out:5
+    createExecutionHelpers  CC=1  out:5
+    createExpressionEvaluator  CC=2  out:3
+    createLiteralResolver  CC=8  out:4
+    createParamResolver  CC=1  out:3
+    evalExpr  CC=3  out:6
+  legacy.components.dsl.dsl.highlight  [9 funcs]
+    args  CC=2  out:2
+    body  CC=1  out:1
+    br  CC=1  out:1
+    esc  CC=2  out:0
+    highlightDsl  CC=13  out:11
+    highlightValue  CC=5  out:4
+    kw  CC=2  out:1
+    op  CC=1  out:1
+    str  CC=1  out:1
+  legacy.components.dsl.dsl.highlight.legacy  [13 funcs]
+    args  CC=2  out:2
+    body  CC=1  out:2
+    br  CC=1  out:1
+    esc  CC=2  out:0
+    highlightDsl  CC=64  out:19
+    highlightValue  CC=5  out:4
+    kw  CC=2  out:1
+    lines  CC=62  out:17
+    msg  CC=2  out:1
+    op  CC=1  out:1
+  legacy.components.dsl.dsl.migrate.xml  [39 funcs]
+    applyLegacyTransactionEntry  CC=3  out:3
+    buildDbMigrationError  CC=3  out:1
+    buildDbMigrationResult  CC=2  out:0
+    buildLegacyGoals  CC=2  out:4
+    buildLegacyOperationTitle  CC=3  out:3
+    buildLegacyScenarioAst  CC=2  out:2
+    buildLegacyScenarioName  CC=5  out:3
+    buildLegacyTaskSteps  CC=3  out:4
+    collectLegacyTransactions  CC=3  out:2
+    collectLegacyVarMap  CC=5  out:5
+  legacy.components.dsl.dsl.quotes  [6 funcs]
+    canonicalizeDslLineQuotes  CC=2  out:3
+    canonicalizeDslQuotes  CC=2  out:5
+    formatDslLiteral  CC=3  out:2
+    normalizeDslLineQuotes  CC=2  out:2
+    normalizeDslTextQuotes  CC=2  out:5
+    quoteDslValue  CC=2  out:2
+  legacy.components.dsl.dsl.runtime  [2 funcs]
+    createExecContextFromDef  CC=16  out:6
+    factory  CC=5  out:0
+  legacy.components.dsl.dsl.runtime.helpers  [19 funcs]
+    assignDerivedMap  CC=5  out:1
+    buildDerivedLibrary  CC=7  out:2
+    buildHeuristicLibrary  CC=10  out:2
+    buildObjectFunctionMap  CC=17  out:6
+    buildParamUnitMap  CC=13  out:6
+    classLib  CC=4  out:1
+    createConsoleShim  CC=2  out:3
+    deriveFromClasses  CC=4  out:4
+    deriveLibraryList  CC=2  out:1
+    deriveSystemParamNames  CC=4  out:7
+  legacy.components.dsl.dsl.schema  [9 funcs]
+    DslElseConditionJsonSchema  CC=1  out:1
+    DslFuncJsonSchema  CC=1  out:1
+    DslGoalJsonSchema  CC=1  out:1
+    DslIfConditionJsonSchema  CC=2  out:1
+    DslStepTaskJsonSchema  CC=1  out:1
+    DslTaskAndJsonSchema  CC=1  out:1
+    DslTaskJsonSchema  CC=1  out:1
+    createJsonObjectSchema  CC=1  out:0
+    createTypedJsonSchema  CC=1  out:1
+  legacy.components.dsl.dsl.serialize.text  [29 funcs]
+    astToDslText  CC=1  out:2
+    buildBlockLines  CC=3  out:5
+    buildScenarioLines  CC=6  out:4
+    buildValueWithUnit  CC=5  out:2
+    isStepType  CC=1  out:0
+    renderLegacyBlockContent  CC=5  out:4
+    renderStructuredStep  CC=3  out:1
+    serializeCalcStep  CC=2  out:3
+    serializeDeltaStep  CC=5  out:5
+    serializeDialogStep  CC=2  out:3
+  legacy.components.dsl.dsl.validate.db  [16 funcs]
+    appendLibraryGoalCode  CC=4  out:3
+    buildLibraryGoalsDsl  CC=7  out:6
+    buildValidationText  CC=3  out:1
+    collectValidationErrors  CC=2  out:0
+    extractDslFromContent  CC=8  out:3
+    extractDslFromLibrary  CC=5  out:3
+    extractDslFromRow  CC=4  out:3
+    extractFirstNonEmptyString  CC=4  out:1
+    extractStringFromUnknown  CC=13  out:4
+    extractTopLevelDsl  CC=2  out:2
+  legacy.components.dsl.singleton  [2 funcs]
+    getDslEngine  CC=2  out:1
+    initializeDslEngine  CC=1  out:2
+
+EDGES:
+  legacy.components.dsl-editor.renderers-helpers.buildSelect → legacy.components.dsl-editor.renderers-helpers.mapClassToDefKey
+  legacy.components.dsl-editor.renderers-helpers.buildSelect → legacy.components.dsl-editor.renderers-helpers.getAddToDefText
+  legacy.components.dsl-editor.renderers-helpers.buildSelect → legacy.components.dsl-editor.renderers-helpers.normalizeSelectList
+  legacy.components.dsl-editor.renderers-helpers.buildSelect → legacy.components.dsl-editor.renderers-helpers.renderSelectOptions
+  legacy.components.dsl-editor.blocks.isBlock → legacy.components.dsl-editor.blocks.getBlockType
+  legacy.components.dsl-editor.blocks.prevBlock → legacy.components.dsl-editor.blocks.isBlock
+  legacy.components.dsl-editor.blocks.nextBlock → legacy.components.dsl-editor.blocks.isBlock
+  legacy.components.dsl-editor.blocks.moveBlockUp → legacy.components.dsl-editor.blocks.prevBlock
+  legacy.components.dsl-editor.blocks.moveBlockDown → legacy.components.dsl-editor.blocks.nextBlock
+  legacy.components.dsl-editor.blocks.cloneBlock → legacy.components.dsl-editor.blocks.isBlock
+  legacy.components.dsl-editor.blocks.cloneBlock → legacy.components.dsl-editor.blocks.getBlockType
+  legacy.components.dsl.dsl.quotes.normalizeDslTextQuotes → legacy.components.dsl.dsl.quotes.normalizeDslLineQuotes
+  legacy.components.dsl.dsl.quotes.quoteDslValue → legacy.components.dsl.dsl.quotes.formatDslLiteral
+  legacy.components.dsl.dsl.quotes.canonicalizeDslLineQuotes → legacy.components.dsl.dsl.quotes.formatDslLiteral
+  legacy.components.dsl.dsl.quotes.canonicalizeDslQuotes → legacy.components.dsl.dsl.quotes.canonicalizeDslLineQuotes
+  legacy.components.dsl-sim.simulator.DslSimulator.render → legacy.components.dsl-sim.simulator.DslSimulator.simulate
+  legacy.components.dsl-table.dsl-table.component.DslTable.render → legacy.components.dsl-table.dsl-table.component.DslTable.runtimeKeys
+  legacy.components.dsl-table.dsl-table.component.DslTable.render → legacy.components.dsl-table.dsl-table.component.DslTable.getValue
+  legacy.components.dsl-table.dsl-table.component.DslTable.rows → legacy.components.dsl-table.dsl-table.component.DslTable.runtimeKeys
+  legacy.components.dsl-table.dsl-table.component.DslTable.html → legacy.components.dsl-table.dsl-table.component.DslTable.getValue
+  legacy.components.dsl-table.dsl-table.component.DslTable.startAutoRefresh → legacy.components.dsl-table.dsl-table.component.DslTable.stopAutoRefresh
+  legacy.components.dsl-table.dsl-table.component.DslTable.stopAutoRefresh → legacy.components.dsl-table.dsl-table.component.DslTable.clearInterval
+  legacy.components.dsl-table.dsl-table.component.DslTable.clearInterval → legacy.components.dsl-table.dsl-table.component.DslTable.runtimeKeys
+  legacy.components.dsl-table.dsl-table.component.DslTable.runtimeKeys → legacy.components.dsl-table.dsl-table.component.DslTable.add
+  legacy.components.dsl-table.dsl-table.component.DslTable.dictKeys → legacy.components.dsl-table.dsl-table.component.DslTable.add
+  legacy.components.dsl-table.dsl-table.component.DslTable.add → legacy.components.dsl-table.dsl-table.component.DslTable.getValue
+  legacy.components.dsl.singleton.initializeDslEngine → legacy.components.dsl.singleton.getDslEngine
+  legacy.components.dsl-sim.state-table.DslStateTable.render → legacy.components.dsl-sim.state-table.DslStateTable.getOriginBadge
+  legacy.components.dsl-sim.state-table.DslStateTable.html → legacy.components.dsl-sim.state-table.DslStateTable.getOriginBadge
+  legacy.components.dsl-sim.state-table.DslStateTable.startAutoRefresh → legacy.components.dsl-sim.state-table.DslStateTable.stopAutoRefresh
+  legacy.components.dsl-sim.state-table.DslStateTable.stopAutoRefresh → legacy.components.dsl-sim.state-table.DslStateTable.clearInterval
+  legacy.components.dsl-sim.state-table.DslStateTable.clearInterval → legacy.components.dsl-sim.state-table.DslStateTable.getOriginBadge
+  legacy.components.dsl.dsl-registry.execution.compareEquality → legacy.components.dsl.dsl-registry.execution.toNumber
+  legacy.components.dsl.dsl-registry.execution.compare → legacy.components.dsl.dsl-registry.execution.compareEquality
+  legacy.components.dsl.dsl-registry.execution.compare → legacy.components.dsl.dsl-registry.execution.relOp
+  legacy.components.dsl.dsl-registry.execution.substituteObj → legacy.components.dsl.dsl-registry.execution.substitute
+  legacy.components.dsl.dsl-registry.execution.executeApi → legacy.components.dsl.dsl-registry.execution.substitute
+  legacy.components.dsl.dsl-registry.execution.executeUi → legacy.components.dsl.dsl-registry.execution.substituteObj
+  legacy.components.dsl.dsl-registry.execution.event → legacy.components.dsl.dsl-registry.execution.substituteObj
+  legacy.components.dsl.dsl-registry.execution.executeMapping → legacy.components.dsl.dsl-registry.execution.executeApi
+  legacy.components.dsl.dsl-registry.execution.executeMapping → legacy.components.dsl.dsl-registry.execution.executeUi
+  legacy.components.dsl.dsl-registry.execution.executeMapping → legacy.components.dsl.dsl-registry.execution.executeOnBackend
+  legacy.components.dsl.dsl-registry.execution.kind → legacy.components.dsl.dsl-registry.execution.executeApi
+  legacy.components.dsl.dsl-registry.execution.kind → legacy.components.dsl.dsl-registry.execution.executeUi
+  legacy.components.dsl.dsl-registry.execution.kind → legacy.components.dsl.dsl-registry.execution.executeOnBackend
+  legacy.components.dsl.dsl-registry.execution.executeFuncMapping → legacy.components.dsl.dsl-registry.execution.executeOnBackend
+  legacy.components.dsl-editor.renderers-step-blocks.renderOutBlock → legacy.components.dsl-editor.renderers-step-blocks.buildVarSelectHtml
+  legacy.components.dsl-editor.renderers-step-blocks.renderDialogBlock → legacy.components.dsl-editor.renderers-step-blocks.buildVarSelectHtml
+  legacy.components.dsl-editor.renderers.BlockRenderers.renderConditionBlock → legacy.components.dsl-editor.renderers.BlockRenderers.renderElseBlock
+  legacy.components.dsl.dsl.runtime.helpers.normalize → legacy.components.dsl.dsl.runtime.helpers.toNumber

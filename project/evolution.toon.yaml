@@ -1,0 +1,79 @@
+# code2llm/evolution | 5071 func | 215f | 2026-04-20
+
+NEXT[10] (ranked by impact):
+  [1] !! SPLIT-FUNC      parseDsl  CC=56  fan=41
+      WHY: CC=56 exceeds 15
+      EFFORT: ~1h  IMPACT: 2296
+
+  [2] !! SPLIT-FUNC      parseDsl  CC=56  fan=41
+      WHY: CC=56 exceeds 15
+      EFFORT: ~1h  IMPACT: 2296
+
+  [3] !! SPLIT-FUNC      MapEditorPage.handleVisualEditorClick  CC=66  fan=26
+      WHY: CC=66 exceeds 15
+      EFFORT: ~1h  IMPACT: 1716
+
+  [4] !! SPLIT-FUNC      handleRemoveFunction  CC=57  fan=25
+      WHY: CC=57 exceeds 15
+      EFFORT: ~1h  IMPACT: 1425
+
+  [5] !! SPLIT-FUNC      ScenarioEditorPage.connectStreams  CC=53  fan=24
+      WHY: CC=53 exceeds 15
+      EFFORT: ~1h  IMPACT: 1272
+
+  [6] !! SPLIT-FUNC      highlightDsl  CC=64  fan=19
+      WHY: CC=64 exceeds 15
+      EFFORT: ~1h  IMPACT: 1216
+
+  [7] !! SPLIT-FUNC      highlightDsl  CC=64  fan=19
+      WHY: CC=64 exceeds 15
+      EFFORT: ~1h  IMPACT: 1216
+
+  [8] !! SPLIT-FUNC      MapEditorPage.handleItemActionClick  CC=52  fan=22
+      WHY: CC=52 exceeds 15
+      EFFORT: ~1h  IMPACT: 1144
+
+  [9] !! SPLIT-FUNC      MapEditorPage.target  CC=51  fan=22
+      WHY: CC=51 exceeds 15
+      EFFORT: ~1h  IMPACT: 1122
+
+  [10] !! SPLIT-FUNC      MapEditorPage.subName  CC=51  fan=22
+      WHY: CC=51 exceeds 15
+      EFFORT: ~1h  IMPACT: 1122
+
+
+RISKS[0]: none
+
+METRICS-TARGET:
+  CC̄:          3.8 → ≤2.7
+  max-CC:      66 → ≤20
+  god-modules: 0 → 0
+  high-CC(≥15): 171 → ≤85
+  hub-types:   0 → ≤0
+
+PATTERNS (language parser shared logic):
+  _extract_declarations() in base.py — unified extraction for:
+    - TypeScript: interfaces, types, classes, functions, arrow funcs
+    - PHP: namespaces, traits, classes, functions, includes
+    - Ruby: modules, classes, methods, requires
+    - C++: classes, structs, functions, #includes
+    - C#: classes, interfaces, methods, usings
+    - Java: classes, interfaces, methods, imports
+    - Go: packages, functions, structs
+    - Rust: modules, functions, traits, use statements
+
+  Shared regex patterns per language:
+    - import: language-specific import/require/using patterns
+    - class: class/struct/trait declarations with inheritance
+    - function: function/method signatures with visibility
+    - brace_tracking: for C-family languages ({ })
+    - end_keyword_tracking: for Ruby (module/class/def...end)
+
+  Benefits:
+    - Consistent extraction logic across all languages
+    - Reduced code duplication (~70% reduction in parser LOC)
+    - Easier maintenance: fix once, apply everywhere
+    - Standardized FunctionInfo/ClassInfo models
+
+HISTORY:
+  (first run — no previous data)

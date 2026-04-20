@@ -1,0 +1,1489 @@
+flowchart TD
+    subgraph backend__cql_backend
+        backend__cql_backend__quotes___coerce_str["_coerce_str"]
+        backend__cql_backend__quotes__normalize_dsl_line_quotes["normalize_dsl_line_quotes"]
+        backend__cql_backend__quotes__normalize_dsl_text_quotes["normalize_dsl_text_quotes"]
+        backend__cql_backend__quotes__format_dsl_literal["format_dsl_literal"]
+        backend__cql_backend__quotes__quote_dsl_value["quote_dsl_value"]
+        backend__cql_backend__quotes__canonicalize_dsl_line_quotes["canonicalize_dsl_line_quotes"]
+        backend__cql_backend__quotes__canonicalize_dsl_quotes["canonicalize_dsl_quotes"]
+        backend__cql_backend__quotes__read_quoted_token["read_quoted_token"]
+        backend__cql_backend____main____main["main"]
+        backend__cql_backend__highlight___esc["_esc"]
+        backend__cql_backend__highlight___mark["_mark"]
+        backend__cql_backend__highlight__highlight_line["highlight_line"]
+        backend__cql_backend__highlight__highlight_dsl["highlight_dsl"]
+        backend__cql_backend__app__health["health"]
+        backend__cql_backend__app__capabilities["capabilities"]
+        backend__cql_backend__app__quote["quote"]
+        backend__cql_backend__app__unquote["unquote"]
+        backend__cql_backend__app__format_literal["format_literal"]
+        backend__cql_backend__app__canonicalize["canonicalize"]
+        backend__cql_backend__app__normalize["normalize"]
+        backend__cql_backend__app__highlight["highlight"]
+        backend__cql_backend__app___stub_501["_stub_501"]
+        backend__cql_backend__app__parse["parse"]
+        backend__cql_backend__app__serialize["serialize"]
+        backend__cql_backend__app__validate["validate"]
+        backend__cql_backend__app__exec_dsl["exec_dsl"]
+        backend__cql_backend__app__scenario_build["scenario_build"]
+    end
+    subgraph legacy__components
+        legacy__components__dsl_editor__dsl_commands__getButtonsByCategory["getButtonsByCategory"]
+        legacy__components__dsl_editor__dsl_commands__renderGoalActionsButtons("renderGoalActionsButtons CC=12")
+        legacy__components__dsl_editor__dsl_commands__btnClass["btnClass"]
+        legacy__components__dsl_editor__dsl_commands__buttons["buttons"]
+        legacy__components__dsl_editor__dsl_commands__renderFuncActionsButtons["renderFuncActionsButtons"]
+        legacy__components__dsl_editor__renderers_helpers__stepActions["stepActions"]
+        legacy__components__dsl_editor__renderers_helpers__mapClassToDefKey("mapClassToDefKey CC=13")
+        legacy__components__dsl_editor__renderers_helpers__norm["norm"]
+        legacy__components__dsl_editor__renderers_helpers__getAddToDefText["getAddToDefText"]
+        legacy__components__dsl_editor__renderers_helpers__lang["lang"]
+        legacy__components__dsl_editor__renderers_helpers__normalizeSelectList["normalizeSelectList"]
+        legacy__components__dsl_editor__renderers_helpers__renderSelectOptions["renderSelectOptions"]
+        legacy__components__dsl_editor__renderers_helpers__selected["selected"]
+        legacy__components__dsl_editor__renderers_helpers__buildSelect("buildSelect CC=9")
+        legacy__components__dsl_editor__renderers_helpers__textDef["textDef"]
+        legacy__components__dsl_editor__renderers_helpers__val["val"]
+        legacy__components__dsl_editor__renderers_helpers__list["list"]
+        legacy__components__dsl_editor__renderers_helpers__options["options"]
+        legacy__components__dsl_editor__blocks__getBlockType("getBlockType CC=12")
+        legacy__components__dsl_editor__blocks__kind["kind"]
+        legacy__components__dsl_editor__blocks__isBlock["isBlock"]
+        legacy__components__dsl_editor__blocks__findStepsContainer["findStepsContainer"]
+        legacy__components__dsl_editor__blocks__goal["goal"]
+        legacy__components__dsl_editor__blocks__func["func"]
+        legacy__components__dsl_editor__blocks__parent["parent"]
+        legacy__components__dsl_editor__blocks__prevBlock["prevBlock"]
+        legacy__components__dsl_editor__blocks__nextBlock["nextBlock"]
+        legacy__components__dsl_editor__blocks__moveBlockUp["moveBlockUp"]
+        legacy__components__dsl_editor__blocks__prev["prev"]
+        legacy__components__dsl_editor__blocks__moveBlockDown["moveBlockDown"]
+        legacy__components__dsl_editor__blocks__nxt["nxt"]
+        legacy__components__dsl_editor__blocks__moveGoalUp("moveGoalUp CC=8")
+        legacy__components__dsl_editor__blocks__moveGoalDown("moveGoalDown CC=8")
+        legacy__components__dsl_editor__blocks__next["next"]
+        legacy__components__dsl_editor__blocks__cloneBlock["cloneBlock"]
+        legacy__components__dsl_editor__blocks__clone["clone"]
+        legacy__components__dsl_editor__blocks__t["t"]
+        legacy__components__dsl__dsl__examples__getDslExample["getDslExample"]
+        legacy__components__dsl__dsl__examples__fileName["fileName"]
+        legacy__components__dsl__dsl__examples__getDslExampleWithReplacements["getDslExampleWithReplacements"]
+        legacy__components__dsl__dsl__examples__text["text"]
+        legacy__components__dsl__dsl__quotes__DSL_QUOTED_TOKEN_PATTERN["DSL_QUOTED_TOKEN_PATTERN"]
+        legacy__components__dsl__dsl__quotes__normalizeDslLineQuotes["normalizeDslLineQuotes"]
+        legacy__components__dsl__dsl__quotes__normalizeDslTextQuotes["normalizeDslTextQuotes"]
+        legacy__components__dsl__dsl__quotes__formatDslLiteral["formatDslLiteral"]
+        legacy__components__dsl__dsl__quotes__text["text"]
+        legacy__components__dsl__dsl__quotes__quoteDslValue["quoteDslValue"]
+        legacy__components__dsl__dsl__quotes__canonicalizeDslLineQuotes["canonicalizeDslLineQuotes"]
+        legacy__components__dsl__dsl__quotes__canonicalizeDslQuotes["canonicalizeDslQuotes"]
+        legacy__components__dsl__dsl__quotes__getFirstDefined["getFirstDefined"]
+        legacy__components__dsl__dsl__quotes__readQuotedToken["readQuotedToken"]
+        legacy__components__dsl__dsl__quotes__raw["raw"]
+        legacy__components__dsl__dsl__quotes__last["last"]
+        legacy__components__dsl_sim__simulator__DslSimulator__el["el"]
+        legacy__components__dsl_sim__simulator__DslSimulator__setRuntime["setRuntime"]
+        legacy__components__dsl_sim__simulator__DslSimulator__updateRuntime["updateRuntime"]
+        legacy__components__dsl_sim__simulator__DslSimulator__simulate["simulate"]
+        legacy__components__dsl_sim__simulator__DslSimulator__res["res"]
+        legacy__components__dsl_sim__simulator__DslSimulator__render{{render CC=24}}
+        legacy__components__dsl_sim__simulator__DslSimulator__html{{html CC=23}}
+    end
+    subgraph legacy__dsl
+        legacy__dsl__src__core__dsl["dsl"]
+        legacy__dsl__src__core__exec["exec"]
+        legacy__dsl__src__core__run["run"]
+        legacy__dsl__src__core__navigate["navigate"]
+        legacy__dsl__src__core__startRecording["startRecording"]
+        legacy__dsl__src__core__stopRecording["stopRecording"]
+        legacy__dsl__src__core__replay["replay"]
+        legacy__dsl__src__core__session["session"]
+        legacy__dsl__src__core__connect["connect"]
+        legacy__dsl__src__main__DslEditorApp__init["init"]
+        legacy__dsl__src__main__DslEditorApp___refresh["_refresh"]
+        legacy__dsl__src__main__DslEditorApp___onAction["_onAction"]
+        legacy__dsl__src__main__DslEditorApp__loadSchema["loadSchema"]
+        legacy__dsl__src__main__DslEditorApp__response["response"]
+        legacy__dsl__src__main__DslEditorApp__render("render CC=9")
+        legacy__dsl__src__main__DslEditorApp__app["app"]
+        legacy__dsl__src__main__DslEditorApp__renderList["renderList"]
+        legacy__dsl__src__main__DslEditorApp__setupEventListeners("setupEventListeners CC=12")
+        legacy__dsl__src__main__DslEditorApp__target["target"]
+        legacy__dsl__src__main__DslEditorApp__li["li"]
+        legacy__dsl__src__main__DslEditorApp__showCreateForm("showCreateForm CC=8")
+        legacy__dsl__src__main__DslEditorApp__editor("editor CC=8")
+        legacy__dsl__src__main__DslEditorApp__formData["formData"]
+        legacy__dsl__src__main__DslEditorApp__data["data"]
+        legacy__dsl__src__main__DslEditorApp__endpoint["endpoint"]
+        legacy__dsl__src__main__DslEditorApp__alert["alert"]
+        legacy__dsl__src__main__DslEditorApp__error["error"]
+        legacy__dsl__src__main__DslEditorApp__showDetails("showDetails CC=10")
+        legacy__dsl__src__main__DslEditorApp___doDelete["_doDelete"]
+    end
+    subgraph legacy__modules
+        legacy__modules__connect_scenario__connect_scenario__view__test__view["view"]
+        legacy__modules__connect_scenario__connect_scenario__view__test__element["element"]
+        legacy__modules__connect_scenario__connect_scenario__module__ConnectScenarioModule__getDisplayName["getDisplayName"]
+        legacy__modules__connect_scenario__connect_scenario__module__ConnectScenarioModule__viewImport["viewImport"]
+        legacy__modules__connect_scenario__helpers__func_editor_parser__parseFuncDefinitions("parseFuncDefinitions CC=9")
+        legacy__modules__connect_scenario__helpers__func_editor_parser__lines("lines CC=9")
+        legacy__modules__connect_scenario__helpers__func_editor_parser__trimmed["trimmed"]
+        legacy__modules__connect_scenario__helpers__func_editor_parser__funcMatch["funcMatch"]
+        legacy__modules__connect_scenario__helpers__func_editor_parser__validateFunc("validateFunc CC=9")
+        legacy__modules__connect_scenario__helpers__func_editor_parser__lineNum("lineNum CC=9")
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__getFirmware["getFirmware"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__fetchDslFunctions["fetchDslFunctions"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__data["data"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__fetchDefinitions("fetchDefinitions CC=12")
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__fetchRuntimeState{{fetchRuntimeState CC=36}}
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__FirmwareCQRS["FirmwareCQRS"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__proj{{proj CC=19}}
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__k["k"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__renderStateRows["renderStateRows"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__rows["rows"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__key["key"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__val["val"]
+        legacy__modules__connect_scenario__helpers__scenario_editor__api__valueStr["valueStr"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__createScenario["createScenario"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__deleteScenario["deleteScenario"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__listScenarios{{listScenarios CC=19}}
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__rows["rows"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__cqrs{{cqrs CC=16}}
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__st["st"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__lc("lc CC=8")
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__fetchScenarioById["fetchScenarioById"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__patchScenarioTitle["patchScenarioTitle"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__patchScenarioContent["patchScenarioContent"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__loadScenarioList["loadScenarioList"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__saveScenarioList["saveScenarioList"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__setCurrentScenarioId["setCurrentScenarioId"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__getCurrentScenarioId["getCurrentScenarioId"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__url["url"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__loadScenarioLocal["loadScenarioLocal"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__saveScenarioLocal["saveScenarioLocal"]
+        legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__removeScenarioLocal["removeScenarioLocal"]
+        legacy__modules__connect_scenario__helpers__def_integration__persistence__defaultDslModuleLoader("defaultDslModuleLoader CC=10")
+        legacy__modules__connect_scenario__helpers__def_integration__persistence__extractScenarioDefCode("extractScenarioDefCode CC=10")
+        legacy__modules__connect_scenario__helpers__def_integration__persistence__loadScenarioDef["loadScenarioDef"]
+        legacy__modules__connect_scenario__helpers__def_integration__persistence__scenario["scenario"]
+        legacy__modules__connect_scenario__helpers__def_integration__persistence__defCode["defCode"]
+        legacy__modules__connect_scenario__helpers__def_integration__persistence__saveScenarioDef("saveScenarioDef CC=10")
+        legacy__modules__connect_scenario__helpers__def_integration__persistence__importDefFromDatabase["importDefFromDatabase"]
+        legacy__modules__connect_scenario__helpers__scenario_dialogs__getDialogService["getDialogService"]
+        legacy__modules__connect_scenario__helpers__scenario_dialogs__promptText["promptText"]
+        legacy__modules__connect_scenario__helpers__scenario_dialogs__confirmAction["confirmAction"]
+        legacy__modules__connect_scenario__helpers__scenario_dialogs__showInfoDialog("showInfoDialog CC=8")
+        legacy__modules__connect_scenario__helpers__scenario_dialogs__dialogService["dialogService"]
+        legacy__modules__connect_scenario__helpers__def_integration__library__test__merged["merged"]
+        legacy__modules__connect_scenario__helpers__def_integration__library__test__updated["updated"]
+        legacy__modules__connect_scenario__helpers__def_integration__library__test__replaced["replaced"]
+        legacy__modules__connect_scenario__helpers__def_integration__dsl_runner__getCurrentDslExecContext["getCurrentDslExecContext"]
+        legacy__modules__connect_scenario__helpers__def_integration__dsl_runner__runDslConsoleWithLoader["runDslConsoleWithLoader"]
+        legacy__modules__connect_scenario__helpers__def_integration__add_to_def__test__select["select"]
+        legacy__modules__connect_scenario__helpers__def_integration__add_to_def__test__result["result"]
+    end
+    subgraph legacy__pages
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__runtime__test__buildDom["buildDom"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__generateDslFromLibrary("generateDslFromLibrary CC=11")
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__libObj["libObj"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__goals["goals"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__codeLines["codeLines"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__extractGoalsWithCode("extractGoalsWithCode CC=11")
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__lines{{lines CC=15}}
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__goalMatch["goalMatch"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__codeLine["codeLine"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__parseGoalStructure("parseGoalStructure CC=12")
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__trimmed["trimmed"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__outValMatch["outValMatch"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__outMaxMatch["outMaxMatch"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__outMinMatch["outMinMatch"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__outResultMatch["outResultMatch"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__optMatch["optMatch"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__parsing__extractStepsFromDsl{{extractStepsFromDsl CC=18}}
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__templates__getDslEditorContent["getDslEditorContent"]
+        legacy__pages__connect_scenario_dsl_editor__dsl_editor__templates__getDslRunModalContent["getDslRunModalContent"]
+        legacy__pages__connect_scenario_map_editor__map_editor__templates__getMapEditorContent["getMapEditorContent"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__toggleGoalConfigEnabled["toggleGoalConfigEnabled"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__goals["goals"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__moveGoalConfig["moveGoalConfig"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__newIdx["newIdx"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__editGoalConfigOpt["editGoalConfigOpt"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__goal["goal"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__opt["opt"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__newValue["newValue"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__renderGoalsConfig["renderGoalsConfig"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__syncGoalsConfigFromDsl("syncGoalsConfigFromDsl CC=9")
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__scenario["scenario"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__dsl["dsl"]
+        legacy__pages__connect_scenario_library_editor__library_editor__goals_config__count["count"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__item["item"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__funcItem["funcItem"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__funcIndex["funcIndex"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__goalIndex["goalIndex"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__obj["obj"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__row["row"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__tag["tag"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__param["param"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__optItem["optItem"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__goalName["goalName"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__optName["optName"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__section["section"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__idx["idx"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__modal["modal"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__code["code"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__editor["editor"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__src["src"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__validation["validation"]
+        legacy__pages__connect_scenario_library_editor__library_editor__action_handlers__getActionHandler["getActionHandler"]
+        legacy__pages__connect_scenario_library_editor__library_editor__events__bindLibraryEditorEvents{{bindLibraryEditorEvents CC=26}}
+        legacy__pages__connect_scenario_library_editor__library_editor__events__row["row"]
+        legacy__pages__connect_scenario_library_editor__library_editor__events__filterInput["filterInput"]
+        legacy__pages__connect_scenario_library_editor__library_editor__events__sortSelect["sortSelect"]
+        legacy__pages__connect_scenario_library_editor__library_editor__events__addScenarioBtn["addScenarioBtn"]
+        legacy__pages__connect_scenario_library_editor__library_editor__events__saveNewBtn["saveNewBtn"]
+        legacy__pages__connect_scenario_library_editor__library_editor__events__target["target"]
+        legacy__pages__connect_scenario_library_editor__library_editor__events__tab["tab"]
+    end
+    subgraph runtime__dsl
+        runtime__dsl__examples__getDslExample["getDslExample"]
+        runtime__dsl__examples__fileName["fileName"]
+        runtime__dsl__examples__getDslExampleWithReplacements["getDslExampleWithReplacements"]
+        runtime__dsl__examples__text["text"]
+        runtime__dsl__quotes__DSL_QUOTED_TOKEN_PATTERN["DSL_QUOTED_TOKEN_PATTERN"]
+        runtime__dsl__quotes__normalizeDslLineQuotes["normalizeDslLineQuotes"]
+        runtime__dsl__quotes__normalizeDslTextQuotes["normalizeDslTextQuotes"]
+        runtime__dsl__quotes__formatDslLiteral["formatDslLiteral"]
+        runtime__dsl__quotes__text["text"]
+        runtime__dsl__quotes__quoteDslValue["quoteDslValue"]
+        runtime__dsl__quotes__canonicalizeDslLineQuotes["canonicalizeDslLineQuotes"]
+        runtime__dsl__quotes__canonicalizeDslQuotes["canonicalizeDslQuotes"]
+        runtime__dsl__quotes__getFirstDefined["getFirstDefined"]
+        runtime__dsl__quotes__readQuotedToken["readQuotedToken"]
+        runtime__dsl__quotes__raw["raw"]
+        runtime__dsl__quotes__last["last"]
+        runtime__dsl__migrate__xml__db__test__mocks["mocks"]
+        runtime__dsl__migrate__xml__db__test__makeFile["makeFile"]
+        runtime__dsl__migrate__xml__db__test__results["results"]
+        runtime__dsl__exec__test__buildAst["buildAst"]
+        runtime__dsl__exec__test__exec["exec"]
+        runtime__dsl__migrate__xml__test__scenarios["scenarios"]
+        runtime__dsl__migrate__xml__test__migrated["migrated"]
+        runtime__dsl__serialize__text__test__text["text"]
+        runtime__dsl__validate__db__test__mocks["mocks"]
+        runtime__dsl__validate__db__test__result["result"]
+        runtime__dsl__validate__db__test__reports["reports"]
+        runtime__dsl__highlight__refactored__test__result["result"]
+        runtime__dsl__xml__test__xml["xml"]
+        runtime__dsl__xml__test__parsed["parsed"]
+        runtime__dsl__validate__db__fetchTestScenarios["fetchTestScenarios"]
+        runtime__dsl__validate__db__extractStringFromUnknown("extractStringFromUnknown CC=13")
+        runtime__dsl__validate__db__s("s CC=12")
+        runtime__dsl__validate__db__j["j"]
+        runtime__dsl__validate__db__extractFirstNonEmptyString["extractFirstNonEmptyString"]
+        runtime__dsl__validate__db__extractTopLevelDsl["extractTopLevelDsl"]
+        runtime__dsl__validate__db__parseLibrarySource["parseLibrarySource"]
+        runtime__dsl__validate__db__appendLibraryGoalCode["appendLibraryGoalCode"]
+        runtime__dsl__validate__db__buildLibraryGoalsDsl["buildLibraryGoalsDsl"]
+        runtime__dsl__validate__db__name["name"]
+        runtime__dsl__validate__db__extractDslFromLibrary["extractDslFromLibrary"]
+        runtime__dsl__validate__db__lib["lib"]
+        runtime__dsl__validate__db__goals["goals"]
+        runtime__dsl__validate__db__extractDslFromContent("extractDslFromContent CC=8")
+        runtime__dsl__validate__db__extracted["extracted"]
+        runtime__dsl__validate__db__extractDslFromRow["extractDslFromRow"]
+        runtime__dsl__validate__db__hasScenarioHeader["hasScenarioHeader"]
+        runtime__dsl__validate__db__buildValidationText["buildValidationText"]
+        runtime__dsl__validate__db__collectValidationErrors["collectValidationErrors"]
+        runtime__dsl__validate__db__validateDslText("validateDslText CC=8")
+        runtime__dsl__validate__db__normalized["normalized"]
+        runtime__dsl__validate__db__fmt["fmt"]
+        runtime__dsl__validate__db__src["src"]
+        runtime__dsl__validate__db__parsed["parsed"]
+        runtime__dsl__validate__db__astOk["astOk"]
+        runtime__dsl__validate__db__xmlRes["xmlRes"]
+        runtime__dsl__validate__db__uniqueErrors["uniqueErrors"]
+        runtime__dsl__validate__db__validateAllTestScenarios("validateAllTestScenarios CC=13")
+        runtime__dsl__validate__db__rows("rows CC=13")
+        runtime__dsl__validate__db__id["id"]
+    end
+    subgraph runtime__dsl_content_helpers
+        runtime__dsl_content_helpers__normalizeDsl["normalizeDsl"]
+        runtime__dsl_content_helpers__raw["raw"]
+        runtime__dsl_content_helpers__normalizeQuotedDslLine["normalizeQuotedDslLine"]
+        runtime__dsl_content_helpers__normalizeActionTarget["normalizeActionTarget"]
+        runtime__dsl_content_helpers__value["value"]
+        runtime__dsl_content_helpers__valveMatch["valveMatch"]
+        runtime__dsl_content_helpers__isOffAction["isOffAction"]
+        runtime__dsl_content_helpers__isTimingAction["isTimingAction"]
+        runtime__dsl_content_helpers__buildLegacySetLine["buildLegacySetLine"]
+        runtime__dsl_content_helpers__getLegacyTaskFunctionName["getLegacyTaskFunctionName"]
+        runtime__dsl_content_helpers__getLegacyTaskObjectName["getLegacyTaskObjectName"]
+        runtime__dsl_content_helpers__renderLegacyTimingTask["renderLegacyTimingTask"]
+        runtime__dsl_content_helpers__keyword["keyword"]
+        runtime__dsl_content_helpers__renderLegacyObjectTask["renderLegacyObjectTask"]
+        runtime__dsl_content_helpers__objectName["objectName"]
+        runtime__dsl_content_helpers__renderLegacyFunctionTask["renderLegacyFunctionTask"]
+        runtime__dsl_content_helpers__renderSingleLegacyTask["renderSingleLegacyTask"]
+        runtime__dsl_content_helpers__functionName["functionName"]
+        runtime__dsl_content_helpers__rawObject["rawObject"]
+        runtime__dsl_content_helpers__getLegacyTaskSequence["getLegacyTaskSequence"]
+        runtime__dsl_content_helpers__renderLegacyTaskAsDslLines["renderLegacyTaskAsDslLines"]
+        runtime__dsl_content_helpers__buildConditionalLine("buildConditionalLine CC=10")
+        runtime__dsl_content_helpers__unit["unit"]
+        runtime__dsl_content_helpers__buildElseLine["buildElseLine"]
+        runtime__dsl_content_helpers__buildVariablePayload["buildVariablePayload"]
+        runtime__dsl_content_helpers__appendVariableEntries{{appendVariableEntries CC=16}}
+        runtime__dsl_content_helpers__action["action"]
+        runtime__dsl_content_helpers__parameter["parameter"]
+        runtime__dsl_content_helpers__appendVariableGroups["appendVariableGroups"]
+        runtime__dsl_content_helpers__variables["variables"]
+        runtime__dsl_content_helpers__appendConditionLines["appendConditionLines"]
+        runtime__dsl_content_helpers__type("type CC=8")
+        runtime__dsl_content_helpers__appendTaskRange["appendTaskRange"]
+        runtime__dsl_content_helpers__findFirstOffTaskIndex["findFirstOffTaskIndex"]
+        runtime__dsl_content_helpers__name["name"]
+        runtime__dsl_content_helpers__appendStructuredGoalSteps("appendStructuredGoalSteps CC=13")
+        runtime__dsl_content_helpers__steps["steps"]
+        runtime__dsl_content_helpers__appendLegacyGoalContent("appendLegacyGoalContent CC=8")
+        runtime__dsl_content_helpers__tasks["tasks"]
+        runtime__dsl_content_helpers__variableGroups["variableGroups"]
+        runtime__dsl_content_helpers__conditions["conditions"]
+        runtime__dsl_content_helpers__splitIndex["splitIndex"]
+        runtime__dsl_content_helpers__appendGoalDsl["appendGoalDsl"]
+        runtime__dsl_content_helpers__goalName["goalName"]
+        runtime__dsl_content_helpers__buildScenarioDslLines["buildScenarioDslLines"]
+        runtime__dsl_content_helpers__goals["goals"]
+        runtime__dsl_content_helpers__dslFromScenarioContent["dslFromScenarioContent"]
+        runtime__dsl_content_helpers__dsl["dsl"]
+        runtime__dsl_content_helpers__goalsFromContent["goalsFromContent"]
+        runtime__dsl_content_helpers__text["text"]
+        runtime__dsl_content_helpers__res["res"]
+    end
+    subgraph runtime__dsl_data
+        runtime__dsl_data__service__DslDataService__normalizeList["normalizeList"]
+        runtime__dsl_data__service__DslDataService__seen["seen"]
+        runtime__dsl_data__service__DslDataService__text["text"]
+        runtime__dsl_data__service__DslDataService__getSharedSchemaUrls("getSharedSchemaUrls CC=10")
+        runtime__dsl_data__service__DslDataService__push["push"]
+        runtime__dsl_data__service__DslDataService__normalized["normalized"]
+        runtime__dsl_data__service__DslDataService__currentUrl["currentUrl"]
+        runtime__dsl_data__service__DslDataService__objectByName["objectByName"]
+        runtime__dsl_data__service__DslDataService__functionByName["functionByName"]
+        runtime__dsl_data__service__DslDataService__objectRef["objectRef"]
+        runtime__dsl_data__service__DslDataService__functionRef["functionRef"]
+        runtime__dsl_data__service__DslDataService__paramByName["paramByName"]
+        runtime__dsl_data__service__DslDataService__unitByName["unitByName"]
+        runtime__dsl_data__service__DslDataService__paramRef["paramRef"]
+        runtime__dsl_data__service__DslDataService__unitRef["unitRef"]
+        runtime__dsl_data__service__DslDataService__buildSharedObjectBindings("buildSharedObjectBindings CC=8")
+        runtime__dsl_data__service__DslDataService__bindings["bindings"]
+        runtime__dsl_data__service__DslDataService__functions["functions"]
+        runtime__dsl_data__service__DslDataService__buildSharedParamBindings("buildSharedParamBindings CC=8")
+        runtime__dsl_data__service__DslDataService__units["units"]
+        runtime__dsl_data__service__DslDataService__fetchSharedSchema{{fetchSharedSchema CC=21}}
+        runtime__dsl_data__service__DslDataService__response["response"]
+        runtime__dsl_data__service__DslDataService__schema["schema"]
+        runtime__dsl_data__service__DslDataService__objects["objects"]
+        runtime__dsl_data__service__DslDataService__params["params"]
+        runtime__dsl_data__service__DslDataService__loadAll["loadAll"]
+        runtime__dsl_data__service__DslDataService__fetchAll["fetchAll"]
+        runtime__dsl_data__service__DslDataService__defData["defData"]
+        runtime__dsl_data__service__DslDataService__apiData["apiData"]
+        runtime__dsl_data__service__DslDataService__sharedSchema["sharedSchema"]
+        runtime__dsl_data__service__DslDataService__getFunctionsForObject["getFunctionsForObject"]
+        runtime__dsl_data__service__DslDataService__obj["obj"]
+        runtime__dsl_data__service__DslDataService__functionIds["functionIds"]
+        runtime__dsl_data__service__DslDataService__getUnitsForParam["getUnitsForParam"]
+        runtime__dsl_data__service__DslDataService__param["param"]
+        runtime__dsl_data__service__DslDataService__unitIds["unitIds"]
+        runtime__dsl_data__service__DslDataService__clearCache["clearCache"]
+        runtime__dsl_data__service__DslDataService__transformDslObjects["transformDslObjects"]
+        runtime__dsl_data__service__DslDataService__transformDslFunctions("transformDslFunctions CC=10")
+        runtime__dsl_data__service__DslDataService__transformDslParams("transformDslParams CC=10")
+        runtime__dsl_data__service__DslDataService__transformDslUnits("transformDslUnits CC=14")
+        runtime__dsl_data__service__DslDataService__tryFetchFromDefLibrary("tryFetchFromDefLibrary CC=9")
+        runtime__dsl_data__service__DslDataService__defLib["defLib"]
+        runtime__dsl_data__service__DslDataService__arr["arr"]
+        runtime__dsl_data__service__DslDataService__objectRows["objectRows"]
+        runtime__dsl_data__service__DslDataService__functionRows["functionRows"]
+        runtime__dsl_data__service__DslDataService__paramRows["paramRows"]
+        runtime__dsl_data__service__DslDataService__unitRows["unitRows"]
+        runtime__dsl_data__service__DslDataService__fetchFromApi("fetchFromApi CC=8")
+        runtime__dsl_data__service__DslDataService__p["p"]
+        runtime__dsl_data__service__DslDataService__fetchWithAuth["fetchWithAuth"]
+        runtime__dsl_data__service__DslDataService__objs["objs"]
+        runtime__dsl_data__service__DslDataService__fns["fns"]
+        runtime__dsl_data__service__DslDataService__prs["prs"]
+        runtime__dsl_data__service__DslDataService__getEmptyDslData["getEmptyDslData"]
+        runtime__dsl_data__service__DslDataService__dslDataService["dslDataService"]
+    end
+    subgraph runtime__dsl_dialog
+        runtime__dsl_dialog__stylesInjected["stylesInjected"]
+        runtime__dsl_dialog__injectStyles["injectStyles"]
+        runtime__dsl_dialog__style["style"]
+        runtime__dsl_dialog__showDslDialog("showDslDialog CC=9")
+        runtime__dsl_dialog__overlay["overlay"]
+        runtime__dsl_dialog__value["value"]
+        runtime__dsl_dialog__handleEscape["handleEscape"]
+        runtime__dsl_dialog__parseDialogOptions["parseDialogOptions"]
+    end
+    subgraph runtime__dsl_execution
+        runtime__dsl_execution__handlers__handleIfStep["handleIfStep"]
+        runtime__dsl_execution__handlers__lhs["lhs"]
+        runtime__dsl_execution__handlers__rhs["rhs"]
+        runtime__dsl_execution__handlers__passed["passed"]
+        runtime__dsl_execution__handlers__handleElseStep["handleElseStep"]
+        runtime__dsl_execution__handlers__handleTaskStep["handleTaskStep"]
+        runtime__dsl_execution__handlers__handlePumpStep["handlePumpStep"]
+        runtime__dsl_execution__handlers__raw["raw"]
+        runtime__dsl_execution__handlers__handleFuncCallStep["handleFuncCallStep"]
+        runtime__dsl_execution__handlers__handleGetStep["handleGetStep"]
+        runtime__dsl_execution__handlers__cur["cur"]
+        runtime__dsl_execution__handlers__v["v"]
+        runtime__dsl_execution__handlers__handleSetStep["handleSetStep"]
+        runtime__dsl_execution__handlers__resolveUnitAwareValue["resolveUnitAwareValue"]
+        runtime__dsl_execution__handlers__lb["lb"]
+        runtime__dsl_execution__handlers__rb["rb"]
+        runtime__dsl_execution__handlers__handleMaxStep["handleMaxStep"]
+        runtime__dsl_execution__handlers__key["key"]
+        runtime__dsl_execution__handlers__lit["lit"]
+        runtime__dsl_execution__handlers__result["result"]
+        runtime__dsl_execution__handlers__handleMinStep["handleMinStep"]
+        runtime__dsl_execution__handlers__handleDeltaMaxStep["handleDeltaMaxStep"]
+        runtime__dsl_execution__handlers__handleDeltaMinStep["handleDeltaMinStep"]
+        runtime__dsl_execution__handlers__handleValStep("handleValStep CC=8")
+        runtime__dsl_execution__handlers__handleWaitStep["handleWaitStep"]
+        runtime__dsl_execution__handlers__handleLogStep["handleLogStep"]
+        runtime__dsl_execution__handlers__handleAlarmStep["handleAlarmStep"]
+        runtime__dsl_execution__handlers__handleErrorStep["handleErrorStep"]
+        runtime__dsl_execution__handlers__handleSaveStep["handleSaveStep"]
+        runtime__dsl_execution__handlers__handleUserStep["handleUserStep"]
+        runtime__dsl_execution__handlers__handleResultStep["handleResultStep"]
+        runtime__dsl_execution__handlers__handleOptStep["handleOptStep"]
+        runtime__dsl_execution__handlers__handleRepeatStep["handleRepeatStep"]
+        runtime__dsl_execution__handlers__handleEndStep["handleEndStep"]
+        runtime__dsl_execution__handlers__handleOutStep["handleOutStep"]
+        runtime__dsl_execution__handlers__handleDialogStep["handleDialogStep"]
+        runtime__dsl_execution__handlers__handleInfoStep["handleInfoStep"]
+        runtime__dsl_execution__handlers__handleSampleStep["handleSampleStep"]
+        runtime__dsl_execution__handlers__handleCalcStep["handleCalcStep"]
+        runtime__dsl_execution__handlers__val["val"]
+        runtime__dsl_execution__handlers__handleFunStep["handleFunStep"]
+    end
+    subgraph runtime__dsl_func
+        runtime__dsl_func__parser__createFuncStep["createFuncStep"]
+        runtime__dsl_func__parser__parseTaskStep["parseTaskStep"]
+        runtime__dsl_func__parser__match["match"]
+        runtime__dsl_func__parser__splitSetValue["splitSetValue"]
+        runtime__dsl_func__parser__parseSetStep["parseSetStep"]
+        runtime__dsl_func__parser__parsedValue["parsedValue"]
+        runtime__dsl_func__parser__createVariableValueParser["createVariableValueParser"]
+        runtime__dsl_func__parser__pattern["pattern"]
+        runtime__dsl_func__parser__parseValStep["parseValStep"]
+        runtime__dsl_func__parser__parseIfStep["parseIfStep"]
+        runtime__dsl_func__parser__parseSaveStep["parseSaveStep"]
+        runtime__dsl_func__parser__createMessageParser["createMessageParser"]
+        runtime__dsl_func__parser__createOptionalMessageParser["createOptionalMessageParser"]
+        runtime__dsl_func__parser__parseSimpleWaitStep["parseSimpleWaitStep"]
+        runtime__dsl_func__parser__parseFuncDefinitions("parseFuncDefinitions CC=13")
+        runtime__dsl_func__parser__lines["lines"]
+        runtime__dsl_func__parser__trimmed["trimmed"]
+        runtime__dsl_func__parser__funcMatch["funcMatch"]
+        runtime__dsl_func__parser__step["step"]
+        runtime__dsl_func__parser__parseStep["parseStep"]
+        runtime__dsl_func__parser__expandFuncCalls("expandFuncCalls CC=13")
+        runtime__dsl_func__parser__funcCallMatch["funcCallMatch"]
+        runtime__dsl_func__parser__funcName["funcName"]
+        runtime__dsl_func__parser__func("func CC=8")
+        runtime__dsl_func__parser__indent["indent"]
+        runtime__dsl_func__parser__getFuncNames["getFuncNames"]
+        runtime__dsl_func__parser__validateFuncCalls["validateFuncCalls"]
+        runtime__dsl_func__parser__lineNum["lineNum"]
+        runtime__dsl_func__parser__generateFuncFromSteps["generateFuncFromSteps"]
+        runtime__dsl_func__parser__setGlobalFuncLibrary["setGlobalFuncLibrary"]
+        runtime__dsl_func__parser__getGlobalFuncLibrary["getGlobalFuncLibrary"]
+        runtime__dsl_func__parser__loadFuncLibraryFromSource["loadFuncLibraryFromSource"]
+        runtime__dsl_func__parser__library["library"]
+        runtime__dsl_func__parser__test__library["library"]
+        runtime__dsl_func__parser__test__steps["steps"]
+    end
+    subgraph runtime__dsl_registry
+        runtime__dsl_registry__commands__createBuiltInCommands("createBuiltInCommands CC=14")
+        runtime__dsl_registry__commands__handlers["handlers"]
+        runtime__dsl_registry__commands__value["value"]
+        runtime__dsl_registry__commands__ms["ms"]
+        runtime__dsl_registry__commands__handler["handler"]
+        runtime__dsl_registry__execution__toNumber["toNumber"]
+        runtime__dsl_registry__execution__num["num"]
+        runtime__dsl_registry__execution__compareEquality("compareEquality CC=10")
+        runtime__dsl_registry__execution__leftNum["leftNum"]
+        runtime__dsl_registry__execution__rightNum["rightNum"]
+        runtime__dsl_registry__execution__compare("compare CC=11")
+        runtime__dsl_registry__execution__relOp["relOp"]
+        runtime__dsl_registry__execution__l["l"]
+        runtime__dsl_registry__execution__r["r"]
+        runtime__dsl_registry__execution__substitute["substitute"]
+        runtime__dsl_registry__execution__substituteObj["substituteObj"]
+        runtime__dsl_registry__execution__executeApi["executeApi"]
+        runtime__dsl_registry__execution__url["url"]
+        runtime__dsl_registry__execution__method["method"]
+        runtime__dsl_registry__execution__response["response"]
+        runtime__dsl_registry__execution__executeUi["executeUi"]
+        runtime__dsl_registry__execution__event["event"]
+        runtime__dsl_registry__execution__executeOnBackend["executeOnBackend"]
+        runtime__dsl_registry__execution__executeMapping("executeMapping CC=11")
+        runtime__dsl_registry__execution__kind("kind CC=10")
+        runtime__dsl_registry__execution__executeFuncMapping["executeFuncMapping"]
+        runtime__dsl_registry__presets__getGlobalRegistry["getGlobalRegistry"]
+        runtime__dsl_registry__presets__createRegistry["createRegistry"]
+        runtime__dsl_registry__presets__setGlobalRegistry["setGlobalRegistry"]
+        runtime__dsl_registry__presets__createHardwareRegistry["createHardwareRegistry"]
+        runtime__dsl_registry__presets__registry["registry"]
+        runtime__dsl_registry__parsing__isLiteral["isLiteral"]
+        runtime__dsl_registry__parsing__parseValue["parseValue"]
+        runtime__dsl_registry__parsing__resolveValue["resolveValue"]
+        runtime__dsl_registry__parsing__varName["varName"]
+        runtime__dsl_registry__parsing__parseNumber["parseNumber"]
+        runtime__dsl_registry__parsing__m["m"]
+        runtime__dsl_registry__parsing__parseTimeMs["parseTimeMs"]
+        runtime__dsl_registry__parsing__parsed["parsed"]
+        runtime__dsl_registry__parsing__unit["unit"]
+        runtime__dsl_registry__parsing__handleTask["handleTask"]
+        runtime__dsl_registry__parsing__handleSet["handleSet"]
+        runtime__dsl_registry__parsing__key["key"]
+        runtime__dsl_registry__parsing__resolved["resolved"]
+        runtime__dsl_registry__parsing__ms["ms"]
+        runtime__dsl_registry__parsing__handleWait["handleWait"]
+        runtime__dsl_registry__parsing__handleDialog["handleDialog"]
+        runtime__dsl_registry__parsing__handleOut{{handleOut CC=16}}
+        runtime__dsl_registry__parsing__outType["outType"]
+        runtime__dsl_registry__parsing__rawVal["rawVal"]
+        runtime__dsl_registry__parsing__literal["literal"]
+        runtime__dsl_registry__parsing__outputs["outputs"]
+        runtime__dsl_registry__parsing__handleInfo["handleInfo"]
+        runtime__dsl_registry__parsing__handleIf["handleIf"]
+        runtime__dsl_registry__parsing__leftVal["leftVal"]
+        runtime__dsl_registry__parsing__rightVal["rightVal"]
+        runtime__dsl_registry__parsing__op["op"]
+        runtime__dsl_registry__parsing__result["result"]
+        runtime__dsl_registry__parsing__skip["skip"]
+        runtime__dsl_registry__parsing__handleFuncCall["handleFuncCall"]
+    end
+    subgraph runtime__dsl_timer
+        runtime__dsl_timer__service__DslTimerService__create["create"]
+        runtime__dsl_timer__service__DslTimerService__start("start CC=8")
+        runtime__dsl_timer__service__DslTimerService__timer["timer"]
+        runtime__dsl_timer__service__DslTimerService__interval["interval"]
+        runtime__dsl_timer__service__DslTimerService__stop["stop"]
+        runtime__dsl_timer__service__DslTimerService__clearInterval["clearInterval"]
+        runtime__dsl_timer__service__DslTimerService__pause["pause"]
+        runtime__dsl_timer__service__DslTimerService__resume["resume"]
+        runtime__dsl_timer__service__DslTimerService__reset["reset"]
+        runtime__dsl_timer__service__DslTimerService__getElapsedMs["getElapsedMs"]
+        runtime__dsl_timer__service__DslTimerService__getElapsedSec["getElapsedSec"]
+        runtime__dsl_timer__service__DslTimerService__getRemainingMs["getRemainingMs"]
+        runtime__dsl_timer__service__DslTimerService__elapsed["elapsed"]
+        runtime__dsl_timer__service__DslTimerService__getRemainingSec["getRemainingSec"]
+        runtime__dsl_timer__service__DslTimerService__isExpired["isExpired"]
+        runtime__dsl_timer__service__DslTimerService__isRunning["isRunning"]
+        runtime__dsl_timer__service__DslTimerService__tick("tick CC=8")
+        runtime__dsl_timer__service__DslTimerService__remaining["remaining"]
+        runtime__dsl_timer__service__DslTimerService__delete["delete"]
+        runtime__dsl_timer__service__DslTimerService__getTimerNames["getTimerNames"]
+        runtime__dsl_timer__service__DslTimerService__clearAll["clearAll"]
+        runtime__dsl_timer__service__DslTimerService__executeDslCommand("executeDslCommand CC=13")
+        runtime__dsl_timer__service__DslTimerService__cmd("cmd CC=12")
+        runtime__dsl_timer__service__DslTimerService__duration["duration"]
+        runtime__dsl_timer__service__DslTimerService__parseTimeValue["parseTimeValue"]
+        runtime__dsl_timer__service__DslTimerService__match["match"]
+        runtime__dsl_timer__service__DslTimerService__num["num"]
+        runtime__dsl_timer__service__DslTimerService__unit["unit"]
+        runtime__dsl_timer__service__DslTimerService__formatTime["formatTime"]
+        runtime__dsl_timer__service__DslTimerService__totalSec["totalSec"]
+        runtime__dsl_timer__service__DslTimerService__min["min"]
+        runtime__dsl_timer__service__DslTimerService__sec["sec"]
+        runtime__dsl_timer__service__DslTimerService__totalSec2["totalSec2"]
+        runtime__dsl_timer__service__DslTimerService__min2["min2"]
+        runtime__dsl_timer__service__DslTimerService__sec2["sec2"]
+        runtime__dsl_timer__service__DslTimerService__msRem["msRem"]
+        runtime__dsl_timer__service__DslTimerService__dslTimerService["dslTimerService"]
+    end
+    subgraph runtime__dsl_tools
+        runtime__dsl_tools__DslTools__highlightDsl["highlightDsl"]
+        runtime__dsl_tools__DslTools__runDslConsole["runDslConsole"]
+        runtime__dsl_tools__DslTools__sim["sim"]
+        runtime__dsl_tools__DslTools__diag["diag"]
+        runtime__dsl_tools__DslTools__processTaskLine("processTaskLine CC=9")
+        runtime__dsl_tools__DslTools__indent["indent"]
+        runtime__dsl_tools__DslTools__waitMatch["waitMatch"]
+        runtime__dsl_tools__DslTools__pairs["pairs"]
+        runtime__dsl_tools__DslTools__plain["plain"]
+        runtime__dsl_tools__DslTools__m["m"]
+        runtime__dsl_tools__DslTools__canonicalizeTasks("canonicalizeTasks CC=11")
+        runtime__dsl_tools__DslTools__lines("lines CC=14")
+        runtime__dsl_tools__DslTools__autoFixText["autoFixText"]
+        runtime__dsl_tools__DslTools__fmt["fmt"]
+        runtime__dsl_tools__DslTools__base["base"]
+        runtime__dsl_tools__DslTools__canon["canon"]
+        runtime__dsl_tools__DslTools__ensured["ensured"]
+        runtime__dsl_tools__DslTools__parseDsl["parseDsl"]
+        runtime__dsl_tools__DslTools__validateDsl["validateDsl"]
+        runtime__dsl_tools__DslTools__src["src"]
+        runtime__dsl_tools__DslTools__res["res"]
+        runtime__dsl_tools__DslTools__buildSyntaxErrorHtml["buildSyntaxErrorHtml"]
+        runtime__dsl_tools__DslTools__buildFormatErrorsHtml["buildFormatErrorsHtml"]
+        runtime__dsl_tools__DslTools__buildFormatWarningsHtml["buildFormatWarningsHtml"]
+        runtime__dsl_tools__DslTools__buildVariableIssuesHtml["buildVariableIssuesHtml"]
+        runtime__dsl_tools__DslTools__buildFixesHtml("buildFixesHtml CC=8")
+        runtime__dsl_tools__DslTools__hasVariableIssues["hasVariableIssues"]
+        runtime__dsl_tools__DslTools__buildValidationSuccessHtml("buildValidationSuccessHtml CC=8")
+        runtime__dsl_tools__DslTools__extra["extra"]
+        runtime__dsl_tools__DslTools__fixed["fixed"]
+        runtime__dsl_tools__DslTools__html["html"]
+        runtime__dsl_tools__DslTools__runDsl["runDsl"]
+        runtime__dsl_tools__DslTools__exec["exec"]
+        runtime__dsl_tools__DslTools__taskNum["taskNum"]
+        runtime__dsl_tools__DslTools__validateDslInElement["validateDslInElement"]
+        runtime__dsl_tools__DslTools__out["out"]
+        runtime__dsl_tools__DslTools__runDslInElement["runDslInElement"]
+        runtime__dsl_tools__DslTools__getPreviewText["getPreviewText"]
+        runtime__dsl_tools__DslTools__el["el"]
+        runtime__dsl_tools__DslTools__isNumericValue["isNumericValue"]
+        runtime__dsl_tools__DslTools__ensureIfUsesVariables{{ensureIfUsesVariables CC=18}}
+        runtime__dsl_tools__DslTools__normalizedLn["normalizedLn"]
+        runtime__dsl_tools__DslTools__goalMatch["goalMatch"]
+        runtime__dsl_tools__DslTools__ifMatch["ifMatch"]
+        runtime__dsl_tools__DslTools__param["param"]
+        runtime__dsl_tools__DslTools__op["op"]
+        runtime__dsl_tools__DslTools__value["value"]
+        runtime__dsl_tools__DslTools__goal["goal"]
+        runtime__dsl_tools__DslTools__vars["vars"]
+        runtime__dsl_tools__DslTools__isSelfReferencingTime["isSelfReferencingTime"]
+        runtime__dsl_tools__DslTools__createTimeWarning["createTimeWarning"]
+        runtime__dsl_tools__DslTools__detectIfConstantIssues("detectIfConstantIssues CC=12")
+        runtime__dsl_tools__DslTools__ln["ln"]
+        runtime__dsl_tools__DslTools__varMatch["varMatch"]
+        runtime__dsl_tools__DslTools__operator["operator"]
+        runtime__dsl_tools__DslTools__isPlaceholderInvalid["isPlaceholderInvalid"]
+        runtime__dsl_tools__DslTools__t["t"]
+        runtime__dsl_tools__DslTools__normalizeValue["normalizeValue"]
+        runtime__dsl_tools__DslTools__stripValueWrappers["stripValueWrappers"]
+        runtime__dsl_tools__DslTools__ensureNumericWithUnit["ensureNumericWithUnit"]
+    end
+    subgraph runtime__singleton
+        runtime__singleton__getDslEngine["getDslEngine"]
+        runtime__singleton__initializeDslEngine["initializeDslEngine"]
+        runtime__singleton__engine["engine"]
+        runtime__singleton__resetDslEngine["resetDslEngine"]
+        runtime__singleton__isDslEngineReady["isDslEngineReady"]
+    end
+    subgraph src__api
+        src__api__cqlRuntimeApi__API_BASE["API_BASE"]
+        src__api__cqlRuntimeApi__CqlBackendError__super["super"]
+        src__api__cqlRuntimeApi__NotImplementedError__super["super"]
+        src__api__cqlRuntimeApi__NotImplementedError__post["post"]
+        src__api__cqlRuntimeApi__NotImplementedError__res["res"]
+        src__api__cqlRuntimeApi__NotImplementedError__detail["detail"]
+        src__api__cqlRuntimeApi__NotImplementedError__text["text"]
+        src__api__cqlRuntimeApi__NotImplementedError__get["get"]
+        src__api__cqlRuntimeApi__NotImplementedError__health["health"]
+        src__api__cqlRuntimeApi__NotImplementedError__capabilities["capabilities"]
+        src__api__cqlRuntimeApi__NotImplementedError__quote["quote"]
+        src__api__cqlRuntimeApi__NotImplementedError__formatLiteral["formatLiteral"]
+        src__api__cqlRuntimeApi__NotImplementedError__unquote["unquote"]
+        src__api__cqlRuntimeApi__NotImplementedError__canonicalize["canonicalize"]
+        src__api__cqlRuntimeApi__NotImplementedError__normalize["normalize"]
+        src__api__cqlRuntimeApi__NotImplementedError__highlightHtml["highlightHtml"]
+        src__api__cqlRuntimeApi__NotImplementedError__parse["parse"]
+        src__api__cqlRuntimeApi__NotImplementedError__serialize["serialize"]
+        src__api__cqlRuntimeApi__NotImplementedError__validate["validate"]
+        src__api__cqlRuntimeApi__NotImplementedError__exec["exec"]
+        src__api__cqlRuntimeApi__NotImplementedError__scenarioBuild["scenarioBuild"]
+        src__api__scenariosApi__API_BASE["API_BASE"]
+        src__api__scenariosApi__url["url"]
+        src__api__scenariosApi__request["request"]
+        src__api__scenariosApi__res["res"]
+        src__api__scenariosApi__text["text"]
+        src__api__scenariosApi__err["err"]
+        src__api__scenariosApi__normalizeRow{{normalizeRow CC=20}}
+        src__api__scenariosApi__content["content"]
+        src__api__scenariosApi__data["data"]
+        src__api__scenariosApi__rows["rows"]
+        src__api__scenariosApi__filters["filters"]
+        src__api__scenariosApi__row["row"]
+        src__api__scenariosApi__getApiBase["getApiBase"]
+        src__api__wsClient__RECONNECT_DELAY_MS["RECONNECT_DELAY_MS"]
+        src__api__wsClient__RECONNECT_MAX_ATTEMPTS["RECONNECT_MAX_ATTEMPTS"]
+        src__api__wsClient__REQUEST_TIMEOUT_MS["REQUEST_TIMEOUT_MS"]
+        src__api__wsClient__defaultUrl["defaultUrl"]
+        src__api__wsClient__fromEnv["fromEnv"]
+        src__api__wsClient__loc["loc"]
+        src__api__wsClient__proto["proto"]
+        src__api__wsClient__WsCqrsClient__super["super"]
+        src__api__wsClient__WsCqrsClient__connected["connected"]
+        src__api__wsClient__WsCqrsClient__connect["connect"]
+        src__api__wsClient__WsCqrsClient__reject["reject"]
+        src__api__wsClient__WsCqrsClient__resolve["resolve"]
+        src__api__wsClient__WsCqrsClient__disconnect["disconnect"]
+        src__api__wsClient__WsCqrsClient__command["command"]
+        src__api__wsClient__WsCqrsClient__query["query"]
+        src__api__wsClient__WsCqrsClient__subscribe["subscribe"]
+        src__api__wsClient__WsCqrsClient___request["_request"]
+        src__api__wsClient__WsCqrsClient__timeout["timeout"]
+        src__api__wsClient__WsCqrsClient__key["key"]
+        src__api__wsClient__WsCqrsClient___handleMessage("_handleMessage CC=13")
+        src__api__wsClient__WsCqrsClient__response["response"]
+        src__api__wsClient__WsCqrsClient__pending["pending"]
+        src__api__wsClient__WsCqrsClient__clearTimeout["clearTimeout"]
+        src__api__wsClient__WsCqrsClient__evt["evt"]
+        src__api__wsClient__WsCqrsClient__handlers["handlers"]
+        src__api__wsClient__WsCqrsClient___scheduleReconnect["_scheduleReconnect"]
+    end
+    subgraph src__components
+        src__components__CodeEditor__highlightOQL["highlightOQL"]
+        src__components__CodeEditor__html["html"]
+        src__components__CodeEditor__highlightIQL["highlightIQL"]
+        src__components__CodeEditor__textareaRef["textareaRef"]
+        src__components__CodeEditor__preRef["preRef"]
+        src__components__CodeEditor__code["code"]
+        src__components__CodeEditor__fn["fn"]
+        src__components__CodeEditor__handleScroll["handleScroll"]
+        src__components__CodeEditor__handleChange["handleChange"]
+        src__components__CodeEditor__newCode["newCode"]
+        src__components__TerminalSim__parseScenarioCode("parseScenarioCode CC=8")
+        src__components__TerminalSim__lines["lines"]
+        src__components__TerminalSim__scenarioName["scenarioName"]
+        src__components__TerminalSim__trimmed["trimmed"]
+        src__components__TerminalSim__scenarioMatch["scenarioMatch"]
+        src__components__TerminalSim__deviceMatch["deviceMatch"]
+        src__components__TerminalSim___buildHeaderLines["_buildHeaderLines"]
+        src__components__TerminalSim___buildStepLines["_buildStepLines"]
+        src__components__TerminalSim__isLast["isLast"]
+        src__components__TerminalSim__prefix["prefix"]
+        src__components__TerminalSim__shortStep["shortStep"]
+        src__components__TerminalSim___buildPreviewLines["_buildPreviewLines"]
+        src__components__TerminalSim__previewLines["previewLines"]
+        src__components__TerminalSim__cleanLine["cleanLine"]
+        src__components__TerminalSim___buildFooterLines["_buildFooterLines"]
+        src__components__TerminalSim__duration["duration"]
+        src__components__TerminalSim__generateTermLines["generateTermLines"]
+        src__components__TerminalSim__lang["lang"]
+        src__components__TerminalSim__termRef["termRef"]
+        src__components__TerminalSim__runSim["runSim"]
+        src__components__TerminalSim__effectiveCode["effectiveCode"]
+        src__components__TerminalSim__termLines["termLines"]
+        src__components__TerminalSim__idx["idx"]
+        src__components__TerminalSim__iv["iv"]
+        src__components__OqlReportRenderer__report["report"]
+        src__components__OqlReportRenderer__sc["sc"]
+        src__components__OqlReportRenderer__meta["meta"]
+        src__components__OqlReportRenderer__goals["goals"]
+        src__components__OqlReportRenderer__GoalCard("GoalCard CC=14")
+        src__components__OqlReportRenderer__steps["steps"]
+        src__components__OqlReportRenderer__thresholds["thresholds"]
+        src__components__OqlReportRenderer__passed["passed"]
+        src__components__OqlReportRenderer__failed["failed"]
+        src__components__OqlReportRenderer__cls["cls"]
+        src__components__OqlReportRenderer__StepRow("StepRow CC=8")
+        src__components__OqlReportRenderer__val["val"]
+        src__components__OqlReportRenderer___downloadJson["_downloadJson"]
+        src__components__OqlReportRenderer__blob["blob"]
+        src__components__OqlReportRenderer__url["url"]
+        src__components__OqlReportRenderer__a["a"]
+        src__components__OqlStepRenderer__effectiveCode["effectiveCode"]
+        src__components__OqlStepRenderer__parsed["parsed"]
+        src__components__OqlStepRenderer__goals["goals"]
+        src__components__OqlStepRenderer__currentGoal["currentGoal"]
+        src__components__OqlStepRenderer__thresholds["thresholds"]
+        src__components__OqlStepRenderer__goalIdx["goalIdx"]
+        src__components__OqlStepRenderer__stepIdx["stepIdx"]
+        src__components__OqlStepRenderer__handleGoalChange["handleGoalChange"]
+        src__components__OqlStepRenderer__handleStepClick["handleStepClick"]
+        src__components__OqlStepRenderer__reportData["reportData"]
+    end
+    subgraph src__context
+        src__context__AppConfigProvider__AppConfigContext["AppConfigContext"]
+        src__context__AppConfigProvider__AppConfigProvider["AppConfigProvider"]
+        src__context__AppConfigProvider__root["root"]
+        src__context__AppConfigProvider__value["value"]
+        src__context__AppConfigProvider__useAppConfig["useAppConfig"]
+        src__context__AppConfigProvider__ctx["ctx"]
+    end
+    subgraph src__hooks
+        src__hooks__useWsStatus__useWsStatus["useWsStatus"]
+        src__hooks__useWsStatus__client["client"]
+        src__hooks__useWsStatus__onOpen["onOpen"]
+        src__hooks__useWsStatus__onClose["onClose"]
+        src__hooks__useUrlConfig__DEFAULTS["DEFAULTS"]
+        src__hooks__useUrlConfig__parseParams("parseParams CC=14")
+        src__hooks__useUrlConfig__params["params"]
+        src__hooks__useUrlConfig__font["font"]
+        src__hooks__useUrlConfig__theme["theme"]
+        src__hooks__useUrlConfig__role["role"]
+        src__hooks__useUrlConfig__lang["lang"]
+        src__hooks__useUrlConfig__size["size"]
+        src__hooks__useUrlConfig__scenario["scenario"]
+        src__hooks__useUrlConfig__useUrlConfig["useUrlConfig"]
+        src__hooks__useUrlConfig__onPop["onPop"]
+        src__hooks__useUrlConfig__patch["patch"]
+        src__hooks__useUrlConfig__url["url"]
+    end
+    subgraph src__i18n
+        src__i18n__I18nProvider__I18nContext("I18nContext CC=8")
+        src__i18n__I18nProvider__getInitialLang("getInitialLang CC=8")
+        src__i18n__I18nProvider__saved["saved"]
+        src__i18n__I18nProvider__browser["browser"]
+        src__i18n__I18nProvider__I18nProvider("I18nProvider CC=12")
+        src__i18n__I18nProvider__setLang["setLang"]
+        src__i18n__I18nProvider__dict["dict"]
+        src__i18n__I18nProvider__t["t"]
+        src__i18n__I18nProvider__keys["keys"]
+        src__i18n__I18nProvider__val["val"]
+        src__i18n__I18nProvider__useI18n["useI18n"]
+        src__i18n__I18nProvider__ctx["ctx"]
+    end
+    subgraph src__main
+        src__main__LocalizedApp["LocalizedApp"]
+    end
+    subgraph src__pages
+        src__pages__EditorPlaceholder__wsOnline["wsOnline"]
+        src__pages__EditorPlaceholder__label["label"]
+        src__pages__Scenarios__SAVE_DEBOUNCE_MS["SAVE_DEBOUNCE_MS"]
+        src__pages__Scenarios__pickExampleKey["pickExampleKey"]
+        src__pages__Scenarios__keys["keys"]
+        src__pages__Scenarios__direct["direct"]
+        src__pages__Scenarios__wsOnline["wsOnline"]
+        src__pages__Scenarios__exampleKeys["exampleKeys"]
+        src__pages__Scenarios__currentScenario["currentScenario"]
+        src__pages__Scenarios__currentCode["currentCode"]
+        src__pages__Scenarios__cancelled["cancelled"]
+        src__pages__Scenarios__client["client"]
+        src__pages__Scenarios__unsub["unsub"]
+        src__pages__Scenarios__saveTimer["saveTimer"]
+        src__pages__Scenarios__scheduleSave["scheduleSave"]
+        src__pages__Scenarios__prevContent["prevContent"]
+        src__pages__Scenarios__handleCodeChange["handleCodeChange"]
+        src__pages__Scenarios__handleTabChange["handleTabChange"]
+        src__pages__Scenarios__updateUrlState["updateUrlState"]
+        src__pages__Scenarios__params["params"]
+        src__pages__Scenarios__handleGoalClick["handleGoalClick"]
+        src__pages__Scenarios__handleStepClick{{handleStepClick CC=16}}
+        src__pages__Scenarios__stepName["stepName"]
+        src__pages__Scenarios__goalParam["goalParam"]
+        src__pages__Scenarios__stepParam["stepParam"]
+        src__pages__Scenarios__statusParam["statusParam"]
+        src__pages__Scenarios__statusBadge["statusBadge"]
+        src__pages__Scenarios__file["file"]
+        src__pages__Scenarios__reader["reader"]
+    end
+    subgraph vite__config
+        vite__config__env["env"]
+        vite__config__apiTarget["apiTarget"]
+        vite__config__wsTarget["wsTarget"]
+    end
+    legacy__components__dsl_editor__renderers_helpers__buildSelect --> legacy__components__dsl_editor__renderers_helpers__mapClassToDefKey
+    legacy__components__dsl_editor__renderers_helpers__buildSelect --> legacy__components__dsl_editor__renderers_helpers__getAddToDefText
+    legacy__components__dsl_editor__renderers_helpers__buildSelect --> legacy__components__dsl_editor__renderers_helpers__normalizeSelectList
+    legacy__components__dsl_editor__renderers_helpers__buildSelect --> legacy__components__dsl_editor__renderers_helpers__renderSelectOptions
+    legacy__components__dsl_editor__blocks__isBlock --> legacy__components__dsl_editor__blocks__getBlockType
+    legacy__components__dsl_editor__blocks__prevBlock --> legacy__components__dsl_editor__blocks__isBlock
+    legacy__components__dsl_editor__blocks__nextBlock --> legacy__components__dsl_editor__blocks__isBlock
+    legacy__components__dsl_editor__blocks__moveBlockUp --> legacy__components__dsl_editor__blocks__prevBlock
+    legacy__components__dsl_editor__blocks__moveBlockDown --> legacy__components__dsl_editor__blocks__nextBlock
+    legacy__components__dsl_editor__blocks__cloneBlock --> legacy__components__dsl_editor__blocks__isBlock
+    legacy__components__dsl_editor__blocks__cloneBlock --> legacy__components__dsl_editor__blocks__getBlockType
+    legacy__components__dsl__dsl__quotes__normalizeDslTextQuotes --> legacy__components__dsl__dsl__quotes__normalizeDslLineQuotes
+    legacy__components__dsl__dsl__quotes__quoteDslValue --> legacy__components__dsl__dsl__quotes__formatDslLiteral
+    legacy__components__dsl__dsl__quotes__canonicalizeDslLineQuotes --> legacy__components__dsl__dsl__quotes__formatDslLiteral
+    legacy__components__dsl__dsl__quotes__canonicalizeDslQuotes --> legacy__components__dsl__dsl__quotes__canonicalizeDslLineQuotes
+    legacy__components__dsl_sim__simulator__DslSimulator__render --> legacy__components__dsl_sim__simulator__DslSimulator__simulate
+    legacy__components__dsl_table__dsl_table__component__DslTable__render --> legacy__components__dsl_table__dsl_table__component__DslTable__runtimeKeys
+    legacy__components__dsl_table__dsl_table__component__DslTable__render --> legacy__components__dsl_table__dsl_table__component__DslTable__getValue
+    legacy__components__dsl_table__dsl_table__component__DslTable__rows --> legacy__components__dsl_table__dsl_table__component__DslTable__runtimeKeys
+    legacy__components__dsl_table__dsl_table__component__DslTable__html --> legacy__components__dsl_table__dsl_table__component__DslTable__getValue
+    legacy__components__dsl_table__dsl_table__component__DslTable__startAutoRefresh --> legacy__components__dsl_table__dsl_table__component__DslTable__stopAutoRefresh
+    legacy__components__dsl_table__dsl_table__component__DslTable__stopAutoRefresh --> legacy__components__dsl_table__dsl_table__component__DslTable__clearInterval
+    legacy__components__dsl_table__dsl_table__component__DslTable__clearInterval --> legacy__components__dsl_table__dsl_table__component__DslTable__runtimeKeys
+    legacy__components__dsl_table__dsl_table__component__DslTable__runtimeKeys --> legacy__components__dsl_table__dsl_table__component__DslTable__add
+    legacy__components__dsl_table__dsl_table__component__DslTable__dictKeys --> legacy__components__dsl_table__dsl_table__component__DslTable__add
+    legacy__components__dsl_table__dsl_table__component__DslTable__add --> legacy__components__dsl_table__dsl_table__component__DslTable__getValue
+    legacy__components__dsl__singleton__initializeDslEngine --> legacy__components__dsl__singleton__getDslEngine
+    legacy__components__dsl_sim__state_table__DslStateTable__render --> legacy__components__dsl_sim__state_table__DslStateTable__getOriginBadge
+    legacy__components__dsl_sim__state_table__DslStateTable__html --> legacy__components__dsl_sim__state_table__DslStateTable__getOriginBadge
+    legacy__components__dsl_sim__state_table__DslStateTable__startAutoRefresh --> legacy__components__dsl_sim__state_table__DslStateTable__stopAutoRefresh
+    legacy__components__dsl_sim__state_table__DslStateTable__stopAutoRefresh --> legacy__components__dsl_sim__state_table__DslStateTable__clearInterval
+    legacy__components__dsl_sim__state_table__DslStateTable__clearInterval --> legacy__components__dsl_sim__state_table__DslStateTable__getOriginBadge
+    legacy__components__dsl__dsl_registry__execution__compareEquality --> legacy__components__dsl__dsl_registry__execution__toNumber
+    legacy__components__dsl__dsl_registry__execution__compare --> legacy__components__dsl__dsl_registry__execution__compareEquality
+    legacy__components__dsl__dsl_registry__execution__compare --> legacy__components__dsl__dsl_registry__execution__relOp
+    legacy__components__dsl__dsl_registry__execution__substituteObj --> legacy__components__dsl__dsl_registry__execution__substitute
+    legacy__components__dsl__dsl_registry__execution__executeApi --> legacy__components__dsl__dsl_registry__execution__substitute
+    legacy__components__dsl__dsl_registry__execution__executeUi --> legacy__components__dsl__dsl_registry__execution__substituteObj
+    legacy__components__dsl__dsl_registry__execution__event --> legacy__components__dsl__dsl_registry__execution__substituteObj
+    legacy__components__dsl__dsl_registry__execution__executeMapping --> legacy__components__dsl__dsl_registry__execution__executeApi
+    legacy__components__dsl__dsl_registry__execution__executeMapping --> legacy__components__dsl__dsl_registry__execution__executeUi
+    legacy__components__dsl__dsl_registry__execution__executeMapping --> legacy__components__dsl__dsl_registry__execution__executeOnBackend
+    legacy__components__dsl__dsl_registry__execution__kind --> legacy__components__dsl__dsl_registry__execution__executeApi
+    legacy__components__dsl__dsl_registry__execution__kind --> legacy__components__dsl__dsl_registry__execution__executeUi
+    legacy__components__dsl__dsl_registry__execution__kind --> legacy__components__dsl__dsl_registry__execution__executeOnBackend
+    legacy__components__dsl__dsl_registry__execution__executeFuncMapping --> legacy__components__dsl__dsl_registry__execution__executeOnBackend
+    legacy__components__dsl_editor__renderers_step_blocks__renderOutBlock --> legacy__components__dsl_editor__renderers_step_blocks__buildVarSelectHtml
+    legacy__components__dsl_editor__renderers_step_blocks__renderDialogBlock --> legacy__components__dsl_editor__renderers_step_blocks__buildVarSelectHtml
+    legacy__components__dsl_editor__renderers__BlockRenderers__renderConditionBlock --> legacy__components__dsl_editor__renderers__BlockRenderers__renderElseBlock
+    legacy__components__dsl__dsl__runtime__helpers__normalize --> legacy__components__dsl__dsl__runtime__helpers__toNumber
+    legacy__components__dsl__dsl__runtime__helpers__buildObjectFunctionMap --> legacy__components__dsl__dsl__runtime__helpers__toList
+    legacy__components__dsl__dsl__runtime__helpers__buildParamUnitMap --> legacy__components__dsl__dsl__runtime__helpers__toList
+    legacy__components__dsl__dsl__runtime__helpers__deriveLibraryList --> legacy__components__dsl__dsl__runtime__helpers__toList
+    legacy__components__dsl__dsl__runtime__helpers__buildDerivedLibrary --> legacy__components__dsl__dsl__runtime__helpers__deriveLibraryList
+    legacy__components__dsl__dsl__runtime__helpers__buildDerivedLibrary --> legacy__components__dsl__dsl__runtime__helpers__deriveSystemParamNames
+    legacy__components__dsl__dsl__runtime__helpers__buildHeuristicLibrary --> legacy__components__dsl__dsl__runtime__helpers__deriveSystemParamNames
+    legacy__components__dsl__dsl__runtime__helpers__deriveFromClasses --> legacy__components__dsl__dsl__runtime__helpers__getClassLibrarySource
+    legacy__components__dsl__dsl__runtime__helpers__deriveFromClasses --> legacy__components__dsl__dsl__runtime__helpers__buildDerivedLibrary
+    legacy__components__dsl__dsl__runtime__helpers__deriveFromClasses --> legacy__components__dsl__dsl__runtime__helpers__assignDerivedMap
+    legacy__components__dsl__dsl__runtime__helpers__deriveFromClasses --> legacy__components__dsl__dsl__runtime__helpers__hasDerivedLibraryEntries
+    legacy__components__dsl__dsl__runtime__helpers__extractLibrary --> legacy__components__dsl__dsl__runtime__helpers__getExplicitLibrary
+    legacy__components__dsl__dsl__runtime__helpers__extractLibrary --> legacy__components__dsl__dsl__runtime__helpers__deriveFromClasses
+    legacy__components__dsl__dsl__runtime__helpers__extractLibrary --> legacy__components__dsl__dsl__runtime__helpers__buildHeuristicLibrary
+    legacy__components__dsl__dsl__runtime__helpers__explicitLib --> legacy__components__dsl__dsl__runtime__helpers__buildHeuristicLibrary
+    legacy__components__dsl__dsl__runtime__helpers__classLib --> legacy__components__dsl__dsl__runtime__helpers__buildHeuristicLibrary
+    legacy__components__dsl__dsl__runtime__helpers__createConsoleShim --> legacy__components__dsl__dsl__runtime__helpers__push
+    legacy__components__dsl_log__logger__DslLogger__log --> legacy__components__dsl_log__logger__DslLogger__appendToElement
+    legacy__components__dsl_log__logger__DslLogger__log --> legacy__components__dsl_log__logger__DslLogger__formatLogEntry
+    legacy__components__dsl_log__logger__DslLogger__info --> legacy__components__dsl_log__logger__DslLogger__log
+    legacy__components__dsl_log__logger__DslLogger__warn --> legacy__components__dsl_log__logger__DslLogger__log
+    legacy__components__dsl_log__logger__DslLogger__error --> legacy__components__dsl_log__logger__DslLogger__log
+    legacy__components__dsl_log__logger__DslLogger__debug --> legacy__components__dsl_log__logger__DslLogger__log
+    legacy__components__dsl_log__logger__DslLogger__setLogLevel --> legacy__components__dsl_log__logger__DslLogger__log
+    legacy__components__dsl_log__logger__DslLogger__connectStream --> legacy__components__dsl_log__logger__DslLogger__disconnectStream
+    legacy__components__dsl_log__logger__DslLogger__connectStream --> legacy__components__dsl_log__logger__DslLogger__info
+    legacy__components__dsl_log__logger__DslLogger__connectStream --> legacy__components__dsl_log__logger__DslLogger__error
+    legacy__components__dsl_log__logger__DslLogger__connectStream --> legacy__components__dsl_log__logger__DslLogger__warn
+    legacy__components__dsl_log__logger__DslLogger__connectStream --> legacy__components__dsl_log__logger__DslLogger__startPolling
+    legacy__components__dsl_log__logger__DslLogger__es --> legacy__components__dsl_log__logger__DslLogger__info
+    legacy__components__dsl_log__logger__DslLogger__js --> legacy__components__dsl_log__logger__DslLogger__info
+    legacy__components__dsl_log__logger__DslLogger__startPolling --> legacy__components__dsl_log__logger__DslLogger__stopPolling
+    legacy__components__dsl_log__logger__DslLogger__startPolling --> legacy__components__dsl_log__logger__DslLogger__info
+    legacy__components__dsl_log__logger__DslLogger__startPolling --> legacy__components__dsl_log__logger__DslLogger__fetchWithAuth
+    legacy__components__dsl_log__logger__DslLogger__startPolling --> legacy__components__dsl_log__logger__DslLogger__debug
+    legacy__components__dsl_log__logger__DslLogger__startPolling --> legacy__components__dsl_log__logger__DslLogger__error
+    legacy__components__dsl_log__logger__DslLogger__startPolling --> legacy__components__dsl_log__logger__DslLogger__poll
+    legacy__components__dsl_log__logger__DslLogger__announced --> legacy__components__dsl_log__logger__DslLogger__info
+    legacy__components__dsl_log__logger__DslLogger__announced --> legacy__components__dsl_log__logger__DslLogger__fetchWithAuth
+    legacy__components__dsl_log__logger__DslLogger__announced --> legacy__components__dsl_log__logger__DslLogger__debug
+    legacy__components__dsl_log__logger__DslLogger__announced --> legacy__components__dsl_log__logger__DslLogger__error
+    legacy__components__dsl_log__logger__DslLogger__poll --> legacy__components__dsl_log__logger__DslLogger__disconnectStream
+    legacy__components__dsl_log__logger__DslLogger__fetchWithAuth --> legacy__components__dsl_log__logger__DslLogger__info
+    legacy__components__dsl_log__logger__DslLogger__fetchWithAuth --> legacy__components__dsl_log__logger__DslLogger__debug
+    legacy__components__dsl_log__logger__DslLogger__logs --> legacy__components__dsl_log__logger__DslLogger__info
+    legacy__components__dsl_log__logger__DslLogger__disconnectStream --> legacy__components__dsl_log__logger__DslLogger__debug
+    legacy__components__dsl_log__logger__DslLogger__disconnectStream --> legacy__components__dsl_log__logger__DslLogger__stopPolling
+    legacy__components__dsl_log__logger__DslLogger__stopPolling --> legacy__components__dsl_log__logger__DslLogger__clearInterval
+    legacy__components__dsl_log__logger__DslLogger__clearInterval --> legacy__components__dsl_log__logger__DslLogger__formatLogEntry
+    legacy__components__dsl_log__logger__DslLogger__formatLogEntry --> legacy__components__dsl_log__logger__DslLogger__getLevelEmoji
+    legacy__components__dsl_log__logger__DslLogger__currentText --> legacy__components__dsl_log__logger__DslLogger__createGoalLogger
+    legacy__components__dsl_log__logger__DslLogger__newText --> legacy__components__dsl_log__logger__DslLogger__createGoalLogger
+    legacy__components__dsl_log__logger__DslLogger__createGoalLogger --> legacy__components__dsl_log__logger__DslLogger__clear
+    legacy__components__dsl_log__logger__DslLogger__logsWrapper --> legacy__components__dsl_log__logger__DslLogger__clear
+    legacy__components__dsl_log__logger__DslLogger__logger --> legacy__components__dsl_log__logger__DslLogger__clear
+    legacy__components__dsl_log__logger__DslLogger__clearBtn --> legacy__components__dsl_log__logger__DslLogger__clear
+    legacy__components__dsl__dsl_timer__service__DslTimerService__create --> legacy__components__dsl__dsl_timer__service__DslTimerService__stop
+    legacy__components__dsl__dsl_timer__service__DslTimerService__create --> legacy__components__dsl__dsl_timer__service__DslTimerService__start
+    legacy__components__dsl__dsl_timer__service__DslTimerService__start --> legacy__components__dsl__dsl_timer__service__DslTimerService__tick
+    legacy__components__dsl__dsl_timer__service__DslTimerService__interval --> legacy__components__dsl__dsl_timer__service__DslTimerService__tick
+    legacy__components__dsl__dsl_timer__service__DslTimerService__stop --> legacy__components__dsl__dsl_timer__service__DslTimerService__clearInterval
+    legacy__components__dsl__dsl_timer__service__DslTimerService__clearInterval --> legacy__components__dsl__dsl_timer__service__DslTimerService__pause
+    legacy__components__dsl__dsl_timer__service__DslTimerService__reset --> legacy__components__dsl__dsl_timer__service__DslTimerService__stop
+    legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedSec --> legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingMs --> legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingSec --> legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__isExpired --> legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__tick --> legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__tick --> legacy__components__dsl__dsl_timer__service__DslTimerService__stop
+    legacy__components__dsl__dsl_timer__service__DslTimerService__delete --> legacy__components__dsl__dsl_timer__service__DslTimerService__stop
+    legacy__components__dsl__dsl_timer__service__DslTimerService__clearAll --> legacy__components__dsl__dsl_timer__service__DslTimerService__stop
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__create
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__start
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__stop
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__pause
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__resume
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__reset
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__parseTimeValue
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedSec
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingSec
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__isRunning
+    legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand --> legacy__components__dsl__dsl_timer__service__DslTimerService__isExpired
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__create
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__start
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__stop
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__pause
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__resume
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__reset
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__parseTimeValue
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__getElapsedSec
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingMs
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__getRemainingSec
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__isRunning
+    legacy__components__dsl__dsl_timer__service__DslTimerService__cmd --> legacy__components__dsl__dsl_timer__service__DslTimerService__isExpired
+    legacy__components__dsl__dsl_timer__service__DslTimerService__duration --> legacy__components__dsl__dsl_timer__service__DslTimerService__create
+    legacy__components__dsl__dsl_timer__service__DslTimerService__parseTimeValue --> legacy__components__dsl__dsl_timer__service__DslTimerService__match
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupKeyboardShortcut --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggle
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggle --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__hide
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggle --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__show
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__show --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__startAutoRefresh
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__show --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__render
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__hide --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__stopAutoRefresh
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__render --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__getTemplate
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__render --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__injectStyles
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__render --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__render --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__refreshLogs
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__refreshLogs
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggleMinimize
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__hide
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__runScript
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__delegateClick
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__switchTab
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__setupEventHandlers --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__makeDraggable
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__delegateClick --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__switchTab
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__tabName --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__switchTab
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__switchTab --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggle
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggleMinimize --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggle
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__refreshLogs --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__renderLogEntry
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__runScript --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__refreshLogs
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__startAutoRefresh --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__refreshLogs
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__currentCount --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__refreshLogs
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__stopAutoRefresh --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__clearInterval
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__clearInterval --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__makeDraggable
+    legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__dslConsole --> legacy__components__dsl_console__dsl_console__component__DslConsoleComponent__toggle
+    legacy__components__dsl__dsl__runtime__createExecContextFromDef --> legacy__components__dsl__dsl__runtime__factory
+    legacy__components__dsl__dsl__engine__DslEngine__getData --> legacy__components__dsl__dsl__engine__DslEngine__initialize
+    legacy__components__dsl__dsl__validate__db__extractTopLevelDsl --> legacy__components__dsl__dsl__validate__db__extractFirstNonEmptyString
+    legacy__components__dsl__dsl__validate__db__buildLibraryGoalsDsl --> legacy__components__dsl__dsl__validate__db__appendLibraryGoalCode
+    legacy__components__dsl__dsl__validate__db__extractDslFromLibrary --> legacy__components__dsl__dsl__validate__db__parseLibrarySource
+    legacy__components__dsl__dsl__validate__db__extractDslFromLibrary --> legacy__components__dsl__dsl__validate__db__buildLibraryGoalsDsl
+    legacy__components__dsl__dsl__validate__db__extractDslFromContent --> legacy__components__dsl__dsl__validate__db__extractStringFromUnknown
+    legacy__components__dsl__dsl__validate__db__extractDslFromContent --> legacy__components__dsl__dsl__validate__db__extractFirstNonEmptyString
+    legacy__components__dsl__dsl__validate__db__extractDslFromRow --> legacy__components__dsl__dsl__validate__db__extractTopLevelDsl
+    legacy__components__dsl__dsl__validate__db__extractDslFromRow --> legacy__components__dsl__dsl__validate__db__extractDslFromLibrary
+    legacy__components__dsl__dsl__validate__db__extractDslFromRow --> legacy__components__dsl__dsl__validate__db__extractDslFromContent
+    legacy__components__dsl__dsl__validate__db__buildValidationText --> legacy__components__dsl__dsl__validate__db__hasScenarioHeader
+    legacy__components__dsl__dsl__validate__db__validateDslText --> legacy__components__dsl__dsl__validate__db__collectValidationErrors
+    legacy__components__dsl__dsl__validate__db__validateAllTestScenarios --> legacy__components__dsl__dsl__validate__db__fetchTestScenarios
+    legacy__components__dsl__dsl__validate__db__validateAllTestScenarios --> legacy__components__dsl__dsl__validate__db__extractDslFromRow
+    legacy__components__dsl__dsl__validate__db__validateAllTestScenarios --> legacy__components__dsl__dsl__validate__db__buildValidationText
+    legacy__components__dsl__dsl__validate__db__validateAllTestScenarios --> legacy__components__dsl__dsl__validate__db__validateDslText
+    legacy__components__dsl__dsl__validate__db__rows --> legacy__components__dsl__dsl__validate__db__extractDslFromRow
+    legacy__components__dsl__dsl__validate__db__rows --> legacy__components__dsl__dsl__validate__db__buildValidationText
+    legacy__components__dsl__dsl__validate__db__rows --> legacy__components__dsl__dsl__validate__db__validateDslText
+    legacy__components__dsl__dsl__schema__createTypedJsonSchema --> legacy__components__dsl__dsl__schema__createJsonObjectSchema
+    legacy__components__dsl__dsl__schema__DslTaskAndJsonSchema --> legacy__components__dsl__dsl__schema__createJsonObjectSchema
+    legacy__components__dsl__dsl__schema__DslTaskJsonSchema --> legacy__components__dsl__dsl__schema__createJsonObjectSchema
+    legacy__components__dsl__dsl__schema__DslIfConditionJsonSchema --> legacy__components__dsl__dsl__schema__createTypedJsonSchema
+    legacy__components__dsl__dsl__schema__DslElseConditionJsonSchema --> legacy__components__dsl__dsl__schema__createTypedJsonSchema
+    legacy__components__dsl__dsl__schema__DslStepTaskJsonSchema --> legacy__components__dsl__dsl__schema__createTypedJsonSchema
+    legacy__components__dsl__dsl__schema__DslGoalJsonSchema --> legacy__components__dsl__dsl__schema__createJsonObjectSchema
+    legacy__components__dsl__dsl__schema__DslFuncJsonSchema --> legacy__components__dsl__dsl__schema__createJsonObjectSchema
+    legacy__components__dsl__dsl__serialize__text__serializeTaskStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeIfStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeIfStep --> legacy__components__dsl__dsl__serialize__text__buildValueWithUnit
+    legacy__components__dsl__dsl__serialize__text__serializeElseStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeParamQueryStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeValueStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeValueStep --> legacy__components__dsl__dsl__serialize__text__buildValueWithUnit
+    legacy__components__dsl__dsl__serialize__text__serializeDeltaStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeDeltaStep --> legacy__components__dsl__dsl__serialize__text__buildValueWithUnit
+    legacy__components__dsl__dsl__serialize__text__serializeWaitStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeWaitStep --> legacy__components__dsl__dsl__serialize__text__buildValueWithUnit
+    legacy__components__dsl__dsl__serialize__text__serializePumpStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializePumpStep --> legacy__components__dsl__dsl__serialize__text__buildValueWithUnit
+    legacy__components__dsl__dsl__serialize__text__serializeSampleStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeCalcStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeFunStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeMessageStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeSaveStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeFuncCallStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeUserStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeResultStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeOptStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeInfoStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeRepeatStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeEndStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeOutStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__serializeDialogStep --> legacy__components__dsl__dsl__serialize__text__isStepType
+    legacy__components__dsl__dsl__serialize__text__renderLegacyBlockContent --> legacy__components__dsl__dsl__serialize__text__renderStructuredStep
+    legacy__components__dsl__dsl__serialize__text__buildBlockLines --> legacy__components__dsl__dsl__serialize__text__renderStructuredStep
+    legacy__components__dsl__dsl__serialize__text__buildBlockLines --> legacy__components__dsl__dsl__serialize__text__renderLegacyBlockContent
+    legacy__components__dsl__dsl__serialize__text__buildScenarioLines --> legacy__components__dsl__dsl__serialize__text__buildBlockLines
+    legacy__components__dsl__dsl__serialize__text__astToDslText --> legacy__components__dsl__dsl__serialize__text__buildScenarioLines
+    legacy__components__dsl__dsl_func__parser__parseTaskStep --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseTaskStep --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__match --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__splitSetValue --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseSetStep --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseSetStep --> legacy__components__dsl__dsl_func__parser__splitSetValue
+    legacy__components__dsl__dsl_func__parser__parseSetStep --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__parsedValue --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__createVariableValueParser --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__createVariableValueParser --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__parseValStep --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseValStep --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__parseIfStep --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseIfStep --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__parseSaveStep --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseSaveStep --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__createMessageParser --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__createMessageParser --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__createOptionalMessageParser --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__createOptionalMessageParser --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__parseSimpleWaitStep --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseSimpleWaitStep --> legacy__components__dsl__dsl_func__parser__createFuncStep
+    legacy__components__dsl__dsl_func__parser__parseFuncDefinitions --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__parseFuncDefinitions --> legacy__components__dsl__dsl_func__parser__parseStep
+    legacy__components__dsl__dsl_func__parser__lines --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__expandFuncCalls --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__func --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__validateFuncCalls --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__lineNum --> legacy__components__dsl__dsl_func__parser__match
+    legacy__components__dsl__dsl_func__parser__loadFuncLibraryFromSource --> legacy__components__dsl__dsl_func__parser__parseFuncDefinitions
+    legacy__components__dsl__dsl_func__parser__loadFuncLibraryFromSource --> legacy__components__dsl__dsl_func__parser__setGlobalFuncLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__handleInput --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__updateOverlayGeometry
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__handleInput --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlight
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__handleScroll --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__updateOverlayGeometry
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__handleScroll --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__syncScroll
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__handleResize --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__updateOverlayGeometry
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__handleResize --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__syncScroll
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__init --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__updateOverlayGeometry
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__init --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlight
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__init --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__addStyles
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlight --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__requestAnimationFrame
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlight --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlightCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlight --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__syncScroll
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__requestAnimationFrame --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlightCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__requestAnimationFrame --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__syncScroll
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__code --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlightCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlighted --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlightCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__setValue --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlight
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__insertText --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__highlight
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__start --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__destroy
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__end --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__destroy
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__value --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__destroy
+    legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__newValue --> legacy__components__dsl_def__def_syntax_highlighter__DefSyntaxHighlighter__destroy
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addObjectToLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeObjectFromLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addFunctionToLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeFunctionFromLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__validateDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__saveDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__reloadRuntime
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__attachButtonHandlers --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__importFromDB
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__target --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__validateDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__target --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__saveDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__target --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__reloadRuntime
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__target --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__importFromDB
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__defSection --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addObjectToLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__defSection --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeObjectFromLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__defSection --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addFunctionToLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__defSection --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeFunctionFromLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__action --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__validateDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__action --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__saveDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__action --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__reloadRuntime
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__action --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__importFromDB
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addObjectToLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__parseDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addObjectToLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addObjectToLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__def --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__def --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeObjectFromLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeObjectFromLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__parseDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeObjectFromLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__selectContainer --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__objectSelect --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__selectedObject --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addFunctionToLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__parseDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addFunctionToLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__addFunctionToLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeFunctionFromLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeFunctionFromLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__parseDef
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__removeFunctionFromLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__functionSelect --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__selectedFunction --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__parseDef --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__getValue
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__parseDef --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__normalizeLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__parseDef --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__fn
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__libStr --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__normalizeLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__lib2 --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__normalizeLibrary
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__getValue
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__setValue
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__updateDefCode --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__refreshSelectlists
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__normalizeLibrary --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__arr
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__validateDef --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__getValue
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__validateDef --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__defCode --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__result --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__errors --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__saveDef --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__getValue
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__saveDef --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__reloadRuntime --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__refreshSelectlists
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__reloadRuntime --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl_def__def_syntax_highlighter__DefEditor__importFromDB --> legacy__components__dsl_def__def_syntax_highlighter__DefEditor__showNotification
+    legacy__components__dsl__dsl__highlight__legacy__kw --> legacy__components__dsl__dsl__highlight__legacy__esc
+    legacy__components__dsl__dsl__highlight__legacy__br --> legacy__components__dsl__dsl__highlight__legacy__esc
+    legacy__components__dsl__dsl__highlight__legacy__op --> legacy__components__dsl__dsl__highlight__legacy__esc
+    legacy__components__dsl__dsl__highlight__legacy__str --> legacy__components__dsl__dsl__highlight__legacy__esc
+    legacy__components__dsl__dsl__highlight__legacy__highlightValue --> legacy__components__dsl__dsl__highlight__legacy__str
+    legacy__components__dsl__dsl__highlight__legacy__highlightDsl --> legacy__components__dsl__dsl__highlight__legacy__esc
+    legacy__components__dsl__dsl__highlight__legacy__highlightDsl --> legacy__components__dsl__dsl__highlight__legacy__kw
+    legacy__components__dsl__dsl__highlight__legacy__highlightDsl --> legacy__components__dsl__dsl__highlight__legacy__br
+    legacy__components__dsl__dsl__highlight__legacy__highlightDsl --> legacy__components__dsl__dsl__highlight__legacy__highlightValue
+    legacy__components__dsl__dsl__highlight__legacy__highlightDsl --> legacy__components__dsl__dsl__highlight__legacy__escHtml
+    legacy__components__dsl__dsl__highlight__legacy__highlightDsl --> legacy__components__dsl__dsl__highlight__legacy__str
+    legacy__components__dsl__dsl__highlight__legacy__lines --> legacy__components__dsl__dsl__highlight__legacy__esc
+    legacy__components__dsl__dsl__highlight__legacy__lines --> legacy__components__dsl__dsl__highlight__legacy__kw
+    legacy__components__dsl__dsl__highlight__legacy__lines --> legacy__components__dsl__dsl__highlight__legacy__br
+    legacy__components__dsl__dsl__highlight__legacy__lines --> legacy__components__dsl__dsl__highlight__legacy__highlightValue
+    legacy__components__dsl__dsl__highlight__legacy__lines --> legacy__components__dsl__dsl__highlight__legacy__escHtml
+    legacy__components__dsl__dsl__highlight__legacy__lines --> legacy__components__dsl__dsl__highlight__legacy__str
+    legacy__components__dsl__dsl__highlight__legacy__body --> legacy__components__dsl__dsl__highlight__legacy__kw
+    legacy__components__dsl__dsl__highlight__legacy__unit --> legacy__components__dsl__dsl__highlight__legacy__br
+    legacy__components__dsl__dsl__highlight__legacy__to --> legacy__components__dsl__dsl__highlight__legacy__kw
+    legacy__components__dsl__dsl__highlight__legacy__to --> legacy__components__dsl__dsl__highlight__legacy__br
+    legacy__components__dsl__dsl__highlight__legacy__args --> legacy__components__dsl__dsl__highlight__legacy__br
+    legacy__components__dsl__dsl__highlight__legacy__msg --> legacy__components__dsl__dsl__highlight__legacy__highlightValue
+    legacy__components__dsl__dsl__exec__toNumber --> legacy__components__dsl__dsl__exec__match
+    legacy__components__dsl__dsl__exec__cmp --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__getUnitInfo --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__toBase --> legacy__components__dsl__dsl__exec__getUnitInfo
+    legacy__components__dsl__dsl__exec__getNumericValue --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__num --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__createExecutionAccessors --> legacy__components__dsl__dsl__exec__normalizeStateKey
+    legacy__components__dsl__dsl__exec__createExecutionAccessors --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__createExecutionAccessors --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__getVar --> legacy__components__dsl__dsl__exec__normalizeStateKey
+    legacy__components__dsl__dsl__exec__key --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__key --> legacy__components__dsl__dsl__exec__getVarUnit
+    legacy__components__dsl__dsl__exec__setVar --> legacy__components__dsl__dsl__exec__normalizeStateKey
+    legacy__components__dsl__dsl__exec__setVar --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__setVar --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__replaceExpressionVariables --> legacy__components__dsl__dsl__exec__getVar
+    legacy__components__dsl__dsl__exec__replaceExpressionVariables --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__evalExpr --> legacy__components__dsl__dsl__exec__getVar
+    legacy__components__dsl__dsl__exec__evalExpr --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__varMatches --> legacy__components__dsl__dsl__exec__getVar
+    legacy__components__dsl__dsl__exec__varMatches --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__value --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__value --> legacy__components__dsl__dsl__exec__getVarUnit
+    legacy__components__dsl__dsl__exec__createExpressionEvaluator --> legacy__components__dsl__dsl__exec__replaceExpressionVariables
+    legacy__components__dsl__dsl__exec__createExpressionEvaluator --> legacy__components__dsl__dsl__exec__evaluateNumericExpression
+    legacy__components__dsl__dsl__exec__createExpressionEvaluator --> legacy__components__dsl__dsl__exec__normalizeFunctionExpression
+    legacy__components__dsl__dsl__exec__getAggregateBuffer --> legacy__components__dsl__dsl__exec__getVar
+    legacy__components__dsl__dsl__exec__getAggregateBuffer --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__createAggregateCalculator --> legacy__components__dsl__dsl__exec__getAggregateBuffer
+    legacy__components__dsl__dsl__exec__createAggregateCalculator --> legacy__components__dsl__dsl__exec__calculateAggregateValue
+    legacy__components__dsl__dsl__exec__createParamResolver --> legacy__components__dsl__dsl__exec__getVar
+    legacy__components__dsl__dsl__exec__createParamResolver --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__createParamResolver --> legacy__components__dsl__dsl__exec__getVarUnit
+    legacy__components__dsl__dsl__exec__resolveNamedLiteral --> legacy__components__dsl__dsl__exec__normalizeStateKey
+    legacy__components__dsl__dsl__exec__resolveNamedLiteral --> legacy__components__dsl__dsl__exec__getVar
+    legacy__components__dsl__dsl__exec__resolveNamedLiteral --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__resolveNamedLiteral --> legacy__components__dsl__dsl__exec__getVarUnit
+    legacy__components__dsl__dsl__exec__resolved --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__resolved --> legacy__components__dsl__dsl__exec__getVarUnit
+    legacy__components__dsl__dsl__exec__resolveLiteralWithUnit --> legacy__components__dsl__dsl__exec__toNumber
+    legacy__components__dsl__dsl__exec__resolveLiteralWithUnit --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__resolveNumericStringLiteral --> legacy__components__dsl__dsl__exec__match
+    legacy__components__dsl__dsl__exec__resolveNumericStringLiteral --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__trimmed --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__match --> legacy__components__dsl__dsl__exec__normUnit
+    legacy__components__dsl__dsl__exec__createLiteralResolver --> legacy__components__dsl__dsl__exec__resolveNamedLiteral
+    legacy__components__dsl__dsl__exec__createLiteralResolver --> legacy__components__dsl__dsl__exec__resolveLiteralWithUnit
+    legacy__components__dsl__dsl__exec__createLiteralResolver --> legacy__components__dsl__dsl__exec__resolveNumericStringLiteral
+    legacy__components__dsl__dsl__exec__createLiteralResolver --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__namedLiteral --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__literalWithUnit --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__numericStringLiteral --> legacy__components__dsl__dsl__exec__getNumericValue
+    legacy__components__dsl__dsl__exec__family --> legacy__components__dsl__dsl__exec__cmp
+    legacy__components__dsl__dsl__exec__createExecutionHelpers --> legacy__components__dsl__dsl__exec__createExecutionAccessors
+    legacy__components__dsl__dsl__exec__createExecutionHelpers --> legacy__components__dsl__dsl__exec__createExpressionEvaluator
+    legacy__components__dsl__dsl__exec__createExecutionHelpers --> legacy__components__dsl__dsl__exec__createAggregateCalculator
+    legacy__components__dsl__dsl__exec__createExecutionHelpers --> legacy__components__dsl__dsl__exec__createParamResolver
+    legacy__components__dsl__dsl__exec__createExecutionHelpers --> legacy__components__dsl__dsl__exec__createLiteralResolver
+    legacy__components__dsl__dsl__exec__accessors --> legacy__components__dsl__dsl__exec__createExpressionEvaluator
+    legacy__components__dsl__dsl__exec__accessors --> legacy__components__dsl__dsl__exec__createAggregateCalculator
+    legacy__components__dsl__dsl__exec__accessors --> legacy__components__dsl__dsl__exec__createParamResolver
+    legacy__components__dsl__dsl__exec__accessors --> legacy__components__dsl__dsl__exec__createLiteralResolver
+    legacy__components__dsl__dsl__exec__executeAst --> legacy__components__dsl__dsl__exec__createExecutionHelpers
+    legacy__components__dsl__dsl__exec__executeAst --> legacy__components__dsl__dsl__exec__handler
+    legacy__components__dsl__dsl__exec__executeDsl --> legacy__components__dsl__dsl__exec__executeAst
+    legacy__components__dsl__dsl_registry__parsing__parseTimeMs --> legacy__components__dsl__dsl_registry__parsing__parseNumber
+    legacy__components__dsl__dsl_registry__parsing__parsed --> legacy__components__dsl__dsl_registry__parsing__parseTimeMs
+    legacy__components__dsl__dsl_registry__parsing__handleTask --> legacy__components__dsl__dsl_registry__parsing__resolveValue
+    legacy__components__dsl__dsl_registry__parsing__handleSet --> legacy__components__dsl__dsl_registry__parsing__resolveValue
+    legacy__components__dsl__dsl_registry__parsing__handleSet --> legacy__components__dsl__dsl_registry__parsing__parseNumber
+    legacy__components__dsl__dsl_registry__parsing__handleSet --> legacy__components__dsl__dsl_registry__parsing__parseTimeMs
+    legacy__components__dsl__dsl_registry__parsing__key --> legacy__components__dsl__dsl_registry__parsing__parseTimeMs
+    legacy__components__dsl__dsl_registry__parsing__resolved --> legacy__components__dsl__dsl_registry__parsing__parseTimeMs
+    legacy__components__dsl__dsl_registry__parsing__handleWait --> legacy__components__dsl__dsl_registry__parsing__parseTimeMs
+    legacy__components__dsl__dsl_registry__parsing__handleWait --> legacy__components__dsl__dsl_registry__parsing__resolveValue
+    legacy__components__dsl__dsl_registry__parsing__handleDialog --> legacy__components__dsl__dsl_registry__parsing__parseValue
+    legacy__components__dsl__dsl_registry__parsing__handleOut --> legacy__components__dsl__dsl_registry__parsing__isLiteral
+    legacy__components__dsl__dsl_registry__parsing__handleOut --> legacy__components__dsl__dsl_registry__parsing__parseValue
+    legacy__components__dsl__dsl_registry__parsing__handleIf --> legacy__components__dsl__dsl_registry__parsing__resolveValue
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleTask
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleSet
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleWait
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleDialog
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleOut
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleInfo
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleIf
+    legacy__components__dsl__dsl_registry__parsing__executeFuncCode --> legacy__components__dsl__dsl_registry__parsing__handleFuncCall
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleTask
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleSet
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleWait
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleDialog
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleOut
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleInfo
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleIf
+    legacy__components__dsl__dsl_registry__parsing__lines --> legacy__components__dsl__dsl_registry__parsing__handleFuncCall
+    legacy__components__dsl__dsl__migrate__xml__doc --> legacy__components__dsl__dsl__migrate__xml__collectLegacyTransactions
+    legacy__components__dsl__dsl__migrate__xml__varMap --> legacy__components__dsl__dsl__migrate__xml__collectLegacyTransactions
+    legacy__components__dsl__dsl__migrate__xml__resolveLegacyDeviceName --> legacy__components__dsl__dsl__migrate__xml__getLegacyValue
+    legacy__components__dsl__dsl__migrate__xml__applyLegacyTransactionEntry --> legacy__components__dsl__dsl__migrate__xml__ensureLegacyTransaction
+    legacy__components__dsl__dsl__migrate__xml__applyLegacyTransactionEntry --> legacy__components__dsl__dsl__migrate__xml__ensureLegacyOperation
+    legacy__components__dsl__dsl__migrate__xml__operation --> legacy__components__dsl__dsl__migrate__xml__buildLegacyTaskSteps
+    legacy__components__dsl__dsl__migrate__xml__collectLegacyTransactions --> legacy__components__dsl__dsl__migrate__xml__parseLegacyTransactionEntry
+    legacy__components__dsl__dsl__migrate__xml__collectLegacyTransactions --> legacy__components__dsl__dsl__migrate__xml__applyLegacyTransactionEntry
+    legacy__components__dsl__dsl__migrate__xml__buildLegacyTaskSteps --> legacy__components__dsl__dsl__migrate__xml__buildLegacyOperationTitle
+    legacy__components__dsl__dsl__migrate__xml__buildLegacyGoals --> legacy__components__dsl__dsl__migrate__xml__sortLegacyNumericKeys
+    legacy__components__dsl__dsl__migrate__xml__buildLegacyGoals --> legacy__components__dsl__dsl__migrate__xml__buildLegacyOperationTitle
+    legacy__components__dsl__dsl__migrate__xml__buildLegacyGoals --> legacy__components__dsl__dsl__migrate__xml__buildLegacyTaskSteps
+    legacy__components__dsl__dsl__migrate__xml__operationKeys --> legacy__components__dsl__dsl__migrate__xml__buildLegacyOperationTitle
+    legacy__components__dsl__dsl__migrate__xml__operationKeys --> legacy__components__dsl__dsl__migrate__xml__buildLegacyTaskSteps
+    legacy__components__dsl__dsl__migrate__xml__goalName --> legacy__components__dsl__dsl__migrate__xml__buildLegacyTaskSteps
+    legacy__components__dsl__dsl__migrate__xml__buildLegacyScenarioAst --> legacy__components__dsl__dsl__migrate__xml__buildLegacyScenarioName
+    legacy__components__dsl__dsl__migrate__xml__buildLegacyScenarioAst --> legacy__components__dsl__dsl__migrate__xml__buildLegacyGoals
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportData --> legacy__components__dsl__dsl__migrate__xml__parseLegacyReportDocument
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportData --> legacy__components__dsl__dsl__migrate__xml__collectLegacyVarMap
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportData --> legacy__components__dsl__dsl__migrate__xml__collectLegacyTransactions
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAstMulti --> legacy__components__dsl__dsl__migrate__xml__parseLegacyReportData
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAstMulti --> legacy__components__dsl__dsl__migrate__xml__resolveLegacyDeviceName
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAstMulti --> legacy__components__dsl__dsl__migrate__xml__sortLegacyNumericKeys
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAstMulti --> legacy__components__dsl__dsl__migrate__xml__buildLegacyScenarioAst
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAst --> legacy__components__dsl__dsl__migrate__xml__parseLegacyReportData
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAst --> legacy__components__dsl__dsl__migrate__xml__sortLegacyNumericKeys
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAst --> legacy__components__dsl__dsl__migrate__xml__buildLegacyScenarioAst
+    legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAst --> legacy__components__dsl__dsl__migrate__xml__resolveLegacyDeviceName
+    legacy__components__dsl__dsl__migrate__xml__migrateLegacyXmlToDsl --> legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAst
+    legacy__components__dsl__dsl__migrate__xml__normalizeMigrationFiles --> legacy__components__dsl__dsl__migrate__xml__isFileList
+    legacy__components__dsl__dsl__migrate__xml__postMigratedScenario --> legacy__components__dsl__dsl__migrate__xml__postScenarioToDb
+    legacy__components__dsl__dsl__migrate__xml__postMigratedScenario --> legacy__components__dsl__dsl__migrate__xml__buildDbMigrationResult
+    legacy__components__dsl__dsl__migrate__xml__migrateNativeFileToDb --> legacy__components__dsl__dsl__migrate__xml__postMigratedScenario
+    legacy__components__dsl__dsl__migrate__xml__scenarioName --> legacy__components__dsl__dsl__migrate__xml__postMigratedScenario
+    legacy__components__dsl__dsl__migrate__xml__scenarioName --> legacy__components__dsl__dsl__migrate__xml__buildDbMigrationError
+    legacy__components__dsl__dsl__migrate__xml__migrateLegacyScenarioBatchToDb --> legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAstMulti
+    legacy__components__dsl__dsl__migrate__xml__migrateLegacyScenarioBatchToDb --> legacy__components__dsl__dsl__migrate__xml__postMigratedScenario
+    legacy__components__dsl__dsl__migrate__xml__migrateLegacyScenarioBatchToDb --> legacy__components__dsl__dsl__migrate__xml__buildDbMigrationError
+    legacy__components__dsl__dsl__migrate__xml__scenarios --> legacy__components__dsl__dsl__migrate__xml__postMigratedScenario
+    legacy__components__dsl__dsl__migrate__xml__scenarios --> legacy__components__dsl__dsl__migrate__xml__buildDbMigrationError
+    legacy__components__dsl__dsl__migrate__xml__migrateLegacyFallbackFileToDb --> legacy__components__dsl__dsl__migrate__xml__migrateLegacyXmlToDsl
+    legacy__components__dsl__dsl__migrate__xml__migrateLegacyFallbackFileToDb --> legacy__components__dsl__dsl__migrate__xml__buildDbMigrationResult
+    legacy__components__dsl__dsl__migrate__xml__migrateLegacyFallbackFileToDb --> legacy__components__dsl__dsl__migrate__xml__postMigratedScenario
+    legacy__components__dsl__dsl__migrate__xml__migrateSingleFileToDb --> legacy__components__dsl__dsl__migrate__xml__getMigrationName
+    legacy__components__dsl__dsl__migrate__xml__migrateSingleFileToDb --> legacy__components__dsl__dsl__migrate__xml__migrateNativeFileToDb
+    legacy__components__dsl__dsl__migrate__xml__migrateSingleFileToDb --> legacy__components__dsl__dsl__migrate__xml__migrateLegacyScenarioBatchToDb
+    legacy__components__dsl__dsl__migrate__xml__migrateSingleFileToDb --> legacy__components__dsl__dsl__migrate__xml__migrateLegacyFallbackFileToDb
+    legacy__components__dsl__dsl__migrate__xml__migrateSingleFileToDb --> legacy__components__dsl__dsl__migrate__xml__buildDbMigrationError
+    legacy__components__dsl__dsl__migrate__xml__migrateFilesToDb --> legacy__components__dsl__dsl__migrate__xml__normalizeMigrationFiles
+    legacy__components__dsl__dsl__migrate__xml__migrateFilesToDb --> legacy__components__dsl__dsl__migrate__xml__migrateSingleFileToDb
+    legacy__components__dsl__dsl__migrate__xml__splitLegacyXmlToScenarios --> legacy__components__dsl__dsl__migrate__xml__parseLegacyReportXmlAstMulti
+    legacy__components__dsl__dsl__highlight__kw --> legacy__components__dsl__dsl__highlight__esc
+    legacy__components__dsl__dsl__highlight__br --> legacy__components__dsl__dsl__highlight__esc
+    legacy__components__dsl__dsl__highlight__op --> legacy__components__dsl__dsl__highlight__esc
+    legacy__components__dsl__dsl__highlight__str --> legacy__components__dsl__dsl__highlight__esc
+    legacy__components__dsl__dsl__highlight__highlightValue --> legacy__components__dsl__dsl__highlight__str
+    legacy__components__dsl__dsl__highlight__body --> legacy__components__dsl__dsl__highlight__kw
+    legacy__components__dsl__dsl__highlight__args --> legacy__components__dsl__dsl__highlight__br
+    legacy__components__dsl__dsl__highlight__highlightDsl --> legacy__components__dsl__dsl__highlight__esc
+    legacy__components__dsl__dsl__highlight__lines --> legacy__components__dsl__dsl__highlight__esc
+    legacy__components__dsl__dsl_content_helpers__renderLegacyTimingTask --> legacy__components__dsl__dsl_content_helpers__isTimingAction
+    legacy__components__dsl__dsl_content_helpers__renderLegacyTimingTask --> legacy__components__dsl__dsl_content_helpers__buildLegacySetLine
+    legacy__components__dsl__dsl_content_helpers__renderLegacyObjectTask --> legacy__components__dsl__dsl_content_helpers__normalizeActionTarget
+    legacy__components__dsl__dsl_content_helpers__renderLegacyObjectTask --> legacy__components__dsl__dsl_content_helpers__buildLegacySetLine
+    legacy__components__dsl__dsl_content_helpers__renderLegacyObjectTask --> legacy__components__dsl__dsl_content_helpers__isOffAction
+    legacy__components__dsl__dsl_content_helpers__renderLegacyFunctionTask --> legacy__components__dsl__dsl_content_helpers__buildLegacySetLine
+    legacy__components__dsl__dsl_content_helpers__renderSingleLegacyTask --> legacy__components__dsl__dsl_content_helpers__getLegacyTaskFunctionName
+    legacy__components__dsl__dsl_content_helpers__renderSingleLegacyTask --> legacy__components__dsl__dsl_content_helpers__getLegacyTaskObjectName
+    legacy__components__dsl__dsl_content_helpers__renderSingleLegacyTask --> legacy__components__dsl__dsl_content_helpers__renderLegacyTimingTask
+    legacy__components__dsl__dsl_content_helpers__renderSingleLegacyTask --> legacy__components__dsl__dsl_content_helpers__renderLegacyObjectTask
+    legacy__components__dsl__dsl_content_helpers__renderSingleLegacyTask --> legacy__components__dsl__dsl_content_helpers__renderLegacyFunctionTask
+    legacy__components__dsl__dsl_content_helpers__renderLegacyTaskAsDslLines --> legacy__components__dsl__dsl_content_helpers__getLegacyTaskSequence
+    legacy__components__dsl__dsl_content_helpers__renderLegacyTaskAsDslLines --> legacy__components__dsl__dsl_content_helpers__renderSingleLegacyTask
+    legacy__components__dsl__dsl_content_helpers__appendVariableEntries --> legacy__components__dsl__dsl_content_helpers__buildVariablePayload
+    legacy__components__dsl__dsl_content_helpers__appendVariableGroups --> legacy__components__dsl__dsl_content_helpers__appendVariableEntries
+    legacy__components__dsl__dsl_content_helpers__appendConditionLines --> legacy__components__dsl__dsl_content_helpers__buildConditionalLine
+    legacy__components__dsl__dsl_content_helpers__appendConditionLines --> legacy__components__dsl__dsl_content_helpers__buildElseLine
+    legacy__components__dsl__dsl_content_helpers__type --> legacy__components__dsl__dsl_content_helpers__renderLegacyTaskAsDslLines
+    legacy__components__dsl__dsl_content_helpers__type --> legacy__components__dsl__dsl_content_helpers__buildConditionalLine
+    legacy__components__dsl__dsl_content_helpers__type --> legacy__components__dsl__dsl_content_helpers__buildElseLine
+    legacy__components__dsl__dsl_content_helpers__type --> legacy__components__dsl__dsl_content_helpers__appendVariableEntries
+    legacy__components__dsl__dsl_content_helpers__appendTaskRange --> legacy__components__dsl__dsl_content_helpers__renderLegacyTaskAsDslLines
+    legacy__components__dsl__dsl_content_helpers__appendStructuredGoalSteps --> legacy__components__dsl__dsl_content_helpers__renderLegacyTaskAsDslLines
+    legacy__components__dsl__dsl_content_helpers__appendStructuredGoalSteps --> legacy__components__dsl__dsl_content_helpers__buildConditionalLine
+    legacy__components__dsl__dsl_content_helpers__appendStructuredGoalSteps --> legacy__components__dsl__dsl_content_helpers__buildElseLine
+    legacy__components__dsl__dsl_content_helpers__appendStructuredGoalSteps --> legacy__components__dsl__dsl_content_helpers__appendVariableEntries
+    legacy__components__dsl__dsl_content_helpers__steps --> legacy__components__dsl__dsl_content_helpers__appendStructuredGoalSteps
+    legacy__components__dsl__dsl_content_helpers__steps --> legacy__components__dsl__dsl_content_helpers__appendLegacyGoalContent
+    legacy__components__dsl__dsl_content_helpers__appendLegacyGoalContent --> legacy__components__dsl__dsl_content_helpers__findFirstOffTaskIndex
+    legacy__components__dsl__dsl_content_helpers__appendLegacyGoalContent --> legacy__components__dsl__dsl_content_helpers__appendTaskRange
+    legacy__components__dsl__dsl_content_helpers__appendLegacyGoalContent --> legacy__components__dsl__dsl_content_helpers__appendVariableGroups
+    legacy__components__dsl__dsl_content_helpers__appendLegacyGoalContent --> legacy__components__dsl__dsl_content_helpers__appendConditionLines
+    legacy__components__dsl__dsl_content_helpers__tasks --> legacy__components__dsl__dsl_content_helpers__appendTaskRange
+    legacy__components__dsl__dsl_content_helpers__tasks --> legacy__components__dsl__dsl_content_helpers__appendVariableGroups
+    legacy__components__dsl__dsl_content_helpers__tasks --> legacy__components__dsl__dsl_content_helpers__appendConditionLines
+    legacy__components__dsl__dsl_content_helpers__variableGroups --> legacy__components__dsl__dsl_content_helpers__appendTaskRange
+    legacy__components__dsl__dsl_content_helpers__variableGroups --> legacy__components__dsl__dsl_content_helpers__appendVariableGroups
+    legacy__components__dsl__dsl_content_helpers__variableGroups --> legacy__components__dsl__dsl_content_helpers__appendConditionLines
+    legacy__components__dsl__dsl_content_helpers__conditions --> legacy__components__dsl__dsl_content_helpers__appendTaskRange
+    legacy__components__dsl__dsl_content_helpers__conditions --> legacy__components__dsl__dsl_content_helpers__appendVariableGroups
+    legacy__components__dsl__dsl_content_helpers__conditions --> legacy__components__dsl__dsl_content_helpers__appendConditionLines
+    legacy__components__dsl__dsl_content_helpers__splitIndex --> legacy__components__dsl__dsl_content_helpers__appendTaskRange
+    legacy__components__dsl__dsl_content_helpers__splitIndex --> legacy__components__dsl__dsl_content_helpers__appendVariableGroups
+    legacy__components__dsl__dsl_content_helpers__splitIndex --> legacy__components__dsl__dsl_content_helpers__appendConditionLines
+    legacy__components__dsl__dsl_content_helpers__appendGoalDsl --> legacy__components__dsl__dsl_content_helpers__appendStructuredGoalSteps
+    legacy__components__dsl__dsl_content_helpers__appendGoalDsl --> legacy__components__dsl__dsl_content_helpers__appendLegacyGoalContent
+    legacy__components__dsl__dsl_content_helpers__buildScenarioDslLines --> legacy__components__dsl__dsl_content_helpers__appendGoalDsl
+    legacy__components__dsl__dsl_content_helpers__dslFromScenarioContent --> legacy__components__dsl__dsl_content_helpers__normalizeDsl
+    legacy__components__dsl__dsl_content_helpers__dslFromScenarioContent --> legacy__components__dsl__dsl_content_helpers__buildScenarioDslLines
+    legacy__components__dsl__dsl_content_helpers__goalsFromContent --> legacy__components__dsl__dsl_content_helpers__dslFromScenarioContent
+    legacy__components__dsl__dsl_dialog__showDslDialog --> legacy__components__dsl__dsl_dialog__injectStyles
+    legacy__components__dsl__dsl_data__service__DslDataService__normalizeList --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__seen --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__text --> legacy__components__dsl__dsl_data__service__DslDataService__getSharedSchemaUrls
+    legacy__components__dsl__dsl_data__service__DslDataService__getSharedSchemaUrls --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__currentUrl --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__objectByName --> legacy__components__dsl__dsl_data__service__DslDataService__normalizeList
+    legacy__components__dsl__dsl_data__service__DslDataService__objectByName --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__functionByName --> legacy__components__dsl__dsl_data__service__DslDataService__normalizeList
+    legacy__components__dsl__dsl_data__service__DslDataService__functionByName --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__objectRef --> legacy__components__dsl__dsl_data__service__DslDataService__normalizeList
+    legacy__components__dsl__dsl_data__service__DslDataService__objectRef --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__functionRef --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__paramRef --> legacy__components__dsl__dsl_data__service__DslDataService__normalizeList
+    legacy__components__dsl__dsl_data__service__DslDataService__paramRef --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__unitRef --> legacy__components__dsl__dsl_data__service__DslDataService__push
+    legacy__components__dsl__dsl_data__service__DslDataService__buildSharedObjectBindings --> legacy__components__dsl__dsl_data__service__DslDataService__normalizeList
+    legacy__components__dsl__dsl_data__service__DslDataService__bindings --> legacy__components__dsl__dsl_data__service__DslDataService__normalizeList
+    legacy__components__dsl__dsl_data__service__DslDataService__buildSharedParamBindings --> legacy__components__dsl__dsl_data__service__DslDataService__normalizeList
+    legacy__components__dsl__dsl_data__service__DslDataService__units --> legacy__components__dsl__dsl_data__service__DslDataService__transformDslObjects
+    legacy__components__dsl__dsl_data__service__DslDataService__units --> legacy__components__dsl__dsl_data__service__DslDataService__transformDslFunctions
+    legacy__components__dsl__dsl_data__service__DslDataService__units --> legacy__components__dsl__dsl_data__service__DslDataService__transformDslParams
+    legacy__components__dsl__dsl_data__service__DslDataService__units --> legacy__components__dsl__dsl_data__service__DslDataService__transformDslUnits
+    legacy__components__dsl__dsl_data__service__DslDataService__fetchSharedSchema --> legacy__components__dsl__dsl_data__service__DslDataService__getSharedSchemaUrls
+    legacy__components__dsl__dsl_data__service__DslDataService__fetchSharedSchema --> legacy__components__dsl__dsl_data__service__DslDataService__fetchWithAuth
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class legacy__components__dsl_sim__simulator__DslSimulator__render,legacy__components__dsl_sim__simulator__DslSimulator__html,legacy__components__dsl_table__dsl_table__component__DslTable__getValue,legacy__components__dsl__dsl__runtime__helpers__buildObjectFunctionMap,legacy__components__dsl_log__logger__DslLogger__startPolling,legacy__components__dsl__dsl__runtime__createExecContextFromDef,legacy__components__dsl__dsl__highlight__legacy__highlightDsl,legacy__components__dsl__dsl__highlight__legacy__lines,legacy__components__dsl__dsl__exec__executeAst,legacy__components__dsl__dsl_registry__parsing__handleOut,legacy__components__dsl__dsl_content_helpers__appendVariableEntries,legacy__components__dsl__dsl_data__service__DslDataService__fetchSharedSchema,legacy__modules__connect_scenario__helpers__scenario_editor__api__fetchRuntimeState,legacy__modules__connect_scenario__helpers__scenario_editor__api__proj,legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__listScenarios,legacy__modules__connect_scenario__helpers__scenarios__service__ScenariosService__cqrs,legacy__modules__connect_scenario__helpers__scenarios__controller__setupScenariosPage,legacy__modules__connect_scenario__connect_scenario__view__ConnectScenarioView__loadCurrentPage,legacy__modules__connect_scenario__helpers__scenarios__patcher__fetchScenarioIdByTitle,legacy__modules__connect_scenario__helpers__scenarios__patcher__appendMaxMinToDsl,legacy__modules__connect_scenario__helpers__scenarios__library_helpers__generateDslFromLibraryGoals,legacy__modules__connect_scenario__helpers__scenarios__dnd__ScenariosDnD__initStepsReorder,legacy__modules__connect_scenario__helpers__scenarios__dnd__ScenariosDnD__lists,legacy__components__dsl__dsl_registry__DslRegistry__buildMeasurements,legacy__components__dsl__dsl__parser__parseTaskPart,legacy__components__dsl__dsl__parser__parseDsl,legacy__components__dsl__dsl_tools__DslTools__ensureIfUsesVariables,legacy__components__dsl__dsl_tools__DslTools__sanitizePlaceholders,legacy__modules__connect_scenario__helpers__scenarios__db_loader__dslText,legacy__modules__connect_scenario__helpers__scenarios__ui_container__bindContainerUiEvents highCC
+    class legacy__components__dsl_editor__dsl_commands__renderGoalActionsButtons,legacy__components__dsl_editor__renderers_helpers__mapClassToDefKey,legacy__components__dsl_editor__renderers_helpers__buildSelect,legacy__components__dsl_editor__blocks__getBlockType,legacy__components__dsl_editor__blocks__moveGoalUp,legacy__components__dsl_editor__blocks__moveGoalDown,legacy__components__dsl_table__dsl_table__component__DslTable__render,legacy__components__dsl_table__dsl_table__component__DslTable__runtimeKeys,legacy__components__dsl__dsl_registry__commands__createBuiltInCommands,legacy__components__dsl_sim__state_table__DslStateTable__render,legacy__components__dsl_sim__state_table__DslStateTable__getOriginBadge,legacy__components__dsl__dsl_registry__execution__compareEquality,legacy__components__dsl__dsl_registry__execution__compare,legacy__components__dsl__dsl_registry__execution__executeMapping,legacy__components__dsl__dsl_registry__execution__kind,legacy__components__dsl_editor__renderers_step_blocks__buildVarSelectHtml,legacy__components__dsl_editor__renderers_step_blocks__renderResultBlock,legacy__components__dsl_editor__renderers_step_blocks__renderOutBlock,legacy__components__dsl_editor__renderers__BlockRenderers__renderConditionBlock,legacy__components__dsl__dsl__runtime__helpers__toList,legacy__components__dsl__dsl__runtime__helpers__buildParamUnitMap,legacy__components__dsl__dsl__runtime__helpers__getClassLibrarySource,legacy__components__dsl__dsl__runtime__helpers__hasDerivedLibraryEntries,legacy__components__dsl__dsl__runtime__helpers__buildHeuristicLibrary,legacy__components__dsl_log__logger__DslLogger__connectStream,legacy__components__dsl_log__logger__DslLogger__announced,legacy__components__dsl_log__logger__DslLogger__fetchWithAuth,legacy__components__dsl__dsl_timer__service__DslTimerService__start,legacy__components__dsl__dsl_timer__service__DslTimerService__tick,legacy__components__dsl__dsl_timer__service__DslTimerService__executeDslCommand medCC

@@ -1,0 +1,312 @@
+# code2llm | 250f 47350L | typescript:224,javascript:20,python:5,shell:1 | 2026-04-20
+# CC̄=3.8 | critical:171/5071 | dups:5 | cycles:0
+
+HEALTH[20]:
+  🔴 DUP   5 classes duplicated
+  🟡 CC    render CC=24 (limit:15)
+  🟡 CC    html CC=23 (limit:15)
+  🟡 CC    getValue CC=15 (limit:15)
+  🟡 CC    buildObjectFunctionMap CC=17 (limit:15)
+  🟡 CC    startPolling CC=15 (limit:15)
+  🟡 CC    createExecContextFromDef CC=16 (limit:15)
+  🟡 CC    highlightDsl CC=64 (limit:15)
+  🟡 CC    lines CC=62 (limit:15)
+  🟡 CC    executeAst CC=23 (limit:15)
+  🟡 CC    handleOut CC=16 (limit:15)
+  🟡 CC    appendVariableEntries CC=16 (limit:15)
+  🟡 CC    fetchSharedSchema CC=21 (limit:15)
+  🟡 CC    fetchRuntimeState CC=36 (limit:15)
+  🟡 CC    proj CC=19 (limit:15)
+  🟡 CC    listScenarios CC=19 (limit:15)
+  🟡 CC    cqrs CC=16 (limit:15)
+  🟡 CC    setupScenariosPage CC=18 (limit:15)
+  🟡 CC    loadCurrentPage CC=23 (limit:15)
+  🟡 CC    fetchScenarioIdByTitle CC=21 (limit:15)
+
+REFACTOR[2]:
+  1. rm duplicates  (-5 dup classes)
+  2. split 19 high-CC methods  (CC>15)
+
+PIPELINES[2804]:
+  [1] Src [env]: env
+      PURITY: 100% pure
+  [2] Src [apiTarget]: apiTarget
+      PURITY: 100% pure
+  [3] Src [wsTarget]: wsTarget
+      PURITY: 100% pure
+  [4] Src [getButtonsByCategory]: getButtonsByCategory
+      PURITY: 100% pure
+  [5] Src [renderGoalActionsButtons]: renderGoalActionsButtons
+      PURITY: 100% pure
+
+LAYERS:
+  legacy/                         CC̄=3.9    ←in:0  →out:0  ×DUP
+  │ !! def-editor.styles.ts      1034L  0C    1m  CC=1      ←0
+  │ !! connect-scenario-scenario-editor.page.ts   910L  1C  104m  CC=53     ←0
+  │ !! connect-scenario-library-editor.page.ts   817L  1C  140m  CC=25     ←0
+  │ !! connect-scenario-dsl-editor.page.ts   768L  1C  121m  CC=29     ←0
+  │ !! dsl-editor.styles.ts       702L  0C    1m  CC=1      ←0
+  │ !! connect-scenario-map-editor.page.ts   681L  2C  105m  CC=66     ←0
+  │ !! dsl-tools.ts               658L  1C   75m  CC=18     ←0  ×DUP
+  │ !! dsl-registry.ts            632L  1C   61m  CC=21     ←0  ×DUP
+  │ !! scenarios.ui-window-handlers.ts   610L  0C  106m  CC=42     ←0
+  │ !! goal-run.runtime.ts        584L  0C   79m  CC=37     ←0
+  │ !! connect-scenario-scenarios.page.ts   561L  1C   91m  CC=26     ←0
+  │ !! dsl.validator.ts           553L  0C   50m  CC=11     ←0
+  │ !! def-integration.ts         542L  1C   60m  CC=10     ←0
+  │ !! dsl-console.component.ts   531L  1C   36m  CC=8      ←0
+  │ !! dsl.xml.ts                 522L  0C   88m  CC=12     ←0
+  │ !! def-syntax-highlighter.ts   520L  2C   77m  CC=11     ←0
+  │ def-editor.render.ts       489L  9C   33m  CC=9      ←0
+  │ dsl.schema.ts              485L  0C   53m  CC=5      ←0
+  │ !! dsl-data.service.ts        484L  11C   56m  CC=21     ←0  ×DUP
+  │ !! dsl.parser.ts              483L  0C   71m  CC=56     ←0
+  │ connect-scenario-func-editor.page.ts   482L  1C   25m  CC=14     ←0
+  │ !! scenarios.serializer.ts    467L  1C  108m  CC=17     ←0
+  │ !! scenarios.ui-container-handlers.ts   464L  1C   83m  CC=57     ←0
+  │ !! dsl-editor.runtime.ts      463L  2C   66m  CC=46     ←0
+  │ library-editor.data-loader.test.ts   420L  0C    5m  CC=1      ←0
+  │ scenarios.events.ts        409L  1C   35m  CC=13     ←0
+  │ !! map-editor.renderers.ts    401L  1C   21m  CC=21     ←0
+  │ !! scenarios.library.ts       395L  1C   73m  CC=48     ←0
+  │ main.ts                    386L  2C   20m  CC=12     ←0
+  │ !! library-editor.data-loader.ts   383L  0C   42m  CC=40     ←0
+  │ dsl-timer.service.ts       369L  3C   37m  CC=13     ←0  ×DUP
+  │ !! dsl.exec.ts                365L  0C   67m  CC=23     ←0
+  │ map-editor.styles.ts       362L  0C    1m  CC=2      ←0
+  │ dsl-func.parser.ts         347L  3C   33m  CC=13     ←0
+  │ map-editor.crud.ts         344L  2C   52m  CC=11     ←0
+  │ dsl.migrate.xml.ts         312L  0C   68m  CC=10     ←0
+  │ scenarios.styles.ts        291L  1C    1m  CC=2      ←0
+  │ !! library-editor.dsl.ts      280L  1C   30m  CC=18     ←0
+  │ !! logger.ts                  264L  2C   33m  CC=15     ←0
+  │ !! dsl.highlight.legacy.ts    264L  0C   17m  CC=64     ←1
+  │ !! library-editor.validation.ts   261L  2C   28m  CC=24     ←0
+  │ renderers-step-blocks.ts   259L  0C   45m  CC=10     ←0
+  │ dsl-execution.handlers.ts   251L  3C   41m  CC=8      ←0
+  │ dsl.highlight.refactored.test.ts   249L  0C    1m  CC=1      ←0
+  │ dsl.highlight.ts           248L  0C   16m  CC=13     ←0
+  │ !! dsl-content-helpers.ts     246L  0C   51m  CC=16     ←0
+  │ !! def-library.ts             244L  0C   35m  CC=17     ←0
+  │ !! library-editor.defaults.ts   230L  1C   39m  CC=16     ←0
+  │ renderers.ts               224L  1C   44m  CC=14     ←0
+  │ def-integration.persistence.test.ts   215L  0C   17m  CC=1      ←0
+  │ dsl.serialize.text.ts      212L  0C   41m  CC=6      ←0
+  │ !! dsl-registry.parsing.ts    207L  0C   33m  CC=16     ←0
+  │ !! dsl.runtime.helpers.ts     206L  0C   32m  CC=17     ←0
+  │ library-editor.crud.ts     206L  1C   34m  CC=8      ←0
+  │ library-editor.action-handlers.ts   202L  0C   19m  CC=4      ←0
+  │ goal-run.runtime.test.ts   200L  0C   21m  CC=2      ←0
+  │ dsl.serialize.ts           195L  0C   50m  CC=11     ←0
+  │ map-editor.templates.ts    194L  0C    1m  CC=1      ←0
+  │ !! library-editor.conversions.ts   190L  1C   15m  CC=15     ←0
+  │ !! scenarios.save.ts          180L  1C   23m  CC=27     ←0
+  │ dsl-editor.templates.ts    178L  0C    2m  CC=2      ←0
+  │ !! dsl-table.component.ts     175L  1C   23m  CC=15     ←0
+  │ !! variables.ui.ts            175L  0C   33m  CC=27     ←0
+  │ example-map.js             175L  0C    0m  CC=0.0    ←0
+  │ index.ts                   173L  0C    9m  CC=3      ←0
+  │ dsl.validate.db.ts         172L  0C   38m  CC=13     ←0
+  │ types.ts                   171L  15C    0m  CC=0.0    ←0
+  │ def-integration.event-bindings.test.ts   167L  0C   17m  CC=1      ←0
+  │ dsl.engine.ts              160L  4C   23m  CC=4      ←0  ×DUP
+  │ dsl-registry.execution.ts   159L  1C   21m  CC=11     ←0
+  │ !! library-editor.events.ts   157L  1C   13m  CC=26     ←0
+  │ def-integration.live-state.test.ts   156L  0C    7m  CC=1      ←0
+  │ dsl-dialog.ts              154L  1C    8m  CC=9      ←0
+  │ !! read-model.ts              154L  1C    9m  CC=63     ←0
+  │ !! dsl-editor.parsing.ts      153L  1C   16m  CC=18     ←0
+  │ def-integration.library-sync.test.ts   150L  0C    8m  CC=1      ←0
+  │ !! func-editor-bindings.ts    146L  1C   25m  CC=25     ←0
+  │ dsl.serialize.test.ts      145L  0C    2m  CC=1      ←0
+  │ dsl.types.ts               145L  0C    0m  CC=0.0    ←0
+  │ library-editor.templates.ts   143L  0C    1m  CC=2      ←0
+  │ def-library.test.ts        134L  0C    3m  CC=2      ←0
+  │ !! connect-scenario.view.ts   133L  1C   15m  CC=23     ←0
+  │ def-integration.runtime-controls.test.ts   133L  0C   21m  CC=1      ←0
+  │ def-integration.persistence.ts   132L  0C    7m  CC=10     ←0
+  │ !! def-integration.templates.ts   132L  1C   13m  CC=17     ←0
+  │ !! def-integration.event-bindings.ts   130L  0C   15m  CC=20     ←0
+  │ def-integration.library-sync.ts   128L  0C   12m  CC=12     ←0
+  │ dsl.migrate.xml.db.test.ts   127L  0C    3m  CC=2      ←0
+  │ !! scenario-editor.api.ts     125L  0C   13m  CC=36     ←0
+  │ def-integration.add-to-def.ts   125L  0C   18m  CC=4      ←0
+  │ state-table.ts             124L  1C   17m  CC=12     ←0
+  │ !! def-integration.runtime-controls.ts   124L  0C   13m  CC=16     ←0
+  │ !! scenario-editor.sandbox.ts   121L  1C   23m  CC=24     ←0
+  │ !! scenarios.dnd.ts           116L  1C   22m  CC=16     ←0
+  │ dsl-registry.commands.ts   112L  0C    5m  CC=14     ←0
+  │ scenarios.library.test.ts   112L  0C    0m  CC=0.0    ←0
+  │ !! scenarios.service.ts       111L  1C   18m  CC=19     ←0
+  │ !! scenarios.click-handlers.ts   111L  0C   17m  CC=16     ←0
+  │ !! scenarios.db-loader.ts     110L  1C   11m  CC=17     ←0
+  │ dsl.validate.db.test.ts    109L  0C    3m  CC=1      ←0
+  │ !! scenarios.library-helpers.ts   106L  1C   10m  CC=15     ←0
+  │ def-integration.add-to-def.test.ts   103L  0C    3m  CC=1      ←0
+  │ dsl.xsd.ts                 103L  0C    0m  CC=0.0    ←0
+  │ !! scenarios.def-helpers.ts   100L  0C   15m  CC=20     ←0
+  │ def-integration.live-state.ts    98L  0C    7m  CC=11     ←0
+  │ !! handlers.ts                 97L  0C   14m  CC=22     ←0
+  │ !! library-editor.highlight.ts    97L  0C   12m  CC=17     ←0
+  │ !! simulator.ts                96L  1C   17m  CC=24     ←0
+  │ !! scenarios.cqrs-loader.ts    96L  1C   13m  CC=16     ←0
+  │ blocks.ts                   95L  0C   19m  CC=12     ←0
+  │ def-integration.editor-lifecycle.test.ts    93L  0C    7m  CC=1      ←0
+  │ !! scenarios.ui-container.ts    92L  0C   20m  CC=55     ←0
+  │ dsl.schema.test.ts          91L  0C    4m  CC=3      ←0
+  │ scenarios.loader.ts         87L  1C    5m  CC=5      ←0
+  │ dsl-registry.types.ts       85L  8C    0m  CC=0.0    ←0
+  │ dsl.runtime.helpers.test.ts    84L  0C    0m  CC=0.0    ←0
+  │ scenarios.save.test.ts      83L  0C    5m  CC=1      ←0
+  │ def-integration.editor-lifecycle.ts    83L  0C    8m  CC=5      ←0
+  │ dsl.serialize.text.test.ts    82L  0C    1m  CC=2      ←0
+  │ !! scenarios.controller.ts     82L  0C    6m  CC=18     ←0
+  │ def-integration.default-def.test.ts    82L  0C    1m  CC=1      ←0
+  │ connect-scenario.view.test.ts    81L  0C    2m  CC=1      ←0
+  │ def-integration.library.test.ts    81L  0C    3m  CC=1      ←0
+  │ dsl-registry.presets.ts     80L  0C    5m  CC=3      ←0
+  │ !! scenarios.patcher.ts        80L  0C   15m  CC=21     ←0
+  │ def-integration.ui-state.test.ts    80L  0C    5m  CC=1      ←0
+  │ scenarios.library.ui.ts     79L  1C   17m  CC=8      ←0
+  │ dsl-func.parser.test.ts     78L  0C    2m  CC=1      ←0
+  │ !! scenarios.list.ts           77L  1C   19m  CC=42     ←0
+  │ types.ts                    76L  5C    0m  CC=0.0    ←0
+  │ dsl.xml.test.ts             75L  0C    2m  CC=1      ←0
+  │ def-integration.ui-state.ts    75L  0C    6m  CC=3      ←0
+  │ scenarios.loader.test.ts    75L  0C    1m  CC=3      ←0
+  │ library-editor.goals-config.ts    75L  1C   13m  CC=9      ←0
+  │ !! scenarios.preview.ts        74L  1C   16m  CC=33     ←0
+  │ dsl-commands.ts             73L  1C    5m  CC=12     ←0
+  │ func-editor-parser.ts       70L  2C    6m  CC=9      ←0
+  │ dsl.migrate.xml.test.ts     69L  0C    2m  CC=1      ←0
+  │ scenarios.dialogs.test.ts    67L  0C    3m  CC=1      ←0
+  │ scenarios.event-handlers.ts    67L  0C   10m  CC=10     ←0
+  │ dsl-contract.ts             66L  3C    0m  CC=0.0    ←0
+  │ dsl-editor.runtime.test.ts    65L  0C    1m  CC=1      ←0
+  │ index.ts                    65L  0C    0m  CC=0.0    ←0
+  │ renderers-helpers.ts        63L  0C   13m  CC=13     ←0
+  │ scenario-dialogs.ts         63L  0C    5m  CC=8      ←0
+  │ def-integration.library.ts    63L  0C    9m  CC=4      ←0
+  │ def-integration.ui-events.test.ts    59L  0C    9m  CC=2      ←0
+  │ scenarios.service.test.ts    59L  0C    4m  CC=1      ←0
+  │ engine.ts                   59L  1C    3m  CC=3      ←0
+  │ dsl.exec.test.ts            56L  0C    2m  CC=1      ←0
+  │ dsl.quotes.ts               52L  0C   12m  CC=6      ←0
+  │ def-integration.runtime.test.ts    50L  0C    2m  CC=1      ←0
+  │ scenarios.ui-popover.ts     50L  0C    9m  CC=10     ←0
+  │ !! dsl.runtime.ts              45L  0C    7m  CC=16     ←0
+  │ conditions.ts               42L  0C   11m  CC=9      ←0
+  │ renderers.types.ts          42L  5C    0m  CC=0.0    ←0
+  │ singleton.ts                41L  0C    5m  CC=2      ←0
+  │ def-integration.default-def.ts    40L  0C    8m  CC=1      ←0
+  │ def-integration.ui-events.ts    40L  0C    5m  CC=6      ←0
+  │ def-integration.runtime.ts    40L  0C    6m  CC=2      ←0
+  │ cql-editor-content.ts       39L  0C    9m  CC=3      ←0
+  │ dsl.examples.ts             38L  0C    4m  CC=2      ←0
+  │ connect-scenario.module.ts    32L  1C    2m  CC=1      ←0
+  │ scenarios.ui-types.ts       32L  0C    0m  CC=0.0    ←0
+  │ def-integration.dsl-runner.test.ts    31L  0C    3m  CC=1      ←0
+  │ vite.config.ts              27L  0C    0m  CC=0.0    ←0
+  │ scenarios.templates.ts      25L  1C    1m  CC=1      ←0
+  │ index.ts                    23L  0C    0m  CC=0.0    ←0
+  │ !! helpers.ts                  22L  0C    3m  CC=19     ←0
+  │ scenarios.ui-bridge.ts      21L  0C    3m  CC=6      ←0
+  │ scenarios.ui-window.ts      20L  0C    5m  CC=10     ←0
+  │ def-integration.dsl-runner.ts    17L  0C    2m  CC=2      ←0
+  │ dsl-table.types.ts          17L  0C    0m  CC=0.0    ←0
+  │ index.ts                    12L  0C    0m  CC=0.0    ←0
+  │ index.ts                     6L  0C    0m  CC=0.0    ←0
+  │ singleton.ts                 5L  0C    0m  CC=0.0    ←0
+  │ dsl.quote-utils.ts           4L  0C    0m  CC=0.0    ←0
+  │ index.ts                     3L  0C    0m  CC=0.0    ←0
+  │ index.ts                     3L  0C    0m  CC=0.0    ←0
+  │ index.ts                     3L  0C    0m  CC=0.0    ←0
+  │ index.ts                     2L  0C    0m  CC=0.0    ←0
+  │
+  src/                            CC̄=3.8    ←in:0  →out:0
+  │ !! Scenarios.jsx              414L  0C   27m  CC=16     ←0
+  │ !! parseOqlToSteps.js         404L  0C   48m  CC=47     ←0
+  │ !! OqlStepRenderer.jsx        366L  0C   19m  CC=16     ←0
+  │ OqlReportRenderer.jsx      186L  0C   16m  CC=14     ←0
+  │ TerminalSim.jsx            166L  0C   24m  CC=8      ←0
+  │ oql-examples.js            164L  0C    0m  CC=0.0    ←0
+  │ CodeEditor.jsx             148L  0C   10m  CC=3      ←0
+  │ I18nProvider.jsx           146L  0C   12m  CC=12     ←0
+  │ wsClient.js                138L  1C   30m  CC=13     ←0
+  │ !! scenariosApi.js            118L  0C   13m  CC=20     ←0
+  │ EditorPlaceholder.jsx       81L  0C    2m  CC=2      ←0
+  │ cqlRuntimeApi.js            81L  2C   21m  CC=7      ←0
+  │ useUrlConfig.js             76L  0C   13m  CC=14     ←0
+  │ AppConfigProvider.jsx       37L  0C    6m  CC=3      ←0
+  │ App.jsx                     32L  0C    0m  CC=0.0    ←0
+  │ main.jsx                    27L  0C    1m  CC=1      ←0
+  │ useWsStatus.js              26L  0C    4m  CC=3      ←0
+  │ SharedNav.jsx               13L  0C    0m  CC=0.0    ←0
+  │
+  runtime/                        CC̄=3.2    ←in:0  →out:0  ×DUP
+  │ !! dsl-tools.ts               658L  1C   75m  CC=18     ←0  ×DUP
+  │ !! dsl-registry.ts            632L  1C   61m  CC=21     ←0  ×DUP
+  │ !! dsl.validator.ts           553L  0C   50m  CC=11     ←0
+  │ !! dsl.xml.ts                 522L  0C   88m  CC=12     ←0
+  │ dsl.schema.ts              485L  0C   53m  CC=5      ←0
+  │ !! dsl-data.service.ts        484L  11C   56m  CC=21     ←0  ×DUP
+  │ !! dsl.parser.ts              483L  0C   71m  CC=56     ←0
+  │ dsl-timer.service.ts       369L  3C   37m  CC=13     ←0  ×DUP
+  │ !! dsl.exec.ts                365L  0C   67m  CC=23     ←0
+  │ dsl-func.parser.ts         347L  3C   33m  CC=13     ←0
+  │ dsl.migrate.xml.ts         312L  0C   68m  CC=10     ←0
+  │ !! dsl.highlight.legacy.ts    264L  0C   17m  CC=64     ←0
+  │ dsl-execution.handlers.ts   251L  3C   41m  CC=8      ←0
+  │ dsl.highlight.refactored.test.ts   249L  0C    1m  CC=1      ←0
+  │ dsl.highlight.ts           248L  0C   16m  CC=13     ←0
+  │ !! dsl-content-helpers.ts     246L  0C   51m  CC=16     ←0
+  │ dsl.serialize.text.ts      212L  0C   41m  CC=6      ←0
+  │ !! dsl-registry.parsing.ts    207L  0C   33m  CC=16     ←0
+  │ !! dsl.runtime.helpers.ts     206L  0C   32m  CC=17     ←0
+  │ dsl.validate.db.ts         172L  0C   38m  CC=13     ←0
+  │ dsl.engine.ts              160L  4C   23m  CC=4      ←0  ×DUP
+  │ dsl-registry.execution.ts   159L  1C   21m  CC=11     ←0
+  │ dsl-dialog.ts              154L  1C    8m  CC=9      ←0
+  │ dsl.types.ts               145L  0C    0m  CC=0.0    ←0
+  │ dsl.migrate.xml.db.test.ts   127L  0C    3m  CC=2      ←0
+  │ dsl-registry.commands.ts   112L  0C    5m  CC=14     ←0
+  │ dsl.validate.db.test.ts    109L  0C    3m  CC=1      ←0
+  │ dsl.xsd.ts                 103L  0C    0m  CC=0.0    ←0
+  │ dsl.schema.test.ts          91L  0C    4m  CC=3      ←0
+  │ dsl-registry.types.ts       85L  8C    0m  CC=0.0    ←0
+  │ dsl.runtime.helpers.test.ts    84L  0C    0m  CC=0.0    ←0
+  │ dsl.serialize.text.test.ts    82L  0C    1m  CC=2      ←0
+  │ dsl-registry.presets.ts     80L  0C    5m  CC=3      ←0
+  │ dsl-func.parser.test.ts     78L  0C    2m  CC=1      ←0
+  │ dsl.xml.test.ts             75L  0C    2m  CC=1      ←0
+  │ dsl.migrate.xml.test.ts     69L  0C    2m  CC=1      ←0
+  │ dsl-contract.ts             66L  3C    0m  CC=0.0    ←0
+  │ index.ts                    65L  0C    0m  CC=0.0    ←0
+  │ dsl.exec.test.ts            56L  0C    2m  CC=1      ←0
+  │ dsl.quotes.ts               52L  0C   12m  CC=6      ←0
+  │ !! dsl.runtime.ts              45L  0C    7m  CC=16     ←0
+  │ singleton.ts                41L  0C    5m  CC=2      ←0
+  │ dsl.examples.ts             38L  0C    4m  CC=2      ←0
+  │ dsl.quote-utils.ts           4L  0C    0m  CC=0.0    ←0
+  │
+  ./                              CC̄=2.0    ←in:0  →out:0
+  │ vite.config.js              38L  0C    3m  CC=2      ←0
+  │ project.sh                  33L  0C    0m  CC=0.0    ←0
+  │
+  backend/                        CC̄=1.5    ←in:0  →out:0
+  │ app                        192L  4C   14m  CC=2      ←0
+  │ highlight                  107L  0C    4m  CC=5      ←1
+  │ quotes                      61L  0C    8m  CC=4      ←1
+  │ __main__                    20L  0C    1m  CC=1      ←0
+  │ __init__                    12L  0C    0m  CC=0.0    ←0
+  │
+
+COUPLING:
+                       backend.cql_backend    legacy.components
+  backend.cql_backend                   ──                    1
+    legacy.components                   ←1                   ──
+  CYCLES: none
+
+EXTERNAL:
+  validation: run `vallm batch .` → validation.toon
+  duplication: run `redup scan .` → duplication.toon

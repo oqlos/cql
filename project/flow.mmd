@@ -1,0 +1,32 @@
+flowchart TD
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph Core
+        vite__config__env["env"]
+        vite__config__apiTarget["apiTarget"]
+        vite__config__wsTarget["wsTarget"]
+        legacy__components__dsl_editor__dsl_commands__getButtonsByCategory["getButtonsByCategory"]
+        legacy__components__dsl_editor__dsl_commands__renderGoalActionsButtons["renderGoalActionsButtons"]
+        legacy__components__dsl_editor__dsl_commands__btnClass["btnClass"]
+        legacy__components__dsl_editor__dsl_commands__buttons["buttons"]
+        legacy__components__dsl_editor__dsl_commands__renderFuncActionsButtons["renderFuncActionsButtons"]
+        legacy__components__dsl_editor__renderers_helpers__stepActions["stepActions"]
+        legacy__components__dsl_editor__renderers_helpers__norm["norm"]
+        legacy__components__dsl_editor__renderers_helpers__lang["lang"]
+        legacy__components__dsl_editor__renderers_helpers__selected["selected"]
+        legacy__components__dsl_editor__renderers_helpers__buildSelect["buildSelect"]
+        legacy__components__dsl_editor__renderers_helpers__textDef["textDef"]
+        legacy__components__dsl_editor__renderers_helpers__val["val"]
+        ...["+3835 more"]
+    end
+
+    subgraph Exporters
+        legacy__components__dsl__dsl_registry__DslRegistry__exportConfig["exportConfig"]
+        legacy__modules__connect_scenario__helpers__def_library__exported["exported"]
+        legacy__modules__connect_scenario__helpers__scenarios__ui_window_handlers__handleExportScenario["handleExportScenario"]
+        runtime__dsl_registry__DslRegistry__exportConfig["exportConfig"]
+    end
+
+    class vite__config__env,vite__config__apiTarget,vite__config__wsTarget,legacy__components__dsl_editor__dsl_commands__getButtonsByCategory,legacy__components__dsl_editor__dsl_commands__renderGoalActionsButtons,legacy__components__dsl_editor__dsl_commands__btnClass,legacy__components__dsl_editor__dsl_commands__buttons,legacy__components__dsl_editor__dsl_commands__renderFuncActionsButtons,legacy__components__dsl_editor__renderers_helpers__stepActions,legacy__components__dsl_editor__renderers_helpers__norm entry

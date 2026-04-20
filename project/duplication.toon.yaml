@@ -1,0 +1,225 @@
+# redup/duplication | 24 groups | 19f 5310L | 2026-04-20
+
+SUMMARY:
+  files_scanned: 19
+  total_lines:   5310
+  dup_groups:    24
+  dup_fragments: 68
+  saved_lines:   261
+  scan_ms:       2461
+
+HOTSPOTS[7] (files with most duplication):
+  backend/cql_backend/xml_codec.py  dup=124L  groups=5  frags=19  (2.3%)
+  backend/cql_backend/parser.py  dup=124L  groups=4  frags=9  (2.3%)
+  backend/cql_backend/exec_runtime.py  dup=74L  groups=7  frags=19  (1.4%)
+  backend/cql_backend/serializer.py  dup=64L  groups=5  frags=12  (1.2%)
+  backend/cql_backend/app.py  dup=28L  groups=2  frags=5  (0.5%)
+  backend/cql_backend/quotes.py  dup=8L  groups=1  frags=2  (0.2%)
+  backend/cql_backend/validator.py  dup=6L  groups=1  frags=2  (0.1%)
+
+DUPLICATES[24] (ranked by impact):
+  [4b8ae09f99b0c39e] ! STRU  _serialize_wait  L=6 N=7 saved=36 sim=1.00
+      backend/cql_backend/xml_codec.py:177-182  (_serialize_wait)
+      backend/cql_backend/xml_codec.py:223-228  (_serialize_fun)
+      backend/cql_backend/xml_codec.py:263-268  (_serialize_user)
+      backend/cql_backend/xml_codec.py:277-284  (_serialize_opt)
+      backend/cql_backend/xml_codec.py:287-292  (_serialize_info)
+      backend/cql_backend/xml_codec.py:307-312  (_serialize_out)
+      backend/cql_backend/xml_codec.py:315-322  (_serialize_dialog)
+  [9b5a619ff7b89b81]   STRU  _parse_set_quoted_line  L=12 N=3 saved=24 sim=1.00
+      backend/cql_backend/parser.py:390-401  (_parse_set_quoted_line)
+      backend/cql_backend/parser.py:581-592  (_parse_user_line)
+      backend/cql_backend/parser.py:681-692  (_parse_dialog_line)
+  [5430b4ff4bf1f065]   STRU  _serialize_fun_step  L=6 N=5 saved=24 sim=1.00
+      backend/cql_backend/serializer.py:134-139  (_serialize_fun_step)
+      backend/cql_backend/serializer.py:166-171  (_serialize_user_step)
+      backend/cql_backend/serializer.py:181-186  (_serialize_opt_step)
+      backend/cql_backend/serializer.py:209-214  (_serialize_out_step)
+      backend/cql_backend/serializer.py:217-222  (_serialize_dialog_step)
+  [4f8a354522d4e36d]   STRU  _parse_user  L=6 N=5 saved=24 sim=1.00
+      backend/cql_backend/xml_codec.py:617-622  (_parse_user)
+      backend/cql_backend/xml_codec.py:629-634  (_parse_opt)
+      backend/cql_backend/xml_codec.py:637-642  (_parse_info)
+      backend/cql_backend/xml_codec.py:653-658  (_parse_out)
+      backend/cql_backend/xml_codec.py:661-666  (_parse_dialog)
+  [527c6e0eca3fadc6]   STRU  _parse_if_compound_or_if_line  L=21 N=2 saved=21 sim=1.00
+      backend/cql_backend/parser.py:228-248  (_parse_if_compound_or_if_line)
+      backend/cql_backend/parser.py:251-271  (_parse_if_compound_line)
+  [1513527fdd405fa1]   STRU  _handle_func_call_step  L=3 N=7 saved=18 sim=1.00
+      backend/cql_backend/exec_runtime.py:321-323  (_handle_func_call_step)
+      backend/cql_backend/exec_runtime.py:416-418  (_handle_wait_step)
+      backend/cql_backend/exec_runtime.py:441-443  (_handle_user_step)
+      backend/cql_backend/exec_runtime.py:451-453  (_handle_opt_step)
+      backend/cql_backend/exec_runtime.py:466-468  (_handle_out_step)
+      backend/cql_backend/exec_runtime.py:471-473  (_handle_dialog_step)
+      backend/cql_backend/exec_runtime.py:476-478  (_handle_info_step)
+  [5888ce5bbdea69a2]   STRU  _serialize_pump  L=8 N=3 saved=16 sim=1.00
+      backend/cql_backend/xml_codec.py:185-192  (_serialize_pump)
+      backend/cql_backend/xml_codec.py:195-206  (_serialize_sample)
+      backend/cql_backend/xml_codec.py:209-220  (_serialize_calc)
+  [6915db73d7daf1e3]   STRU  dsl_to_xml_endpoint  L=6 N=3 saved=12 sim=1.00
+      backend/cql_backend/app.py:376-381  (dsl_to_xml_endpoint)
+      backend/cql_backend/app.py:394-399  (xml_to_ast_endpoint)
+      backend/cql_backend/app.py:406-412  (validate_dsl_text_endpoint)
+  [bacaca0e2605fea5]   STRU  _parse_save_line  L=12 N=2 saved=12 sim=1.00
+      backend/cql_backend/parser.py:567-578  (_parse_save_line)
+      backend/cql_backend/parser.py:595-606  (_parse_result_line)
+  [310b0673ffababeb]   STRU  _handle_max_step  L=11 N=2 saved=11 sim=1.00
+      backend/cql_backend/exec_runtime.py:365-375  (_handle_max_step)
+      backend/cql_backend/exec_runtime.py:378-388  (_handle_min_step)
+  [d3503b9b3e820853]   STRU  _parse_repeat_line  L=11 N=2 saved=11 sim=1.00
+      backend/cql_backend/parser.py:639-649  (_parse_repeat_line)
+      backend/cql_backend/parser.py:652-662  (_parse_end_line)
+  [e99f2444642d996b]   STRU  _handle_log_step  L=3 N=3 saved=6 sim=1.00
+      backend/cql_backend/exec_runtime.py:421-423  (_handle_log_step)
+      backend/cql_backend/exec_runtime.py:426-428  (_handle_alarm_step)
+      backend/cql_backend/exec_runtime.py:431-433  (_handle_error_step)
+  [ff17bf41f3553457]   STRU  _serialize_wait_step  L=6 N=2 saved=6 sim=1.00
+      backend/cql_backend/serializer.py:99-104  (_serialize_wait_step)
+      backend/cql_backend/serializer.py:107-112  (_serialize_pump_step)
+  [3fad4d168c58f995]   STRU  _serialize_save_step  L=5 N=2 saved=5 sim=1.00
+      backend/cql_backend/serializer.py:149-153  (_serialize_save_step)
+      backend/cql_backend/serializer.py:174-178  (_serialize_result_step)
+  [a87af9a4f75ddd53]   STRU  _get_attr  L=4 N=2 saved=4 sim=1.00
+      backend/cql_backend/exec_runtime.py:279-282  (_get_attr)
+      backend/cql_backend/serializer.py:32-35  (_get_step_attr)
+  [547be81900000ef2]   STRU  normalize_dsl_text_quotes  L=4 N=2 saved=4 sim=1.00
+      backend/cql_backend/quotes.py:27-30  (normalize_dsl_text_quotes)
+      backend/cql_backend/quotes.py:51-54  (canonicalize_dsl_quotes)
+  [d9abbbbc6c316565]   STRU  _serialize_repeat_step  L=4 N=2 saved=4 sim=1.00
+      backend/cql_backend/serializer.py:197-200  (_serialize_repeat_step)
+      backend/cql_backend/serializer.py:203-206  (_serialize_end_step)
+  [b5f68ec09198e5a5]   STRU  _serialize_save  L=4 N=2 saved=4 sim=1.00
+      backend/cql_backend/xml_codec.py:240-243  (_serialize_save)
+      backend/cql_backend/xml_codec.py:271-274  (_serialize_result)
+  [d28292b5c3bfb0e0]   STRU  _serialize_repeat  L=4 N=2 saved=4 sim=1.00
+      backend/cql_backend/xml_codec.py:295-298  (_serialize_repeat)
+      backend/cql_backend/xml_codec.py:301-304  (_serialize_end)
+  [62e04cd164bf44d7]   STRU  serialize_endpoint  L=3 N=2 saved=3 sim=1.00
+      backend/cql_backend/app.py:277-279  (serialize_endpoint)
+      backend/cql_backend/app.py:385-390  (ast_to_xml_endpoint)
+  [3a4c496ba1965d89]   STRU  _handle_delta_max_step  L=3 N=2 saved=3 sim=1.00
+      backend/cql_backend/exec_runtime.py:391-393  (_handle_delta_max_step)
+      backend/cql_backend/exec_runtime.py:396-398  (_handle_delta_min_step)
+  [ca954aee391940ec]   STRU  _handle_save_step  L=3 N=2 saved=3 sim=1.00
+      backend/cql_backend/exec_runtime.py:436-438  (_handle_save_step)
+      backend/cql_backend/exec_runtime.py:446-448  (_handle_result_step)
+  [cdb0abfe9820c92e]   STRU  _handle_repeat_step  L=3 N=2 saved=3 sim=1.00
+      backend/cql_backend/exec_runtime.py:456-458  (_handle_repeat_step)
+      backend/cql_backend/exec_runtime.py:461-463  (_handle_end_step)
+  [970997085c86ba30]   STRU  _add_error  L=3 N=2 saved=3 sim=1.00
+      backend/cql_backend/validator.py:76-78  (_add_error)
+      backend/cql_backend/validator.py:81-83  (_add_warning)
+
+REFACTOR[24] (ranked by priority):
+  [1] ○ extract_function   → backend/cql_backend/utils/_serialize_wait.py
+      WHY: 7 occurrences of 6-line block across 1 files — saves 36 lines
+      FILES: backend/cql_backend/xml_codec.py
+  [2] ○ extract_function   → backend/cql_backend/utils/_parse_set_quoted_line.py
+      WHY: 3 occurrences of 12-line block across 1 files — saves 24 lines
+      FILES: backend/cql_backend/parser.py
+  [3] ○ extract_function   → backend/cql_backend/utils/_serialize_fun_step.py
+      WHY: 5 occurrences of 6-line block across 1 files — saves 24 lines
+      FILES: backend/cql_backend/serializer.py
+  [4] ○ extract_function   → backend/cql_backend/utils/_parse_user.py
+      WHY: 5 occurrences of 6-line block across 1 files — saves 24 lines
+      FILES: backend/cql_backend/xml_codec.py
+  [5] ○ extract_function   → backend/cql_backend/utils/_parse_if_compound_or_if_line.py
+      WHY: 2 occurrences of 21-line block across 1 files — saves 21 lines
+      FILES: backend/cql_backend/parser.py
+  [6] ○ extract_function   → backend/cql_backend/utils/_handle_func_call_step.py
+      WHY: 7 occurrences of 3-line block across 1 files — saves 18 lines
+      FILES: backend/cql_backend/exec_runtime.py
+  [7] ○ extract_function   → backend/cql_backend/utils/_serialize_pump.py
+      WHY: 3 occurrences of 8-line block across 1 files — saves 16 lines
+      FILES: backend/cql_backend/xml_codec.py
+  [8] ○ extract_function   → backend/cql_backend/utils/dsl_to_xml_endpoint.py
+      WHY: 3 occurrences of 6-line block across 1 files — saves 12 lines
+      FILES: backend/cql_backend/app.py
+  [9] ○ extract_function   → backend/cql_backend/utils/_parse_save_line.py
+      WHY: 2 occurrences of 12-line block across 1 files — saves 12 lines
+      FILES: backend/cql_backend/parser.py
+  [10] ○ extract_function   → backend/cql_backend/utils/_handle_max_step.py
+      WHY: 2 occurrences of 11-line block across 1 files — saves 11 lines
+      FILES: backend/cql_backend/exec_runtime.py
+  [11] ○ extract_function   → backend/cql_backend/utils/_parse_repeat_line.py
+      WHY: 2 occurrences of 11-line block across 1 files — saves 11 lines
+      FILES: backend/cql_backend/parser.py
+  [12] ○ extract_function   → backend/cql_backend/utils/_handle_log_step.py
+      WHY: 3 occurrences of 3-line block across 1 files — saves 6 lines
+      FILES: backend/cql_backend/exec_runtime.py
+  [13] ○ extract_function   → backend/cql_backend/utils/_serialize_wait_step.py
+      WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
+      FILES: backend/cql_backend/serializer.py
+  [14] ○ extract_function   → backend/cql_backend/utils/_serialize_save_step.py
+      WHY: 2 occurrences of 5-line block across 1 files — saves 5 lines
+      FILES: backend/cql_backend/serializer.py
+  [15] ○ extract_function   → backend/cql_backend/utils/_get_attr.py
+      WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
+      FILES: backend/cql_backend/exec_runtime.py, backend/cql_backend/serializer.py
+  [16] ○ extract_function   → backend/cql_backend/utils/normalize_dsl_text_quotes.py
+      WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
+      FILES: backend/cql_backend/quotes.py
+  [17] ○ extract_function   → backend/cql_backend/utils/_serialize_repeat_step.py
+      WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
+      FILES: backend/cql_backend/serializer.py
+  [18] ○ extract_function   → backend/cql_backend/utils/_serialize_save.py
+      WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
+      FILES: backend/cql_backend/xml_codec.py
+  [19] ○ extract_function   → backend/cql_backend/utils/_serialize_repeat.py
+      WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
+      FILES: backend/cql_backend/xml_codec.py
+  [20] ○ extract_function   → backend/cql_backend/utils/serialize_endpoint.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: backend/cql_backend/app.py
+  [21] ○ extract_function   → backend/cql_backend/utils/_handle_delta_max_step.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: backend/cql_backend/exec_runtime.py
+  [22] ○ extract_function   → backend/cql_backend/utils/_handle_save_step.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: backend/cql_backend/exec_runtime.py
+  [23] ○ extract_function   → backend/cql_backend/utils/_handle_repeat_step.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: backend/cql_backend/exec_runtime.py
+  [24] ○ extract_function   → backend/cql_backend/utils/_add_error.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: backend/cql_backend/validator.py
+
+QUICK_WINS[13] (low risk, high savings — do first):
+  [1] extract_function   saved=36L  → backend/cql_backend/utils/_serialize_wait.py
+      FILES: xml_codec.py
+  [2] extract_function   saved=24L  → backend/cql_backend/utils/_parse_set_quoted_line.py
+      FILES: parser.py
+  [3] extract_function   saved=24L  → backend/cql_backend/utils/_serialize_fun_step.py
+      FILES: serializer.py
+  [4] extract_function   saved=24L  → backend/cql_backend/utils/_parse_user.py
+      FILES: xml_codec.py
+  [5] extract_function   saved=21L  → backend/cql_backend/utils/_parse_if_compound_or_if_line.py
+      FILES: parser.py
+  [6] extract_function   saved=18L  → backend/cql_backend/utils/_handle_func_call_step.py
+      FILES: exec_runtime.py
+  [7] extract_function   saved=16L  → backend/cql_backend/utils/_serialize_pump.py
+      FILES: xml_codec.py
+  [8] extract_function   saved=12L  → backend/cql_backend/utils/dsl_to_xml_endpoint.py
+      FILES: app.py
+  [9] extract_function   saved=12L  → backend/cql_backend/utils/_parse_save_line.py
+      FILES: parser.py
+  [10] extract_function   saved=11L  → backend/cql_backend/utils/_handle_max_step.py
+      FILES: exec_runtime.py
+
+EFFORT_ESTIMATE (total ≈ 8.7h):
+  medium _serialize_wait                     saved=36L  ~72min
+  medium _parse_set_quoted_line              saved=24L  ~48min
+  medium _serialize_fun_step                 saved=24L  ~48min
+  medium _parse_user                         saved=24L  ~48min
+  medium _parse_if_compound_or_if_line       saved=21L  ~42min
+  medium _handle_func_call_step              saved=18L  ~36min
+  medium _serialize_pump                     saved=16L  ~32min
+  easy   dsl_to_xml_endpoint                 saved=12L  ~24min
+  easy   _parse_save_line                    saved=12L  ~24min
+  easy   _handle_max_step                    saved=11L  ~22min
+  ... +14 more (~126min)
+
+METRICS-TARGET:
+  dup_groups:  24 → 0
+  saved_lines: 261 lines recoverable
