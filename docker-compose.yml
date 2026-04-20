@@ -22,22 +22,66 @@ services:
       - "traefik.http.routers.dashboard.rule=Host(`${DOCKER_DOMAIN_TRAEFIK_CQL:-traefik.cql.oqlos.localhost}`)"
       - "traefik.http.routers.dashboard.service=api@internal"
 
-  # ── CQL Editor ──
+  # ── CQL Runtime Backend (Python / FastAPI) ──
+  # Decoupled DSL runtime serving /api/cql/* endpoints that replace the
+  # direct components/dsl/ imports in maskservice frontend.
+  cql-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      # 8101 on the host (8100 collides with maskservice frontend dev server).
+      # Inside the compose network the service is still reachable as
+      # `cql-backend:8101`.
+      - "${CQL_BACKEND_HTTP_PORT:-8101}:8101"
+    environment:
+      CQL_BACKEND_HOST: 0.0.0.0
+      CQL_BACKEND_PORT: 8101
+      CQL_BACKEND_LOG_LEVEL: ${CQL_BACKEND_LOG_LEVEL:-info}
+      # Reciprocal link: cql-backend can call back into maskservice
+      # for scenario data fetches (see clients/maskservice_client.py).
+      MASKSERVICE_API_URL: ${MASKSERVICE_API_URL:-http://host.docker.internal:8080}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - cql-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cql-backend.rule=Host(`${DOCKER_DOMAIN_CQL_BACKEND:-api.cql.oqlos.localhost}`)"
+      - "traefik.http.routers.cql-backend.entrypoints=web"
+      - "traefik.http.services.cql-backend.loadbalancer.server.port=8101"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://127.0.0.1:8101/health').status==200 else sys.exit(1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # ── CQL Editor (React + nginx) ──
   cql:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8091:80"
+      # Direct host port (bypasses Traefik) — override with
+      # CQL_DIRECT_PORT in .env if 8091 collides with another service.
+      - "${CQL_DIRECT_PORT:-8091}:80"
+    volumes:
+      # Mount legacy DSL components for reference and potential reuse
+      - ./legacy:/app/legacy:ro
     environment:
       # Injected into nginx.conf.template via envsubst at container start.
+      # By default, the cql frontend proxies /api/cql/* to the sibling
+      # cql-backend service; everything else hits the maskservice backend.
       BACKEND_API_URL: ${BACKEND_API_URL:-http://host.docker.internal:8080}
       BACKEND_WS_URL: ${BACKEND_WS_URL:-http://host.docker.internal:8080}
+      CQL_BACKEND_URL: ${CQL_BACKEND_URL:-http://cql-backend:8101}
       FRAME_ANCESTORS: ${FRAME_ANCESTORS:-'self' http://*.localhost https://*.localhost}
     extra_hosts:
       # Makes host.docker.internal work on Linux so the proxied /api and /ws
       # can reach a maskservice backend running on the host machine.
       - "host.docker.internal:host-gateway"
+    depends_on:
+      - cql-backend
     networks:
       - cql-net
     labels:

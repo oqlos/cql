@@ -24,6 +24,7 @@ export default function EditorPlaceholder({ kind }) {
     "library-editor": { title: "Library Editor", subtitle: t("editors.libraryEditorDesc") },
     "map-editor": { title: "Map Editor", subtitle: t("editors.mapEditorDesc") },
     "scenario-editor": { title: "Scenario Editor", subtitle: t("editors.scenarioEditorDesc") },
+    "operator-parameters": { title: "Operator Parameters", subtitle: t("editors.operatorParametersDesc") },
   };
   const label = labels[kind] || { title: kind, subtitle: "" };
 

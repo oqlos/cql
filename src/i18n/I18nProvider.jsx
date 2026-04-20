@@ -25,6 +25,7 @@ const dictionaries = {
       libraryEditorDesc: "Scenario templates and per-device libraries.",
       mapEditorDesc: "Device / signal mappings between scenarios and hardware.",
       scenarioEditorDesc: "Full visual scenario editor (goals + steps + asserts).",
+      operatorParametersDesc: "Edit scenario parameters exposed to the test operator.",
     },
   },
   pl: {
@@ -51,6 +52,7 @@ const dictionaries = {
       libraryEditorDesc: "Szablony scenariuszy i biblioteki per-urządzenie.",
       mapEditorDesc: "Mapowania urządzeń/sygnałów między scenariuszami a hardware.",
       scenarioEditorDesc: "Pełny wizualny edytor scenariusza (cele + kroki + asercje).",
+      operatorParametersDesc: "Edycja parametrów scenariusza dostępnych dla operatora testu.",
     },
   },
   de: {
@@ -77,6 +79,7 @@ const dictionaries = {
       libraryEditorDesc: "Szenariovorlagen und gerätespezifische Bibliotheken.",
       mapEditorDesc: "Geräte-/Signal-Zuordnungen zwischen Szenarien und Hardware.",
       scenarioEditorDesc: "Vollständiger visueller Szenario-Editor (Ziele + Schritte + Assertions).",
+      operatorParametersDesc: "Bearbeitung von Szenarioparametern für den Testoperator.",
     },
   },
 };

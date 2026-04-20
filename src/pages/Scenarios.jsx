@@ -258,27 +258,30 @@ export default function Scenarios() {
           <div style={{ color: "var(--accent-red)", margin: "12px 0" }}>{t("scenarios.loadError")}</div>
         )}
 
-        <div className="editor-section">
-          {!remoteScenario && (
-            <div className="example-tabs role-hidden">
-              {exampleKeys.map((k) => (
-                <button
-                  key={k}
-                  className={`example-tab ${activeExample === k ? "active" : ""}`}
-                  onClick={() => handleTabChange(k)}
-                  disabled={isReadOnly}
-                >
-                  {OQL_EXAMPLES[k].title}
-                </button>
-              ))}
-            </div>
-          )}
-          <CodeEditor
-            example={currentScenario}
-            value={currentCode}
-            onChange={handleCodeChange}
-            readOnly={isReadOnly}
-          />
+        <div className="editor-terminal-container">
+          <div className="editor-section">
+            {!remoteScenario && (
+              <div className="example-tabs role-hidden">
+                {exampleKeys.map((k) => (
+                  <button
+                    key={k}
+                    className={`example-tab ${activeExample === k ? "active" : ""}`}
+                    onClick={() => handleTabChange(k)}
+                    disabled={isReadOnly}
+                  >
+                    {OQL_EXAMPLES[k].title}
+                  </button>
+                ))}
+              </div>
+            )}
+            <CodeEditor
+              example={currentScenario}
+              value={currentCode}
+              onChange={handleCodeChange}
+              readOnly={isReadOnly}
+            />
+          </div>
+          <TerminalSim scenarioData={currentScenario} code={currentCode} />
         </div>
 
         {(activeGoal || lastCommand) && (
@@ -406,8 +409,6 @@ export default function Scenarios() {
           />
         )}
         {viewMode === "report" && <OqlReportRenderer data={reportData} />}
-
-        <TerminalSim scenarioData={currentScenario} code={currentCode} />
       </div>
     </div>
   );

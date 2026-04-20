@@ -1,15 +1,98 @@
 # OqlOS CQL Editor - Makefile
-.PHONY: help dev dev-docker dev-open build install clean
+#
+# The docker-compose stack at ./docker-compose.yml contains three services:
+#   - traefik      (reverse proxy, dashboard on :$VITE_CQL_TRAEFIK_PORT)
+#   - cql-backend  (FastAPI DSL runtime, :$CQL_BACKEND_HTTP_PORT)
+#   - cql          (React + nginx editor, :$CQL_DIRECT_PORT)
+# `make up` builds + starts all three in one shot so nothing has to be
+# started separately.
+.PHONY: help up down restart logs ps status health \
+        dev dev-docker dev-open build install clean stop
+
+COMPOSE := docker compose --env-file .env
+ENV     := .env
 
 # Default target
 help:
 	@echo "OqlOS CQL Editor - Available commands:"
-	@echo "  make dev          - Start development server (npm)"
-	@echo "  make dev-docker   - Restart Docker stack (down + up)"
-	@echo "  make dev-open     - Start dev containers and show URLs"
-	@echo "  make build        - Build for production"
-	@echo "  make install      - Install dependencies"
-	@echo "  make clean        - Clean build artifacts"
+	@echo ""
+	@echo "  === Docker stack (cql + cql-backend + traefik) ==="
+	@echo "  make up           - Build and start the full stack (cql + cql-backend + traefik)"
+	@echo "  make down         - Stop and remove all containers"
+	@echo "  make restart      - down + up"
+	@echo "  make logs         - Tail logs from all services (Ctrl-C to exit)"
+	@echo "  make ps           - Show running containers + health"
+	@echo "  make status       - Alias for 'make ps'"
+	@echo "  make health       - Probe /health on cql-backend + HTTP 200 on cql editor"
+	@echo ""
+	@echo "  === Frontend dev (no Docker) ==="
+	@echo "  make dev          - Start Vite dev server (npm)"
+	@echo "  make build        - Build production bundle"
+	@echo "  make install      - Install npm dependencies"
+	@echo "  make clean        - Clean dist/"
+	@echo ""
+	@echo "  === Legacy aliases ==="
+	@echo "  make dev-docker   - Alias for 'make restart'"
+	@echo "  make dev-open     - Alias for 'make up' (with URL summary + hosts hint)"
+	@echo "  make stop         - Alias for 'make down'"
+
+# ── Docker stack ──────────────────────────────────────────────────────
+
+up:
+	@echo "══════════════════════════════════════════════════════════════"
+	@echo "  CQL stack — building and starting all services"
+	@echo "══════════════════════════════════════════════════════════════"
+	@test -f $(ENV) || { echo "❌ .env file missing. Copy .env.example → .env first."; exit 1; }
+	@$(COMPOSE) up -d --build
+	@echo ""
+	@$(MAKE) --no-print-directory _print-urls
+
+down:
+	@echo "Stopping CQL stack..."
+	@$(COMPOSE) down 2>/dev/null || true
+	@echo "✓ Stopped"
+
+restart: down up
+
+logs:
+	@$(COMPOSE) logs -f --tail=100
+
+ps status:
+	@$(COMPOSE) ps
+
+health:
+	@echo "── cql-backend ────────────────────────────────────────────────"
+	@port=$$(grep '^CQL_BACKEND_HTTP_PORT=' $(ENV) 2>/dev/null | cut -d= -f2); \
+	 port=$${port:-8101}; \
+	 curl -fsS "http://localhost:$$port/health" && echo "" || echo "✗ backend unreachable on :$$port"
+	@echo ""
+	@echo "── cql frontend ───────────────────────────────────────────────"
+	@port=$$(grep '^CQL_DIRECT_PORT=' $(ENV) 2>/dev/null | cut -d= -f2); \
+	 port=$${port:-8091}; \
+	 code=$$(curl -fsSo /dev/null -w "%{http_code}" "http://localhost:$$port/" || echo "---"); \
+	 [ "$$code" = "200" ] && echo "✓ HTTP 200 on :$$port" || echo "✗ got $$code on :$$port"
+
+# Internal: nice URL summary after 'up'
+_print-urls:
+	@echo "══════════════════════════════════════════════════════════════"
+	@echo "  Services available at:"
+	@echo "══════════════════════════════════════════════════════════════"
+	@domain=$$(grep '^DOCKER_DOMAIN_CQL=' $(ENV) 2>/dev/null | cut -d= -f2); domain=$${domain:-cql.oqlos.localhost}; \
+	 traefik=$$(grep '^DOCKER_DOMAIN_TRAEFIK_CQL=' $(ENV) 2>/dev/null | cut -d= -f2); traefik=$${traefik:-traefik.cql.oqlos.localhost}; \
+	 http_port=$$(grep '^VITE_CQL_HTTP_PORT=' $(ENV) 2>/dev/null | cut -d= -f2); http_port=$${http_port:-8092}; \
+	 traefik_port=$$(grep '^VITE_CQL_TRAEFIK_PORT=' $(ENV) 2>/dev/null | cut -d= -f2); traefik_port=$${traefik_port:-8093}; \
+	 direct=$$(grep '^CQL_DIRECT_PORT=' $(ENV) 2>/dev/null | cut -d= -f2); direct=$${direct:-8091}; \
+	 backend=$$(grep '^CQL_BACKEND_HTTP_PORT=' $(ENV) 2>/dev/null | cut -d= -f2); backend=$${backend:-8101}; \
+	 echo "  ⚙️  CQL editor       : http://$$domain:$$http_port (via Traefik)"; \
+	 echo "                      : http://localhost:$$direct           (direct)"; \
+	 echo "  🐍 CQL backend (API): http://localhost:$$backend/docs"; \
+	 echo "  📊 Traefik dashboard: http://$$traefik:$$traefik_port"
+	@echo "══════════════════════════════════════════════════════════════"
+	@domain=$$(grep '^DOCKER_DOMAIN_CQL=' $(ENV) 2>/dev/null | cut -d= -f2); domain=$${domain:-cql.oqlos.localhost}; \
+	 traefik=$$(grep '^DOCKER_DOMAIN_TRAEFIK_CQL=' $(ENV) 2>/dev/null | cut -d= -f2); traefik=$${traefik:-traefik.cql.oqlos.localhost}; \
+	 grep -qE "\b$$domain\b" /etc/hosts 2>/dev/null \
+	    && echo "✓ /etc/hosts has $$domain" \
+	    || echo "⚠  Run: echo '127.0.0.1 $$domain $$traefik' | sudo tee -a /etc/hosts"
 
 # Development (npm)
 dev:
@@ -20,54 +103,10 @@ dev:
 	@echo "══════════════════════════════════════════════════════════════"
 	npm run dev
 
-# Docker restart (down + up)
-dev-docker:
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo "  CQL Editor - Restarting Docker Stack"
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo "  Domain: $$(grep DOCKER_DOMAIN_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'cql.localhost')"
-	@echo "  Traefik Dashboard: $$(grep DOCKER_DOMAIN_TRAEFIK_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'traefik.cql.localhost')"
-	@echo ""
-	@echo "  Port Mappings:"
-	@echo "    HTTP:      $$(grep VITE_CQL_HTTP_PORT .env 2>/dev/null | cut -d'=' -f2 || echo '8092') → 80 (container)"
-	@echo "    Traefik:   $$(grep VITE_CQL_TRAEFIK_PORT .env 2>/dev/null | cut -d'=' -f2 || echo '8093') → 8080 (container)"
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo ""
-	@echo "Stopping existing containers..."
-	@docker compose --env-file .env down 2>/dev/null || true
-	@echo "Starting CQL Docker stack..."
-	@docker compose --env-file .env up -d --build
-	@echo ""
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo "  Services available at:"
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo "  ⚙️  CQL Editor: http://$$(grep DOCKER_DOMAIN_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'cql.localhost') (port $$(grep VITE_CQL_HTTP_PORT .env 2>/dev/null | cut -d'=' -f2 || echo '8092'))"
-	@echo "  📊 Traefik:    http://$$(grep DOCKER_DOMAIN_TRAEFIK_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'traefik.cql.localhost'):$$(grep VITE_CQL_TRAEFIK_PORT .env 2>/dev/null | cut -d'=' -f2 || echo '8093')"
-	@echo "══════════════════════════════════════════════════════════════"
-
-# Start and open
-dev-open:
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo "  CQL Editor - Development Environment"
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo ""
-	@echo "  Domain Configuration (from .env)"
-	@echo "  ─────────────────────────────────────────────────────────"
-	@echo "  DOCKER_DOMAIN_CQL:        $$(grep DOCKER_DOMAIN_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'cql.localhost')"
-	@echo "  DOCKER_DOMAIN_TRAEFIK_CQL:  $$(grep DOCKER_DOMAIN_TRAEFIK_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'traefik.cql.localhost')"
-	@echo ""
-	@echo "  Starting Docker containers..."
-	@docker compose --env-file .env up -d --build
-	@echo ""
-	@echo "Checking /etc/hosts..."
-	@grep -q "$$(grep DOCKER_DOMAIN_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'cql.localhost')" /etc/hosts && echo "✓ Domains already configured" || echo "⚠ Run: echo '127.0.0.1 $$(grep DOCKER_DOMAIN_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'cql.localhost') $$(grep DOCKER_DOMAIN_TRAEFIK_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'traefik.cql.localhost')' | sudo tee -a /etc/hosts"
-	@echo ""
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo "  Services available at:"
-	@echo "══════════════════════════════════════════════════════════════"
-	@echo "  ⚙️  CQL Editor: http://$$(grep DOCKER_DOMAIN_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'cql.localhost') (port $$(grep VITE_CQL_HTTP_PORT .env 2>/dev/null | cut -d'=' -f2 || echo '8092'))"
-	@echo "  📊 Traefik:    http://$$(grep DOCKER_DOMAIN_TRAEFIK_CQL .env 2>/dev/null | cut -d'=' -f2 || echo 'traefik.cql.localhost'):$$(grep VITE_CQL_TRAEFIK_PORT .env 2>/dev/null | cut -d'=' -f2 || echo '8093')"
-	@echo "══════════════════════════════════════════════════════════════"
+# Legacy aliases kept for muscle-memory / scripts that already use them.
+dev-docker: restart
+dev-open:   up
+stop:       down
 
 # Build
 build:

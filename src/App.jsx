@@ -17,6 +17,7 @@ export default function App() {
       <Route path="/library-editor" element={<EditorPlaceholder kind="library-editor" />} />
       <Route path="/map-editor" element={<EditorPlaceholder kind="map-editor" />} />
       <Route path="/scenario-editor" element={<EditorPlaceholder kind="scenario-editor" />} />
+      <Route path="/operator-parameters" element={<EditorPlaceholder kind="operator-parameters" />} />
 
       {/* Backwards compatible alias for iframe embeds using the old path. */}
       <Route path="/connect-scenario/scenarios" element={<Scenarios />} />

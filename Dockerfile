@@ -14,6 +14,7 @@ COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 # Defaults — safe to override via `docker compose --env-file .env`
 ENV BACKEND_API_URL="http://host.docker.internal:8080" \
     BACKEND_WS_URL="http://host.docker.internal:8080" \
+    CQL_BACKEND_URL="http://cql-backend:8101" \
     FRAME_ANCESTORS="'self' http://*.localhost https://*.localhost"
 EXPOSE 80
 # nginx:alpine auto-runs envsubst on /etc/nginx/templates/*.template at startup.

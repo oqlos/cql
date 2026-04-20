@@ -150,7 +150,7 @@ export default function OqlStepRenderer({ scenarioData, code, onGoalClick, onSte
                 <li
                   key={i}
                   className={`oql-step-row ${stepTypeClass(step.type)}${activeStepIdx === i ? ' active' : ''}`}
-                  onClick={() => setActiveStepIdx(i)}
+                  onClick={() => handleStepClick(i)}
                 >
                   <div className="oql-sidebar-cell idx">
                     <span className="oql-step-badge">{stepNum}</span>

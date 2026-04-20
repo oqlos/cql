@@ -215,6 +215,22 @@ body {
 }
 
 /* Code Editor */
+.editor-terminal-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.editor-terminal-container .editor-section {
+  width: 45%;
+}
+
+.editor-terminal-container .terminal-wrapper {
+  width: 45%;
+  margin-top: 0;
+}
+
 .editor-wrapper {
   border: 1px solid var(--border);
   border-radius: 8px;
