@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@300;400;600;700;800&display=swap');
 
-:root {
+:root,
+:root[data-theme="dark"] {
   --bg-deep: #0a0f1a;
   --bg-card: #111827;
   --bg-card-hover: #1a2335;
   --border: #1e293b;
+  --border-color: #1e293b;
   --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
@@ -15,7 +17,52 @@
   --accent-red: #ef4444;
   --font-display: 'Sora', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --font-base-size: 14px;
+  --viewport-size: 1280px;
 }
+
+:root[data-theme="light"] {
+  --bg-deep: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #eef2f7;
+  --border: #d1d9e2;
+  --border-color: #d1d9e2;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --accent-blue: #2563eb;
+  --accent-green: #059669;
+  --accent-amber: #d97706;
+  --accent-purple: #7c3aed;
+  --accent-red: #dc2626;
+}
+
+:root[data-theme="high-contrast"] {
+  --bg-deep: #000000;
+  --bg-card: #0c0c0c;
+  --bg-card-hover: #1a1a1a;
+  --border: #ffff00;
+  --border-color: #ffff00;
+  --text-primary: #ffffff;
+  --text-secondary: #ffff00;
+  --text-muted: #cccccc;
+  --accent-blue: #00d4ff;
+  --accent-green: #00ff66;
+  --accent-amber: #ffaa00;
+  --accent-purple: #d040ff;
+  --accent-red: #ff2a2a;
+}
+
+:root[data-font="mono"] { --font-display: 'JetBrains Mono', monospace; }
+:root[data-font="dyslexic"] {
+  --font-display: 'OpenDyslexic', 'Comic Sans MS', cursive;
+  --font-base-size: 15px;
+}
+:root[data-font="large"] {
+  --font-base-size: 17px;
+}
+
+html { font-size: var(--font-base-size); }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -79,10 +126,43 @@ body {
 }
 
 .dash-content {
-  max-width: 1200px;
+  max-width: var(--viewport-size);
   margin: 0 auto;
   padding: 32px 24px;
 }
+
+/* Role-driven affordances */
+:root[data-role="viewer"] .role-hidden,
+:root[data-role="guest"] .role-hidden {
+  display: none !important;
+}
+:root[data-role="viewer"] button:not(.role-force),
+:root[data-role="guest"] button:not(.role-force) {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* Live connection indicator */
+.cql-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+.cql-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-red);
+}
+.cql-status.cql-status--online { color: var(--accent-green); }
+.cql-status.cql-status--online::before { background: var(--accent-green); }
 
 .section-label {
   font-size: 11px;

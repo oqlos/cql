@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { parseOqlToSteps, collectThresholds, toReportJson } from './parseOqlToSteps';
 import './OqlStepRenderer.css';
 
-export default function OqlStepRenderer({ scenarioData, code }) {
+export default function OqlStepRenderer({ scenarioData, code, onGoalClick, onStepClick, activeGoal, activeStep }) {
   const effectiveCode = code || scenarioData?.code || '';
   const parsed = useMemo(() => parseOqlToSteps(effectiveCode), [effectiveCode]);
 
@@ -13,9 +13,41 @@ export default function OqlStepRenderer({ scenarioData, code }) {
   const currentGoal = goals[activeGoalIdx] || null;
   const thresholds = currentGoal ? collectThresholds(currentGoal) : [];
 
+  // Sync with external activeGoal prop
+  useEffect(() => {
+    if (activeGoal) {
+      const goalIdx = goals.findIndex(g => g.name === activeGoal);
+      if (goalIdx !== -1) {
+        setActiveGoalIdx(goalIdx);
+      }
+    }
+  }, [activeGoal, goals]);
+
+  // Sync with external activeStep prop
+  useEffect(() => {
+    if (activeStep && currentGoal) {
+      const stepIdx = currentGoal.steps.findIndex(s => 
+        s.command === activeStep || s.raw === activeStep
+      );
+      if (stepIdx !== -1) {
+        setActiveStepIdx(stepIdx);
+      }
+    }
+  }, [activeStep, currentGoal]);
+
   const handleGoalChange = (idx) => {
     setActiveGoalIdx(idx);
     setActiveStepIdx(null);
+    if (onGoalClick && goals[idx]) {
+      onGoalClick(goals[idx].name);
+    }
+  };
+
+  const handleStepClick = (idx) => {
+    setActiveStepIdx(idx);
+    if (onStepClick && currentGoal?.steps[idx]) {
+      onStepClick(idx, currentGoal.steps[idx]);
+    }
   };
 
   if (!goals.length) {
@@ -73,6 +105,7 @@ export default function OqlStepRenderer({ scenarioData, code }) {
               className={i === activeGoalIdx ? 'active' : ''}
               onClick={() => handleGoalChange(i)}
               title={g.name}
+              style={{ cursor: 'pointer' }}
             >
               {i + 1}
             </li>

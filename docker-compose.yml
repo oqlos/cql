@@ -1,0 +1,55 @@
+services:
+  # ── Traefik Reverse Proxy ──
+  traefik:
+    image: traefik:v3.6.2
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "${VITE_CQL_HTTP_PORT:-8092}:80"
+      - "${VITE_CQL_TRAEFIK_PORT:-8093}:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - cql-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`${DOCKER_DOMAIN_TRAEFIK_CQL:-traefik.cql.localhost}`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+
+  # ── CQL Editor ──
+  cql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8091:80"
+    environment:
+      # Injected into nginx.conf.template via envsubst at container start.
+      BACKEND_API_URL: ${BACKEND_API_URL:-http://host.docker.internal:8080}
+      BACKEND_WS_URL: ${BACKEND_WS_URL:-http://host.docker.internal:8080}
+      FRAME_ANCESTORS: ${FRAME_ANCESTORS:-'self' http://*.localhost https://*.localhost}
+    extra_hosts:
+      # Makes host.docker.internal work on Linux so the proxied /api and /ws
+      # can reach a maskservice backend running on the host machine.
+      - "host.docker.internal:host-gateway"
+    networks:
+      - cql-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cql.rule=Host(`${DOCKER_DOMAIN_CQL:-cql.localhost}`)"
+      - "traefik.http.routers.cql.entrypoints=web"
+      - "traefik.http.routers.cql.priority=10"
+      - "traefik.http.services.cql.loadbalancer.server.port=80"
+
+networks:
+  cql-net:
+    driver: bridge
+    # When maskservice docker-compose is running alongside, attach its
+    # frontend service to this network as `external: true` on their side to
+    # let the iframe call cql via Traefik using the shared host resolver.

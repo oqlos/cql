@@ -85,7 +85,7 @@ function highlightIQL(code) {
   });
 }
 
-export default function CodeEditor({ example, value, onChange }) {
+export default function CodeEditor({ example, value, onChange, readOnly = false }) {
   const [localCode, setLocalCode] = useState(value || example.code);
   const [highlighted, setHighlighted] = useState([]);
   const textareaRef = useRef(null);
@@ -139,6 +139,8 @@ export default function CodeEditor({ example, value, onChange }) {
           onChange={handleChange}
           onScroll={handleScroll}
           spellCheck={false}
+          readOnly={readOnly}
+          aria-readonly={readOnly}
         />
       </div>
     </div>
