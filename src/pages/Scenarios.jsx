@@ -212,8 +212,6 @@ export default function Scenarios() {
 
   return (
     <div className="dashboard">
-      <SharedNav />
-
       <div className="dash-content">
         <div className="section-label" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <span>Scenarios</span>
