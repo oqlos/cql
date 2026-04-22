@@ -9,17 +9,11 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
-    # Backend base (REST + WS) — overridden by docker env via envsubst at start-up.
-    # Fallback values are safe defaults for docker-compose with the default network.
-    set $backend_api     "${BACKEND_API_URL}";
-    set $backend_ws      "${BACKEND_WS_URL}";
-    set $cql_backend_api "${CQL_BACKEND_URL}";
-
     # cql-backend (Python FastAPI) — DSL runtime endpoints.
     # IMPORTANT: must come BEFORE the general /api/ rule because nginx picks
     # the longest matching prefix first, and we want /api/cql/* to land here.
     location /api/cql/ {
-        proxy_pass         $cql_backend_api/api/cql/;
+        proxy_pass         ${CQL_BACKEND_URL}/api/cql/;
         proxy_http_version 1.1;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
@@ -30,7 +24,7 @@ server {
 
     # All other REST traffic → maskservice backend.
     location /api/ {
-        proxy_pass         $backend_api;
+        proxy_pass         ${BACKEND_API_URL};
         proxy_http_version 1.1;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
@@ -41,7 +35,7 @@ server {
 
     # WebSocket proxy: cql wsClient.js connects to '/ws'.
     location /ws {
-        proxy_pass         $backend_ws;
+        proxy_pass         ${BACKEND_WS_URL};
         proxy_http_version 1.1;
         proxy_set_header   Upgrade           $http_upgrade;
         proxy_set_header   Connection        $connection_upgrade;
@@ -63,9 +57,8 @@ server {
         add_header Cache-Control "public, immutable";
     }
 
-    # Security headers — frame-ancestors allows embedding inside maskservice.
-    # Override via BACKEND_FRAME_ANCESTORS env at deploy time.
+    # Security headers — allow embedding by c2004 frontend and localhost hosts.
     add_header X-Content-Type-Options "nosniff" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Content-Security-Policy "frame-ancestors ${FRAME_ANCESTORS}" always;
+    add_header Content-Security-Policy "frame-ancestors 'self' http://localhost:8100 http://identification.localhost:8100 http://*.localhost https://*.localhost" always;
 }

@@ -5,6 +5,7 @@ import TerminalSim from "../components/TerminalSim";
 import OqlStepRenderer from "../components/OqlStepRenderer";
 import OqlReportRenderer from "../components/OqlReportRenderer";
 import SharedNav from "../components/SharedNav";
+import ScenariosList from "../components/ScenariosList";
 import { useAppConfig } from "../context/AppConfigProvider";
 import { useI18n } from "../i18n/I18nProvider";
 import { useWsStatus } from "../hooks/useWsStatus";
@@ -39,6 +40,7 @@ export default function Scenarios() {
   const [remoteScenario, setRemoteScenario] = useState(null);
   const [loadStatus, setLoadStatus] = useState("idle"); // idle | loading | ready | error | local
   const [saveStatus, setSaveStatus] = useState("idle"); // idle | saving | saved | error
+  const [activeDbId, setActiveDbId] = useState(scenarioId || null);
 
   const [scenarioCodes, setScenarioCodes] = useState(() => {
     const initial = {};
@@ -132,8 +134,19 @@ export default function Scenarios() {
   const handleTabChange = useCallback((key) => {
     setActiveExample(key);
     setRemoteScenario(null);
+    setActiveDbId(null);
     if (scenarioId) patch({ scenario: "" });
   }, [scenarioId, patch]);
+
+  const handleSelectFromDb = useCallback((row) => {
+    setActiveDbId(row.id);
+    patch({ scenario: row.id });
+  }, [patch]);
+
+  const handleCreated = useCallback((id) => {
+    setActiveDbId(id);
+    patch({ scenario: id });
+  }, [patch]);
 
   // ── URL sync for execution state (preserves existing behavior) ─────────
   const updateUrlState = useCallback((goal, step, status) => {
@@ -211,7 +224,14 @@ export default function Scenarios() {
   );
 
   return (
-    <div className="dashboard">
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+      <ScenariosList
+        activeId={activeDbId}
+        onSelect={handleSelectFromDb}
+        onCreated={handleCreated}
+        onDeleted={(id) => { if (activeDbId === id) { setActiveDbId(null); patch({ scenario: "" }); } }}
+      />
+    <div className="dashboard" style={{ flex: 1, overflow: "auto" }}>
       <div className="dash-content">
         <div className="section-label" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <span>Scenarios</span>
@@ -408,6 +428,7 @@ export default function Scenarios() {
         )}
         {viewMode === "report" && <OqlReportRenderer data={reportData} />}
       </div>
+    </div>
     </div>
   );
 }

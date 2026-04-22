@@ -108,7 +108,20 @@ export const ScenariosApi = {
     });
   },
 
+  async saveDsl(id, dsl) {
+    try {
+      return await request(`/api/v3/scenarios/${encodeURIComponent(id)}`, {
+        method: "PUT",
+        body: JSON.stringify({ dsl }),
+      });
+    } catch {
+      return this.update(id, { dsl });
+    }
+  },
+
   async saveContent(id, content) {
+    const dsl = typeof content === "object" ? content?.dsl : content;
+    if (dsl !== undefined) return this.saveDsl(id, dsl);
     return this.update(id, { content });
   },
 };
