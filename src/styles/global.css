@@ -445,3 +445,233 @@ body {
     font-size: 12px;
   }
 }
+
+/* Map Editor */
+.mapx-page {
+  max-width: none;
+}
+
+.mapx-topline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mapx-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.mapx-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mapx-selected {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 12px;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mapx-layout {
+  display: grid;
+  grid-template-columns: 230px 120px minmax(0, 1fr);
+  gap: 12px;
+  min-height: 65vh;
+}
+
+.mapx-list,
+.mapx-main {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-card);
+}
+
+.mapx-list {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mapx-list-filters {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mapx-list-filters input,
+.mapx-list-filters select,
+.mapx-btn,
+.mapx-json {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.mapx-list-filters input,
+.mapx-list-filters select {
+  padding: 8px;
+  font-size: 12px;
+}
+
+.mapx-list-body {
+  overflow: auto;
+  padding: 6px;
+  display: grid;
+  gap: 6px;
+}
+
+.mapx-list-item {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.mapx-list-item:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-blue);
+}
+
+.mapx-list-item.active {
+  color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  background: color-mix(in srgb, var(--accent-blue) 12%, transparent);
+}
+
+.mapx-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mapx-tab {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.mapx-tab.active {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.mapx-main {
+  padding: 12px;
+  overflow: auto;
+}
+
+.mapx-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.mapx-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.mapx-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-color);
+  background: color-mix(in srgb, var(--bg-card) 85%, var(--accent-blue) 15%);
+}
+
+.mapx-card pre {
+  margin: 0;
+  padding: 10px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  overflow: auto;
+}
+
+.mapx-btn {
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.mapx-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.mapx-btn-primary {
+  color: white;
+  border-color: var(--accent-blue);
+  background: var(--accent-blue);
+}
+
+.mapx-json-wrap {
+  display: grid;
+  gap: 10px;
+}
+
+.mapx-json {
+  width: 100%;
+  min-height: 52vh;
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 10px;
+}
+
+.mapx-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 14px 8px;
+}
+
+.mapx-error {
+  color: var(--accent-red);
+  font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+  .mapx-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .mapx-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .mapx-tab {
+    width: auto;
+  }
+}

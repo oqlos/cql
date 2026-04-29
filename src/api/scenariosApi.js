@@ -88,18 +88,33 @@ export const ScenariosApi = {
   },
 
   async create({ title }) {
-    const data = await request(`/api/v3/data/test_scenarios`, {
-      method: "POST",
-      body: JSON.stringify({ data: { title } }),
-    });
+    let data;
+    try {
+      data = await request(`/api/v3/data/test_scenarios`, {
+        method: "POST",
+        body: JSON.stringify({ title }),
+      });
+    } catch {
+      data = await request(`/api/v3/data/test_scenarios`, {
+        method: "POST",
+        body: JSON.stringify({ data: { title } }),
+      });
+    }
     return (data?.row?.id || data?.data?.scenario_id || data?.id || "").toString();
   },
 
   async update(id, payload) {
-    return request(`/api/v3/data/test_scenarios/${encodeURIComponent(id)}`, {
-      method: "PATCH",
-      body: JSON.stringify({ data: payload }),
-    });
+    try {
+      return await request(`/api/v3/data/test_scenarios/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      return request(`/api/v3/data/test_scenarios/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify({ data: payload }),
+      });
+    }
   },
 
   async remove(id) {
