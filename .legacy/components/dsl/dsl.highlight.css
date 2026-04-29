@@ -1,0 +1,245 @@
+/* DSL Syntax Highlighting Styles */
+/* Shared CSS classes used by DSL highlighting components */
+
+.dsl-kw { 
+  color: var(--danger, #ef4444); 
+  font-weight: 700; 
+}
+
+.dsl-goal { 
+  color: #a78bfa; 
+  font-weight: 600; 
+}
+
+.dsl-task { 
+  color: var(--primary, #3b82f6); 
+  font-weight: 600; 
+}
+
+.dsl-num { 
+  color: var(--primary, #3b82f6); 
+}
+
+.dsl-arrow { 
+  color: var(--text-muted, #9ca3af); 
+}
+
+.dsl-fn { 
+  color: var(--success, #22c55e); 
+  font-weight: 600; 
+}
+
+.dsl-br { 
+  color: #60a5fa; 
+}
+
+.dsl-op { 
+  color: #fb923c; 
+  font-weight: 700; 
+}
+
+.dsl-string { 
+  color: #38bdf8; 
+}
+
+.dsl-type { 
+  color: #f87171; 
+  font-weight: 700; 
+}
+
+.dsl-comment { 
+  color: var(--text-muted, #9ca3af); 
+  font-style: italic; 
+}
+
+/* FUNC procedure highlighting */
+.dsl-func {
+  color: #c084fc;
+  font-weight: 700;
+}
+
+.dsl-func-name {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+/* Control keywords */
+.dsl-log {
+  color: #60a5fa;
+}
+
+.dsl-alarm {
+  color: var(--warning, #f59e0b);
+}
+
+.dsl-error {
+  color: var(--danger, #ef4444);
+}
+
+.dsl-control {
+  color: #f472b6;
+  font-weight: 700;
+}
+
+.dsl-user {
+  color: #22d3ee;
+  font-weight: 700;
+}
+
+.dsl-result {
+  color: var(--success, #22c55e);
+  font-weight: 700;
+}
+
+.dsl-opt {
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.dsl-info {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.dsl-repeat {
+  color: #fb923c;
+  font-weight: 700;
+}
+
+.dsl-end {
+  color: #a8a29e;
+  font-weight: 700;
+  background: color-mix(in oklab, #a8a29e 10%, transparent);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.dsl-dialog {
+  color: #c084fc;
+  font-weight: 700;
+  background: color-mix(in oklab, #c084fc 10%, transparent);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.dsl-else {
+  color: var(--warning, #f59e0b);
+  font-weight: 700;
+}
+
+.dsl-out {
+  color: #2dd4bf;
+  font-weight: 700;
+  background: color-mix(in oklab, #2dd4bf 10%, transparent);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+.dsl-out-type {
+  color: #5eead4;
+  font-weight: 600;
+}
+
+.dsl-str {
+  color: #fb923c;
+  font-style: italic;
+}
+
+/* DSL Bracket and Quote styling for graphical editor */
+.dsl-bracket {
+  font-weight: 700;
+  color: #60a5fa;
+  font-size: 1.1em;
+}
+
+.dsl-bracket-value {
+  font-weight: 700;
+  color: #60a5fa;
+  background: color-mix(in oklab, #60a5fa 10%, transparent);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.dsl-bracket-select {
+  font-weight: 600;
+  color: #60a5fa;
+}
+
+.dsl-quoted-value {
+  color: #fb923c;
+  font-style: italic;
+}
+
+.dsl-quoted-value input {
+  font-style: normal;
+  border: 1px dashed var(--panel-border, #555);
+  background: color-mix(in oklab, #fb923c 5%, transparent);
+}
+
+/* Step block label colors */
+.step-type-label.set-label { background: #4ade80; color: #000; }
+.step-type-label.get-label { background: #60a5fa; color: #000; }
+.step-type-label.max-label { background: #fb923c; color: #000; }
+.step-type-label.min-label { background: #c084fc; color: #000; }
+.step-type-label.val-label { background: #22d3ee; color: #000; }
+.step-type-label.opt-label { background: #94a3b8; color: #000; }
+.step-type-label.info-label { background: #38bdf8; color: #000; }
+.step-type-label.out-label { background: #2dd4bf; color: #000; }
+.step-type-label.dialog-label { background: #c084fc; color: #000; }
+.step-type-label.task-label { background: var(--primary, #3b82f6); color: var(--primary-contrast, #fff); }
+.step-type-label.if-label { background: var(--warning, #f59e0b); color: var(--on-warning, #000); }
+.step-type-label.else-label { background: #a8a29e; color: #000; }
+
+/* Step action buttons container */
+.step-actions {
+  display: inline-flex;
+  gap: 2px;
+  margin-left: auto;
+  align-items: center;
+}
+
+.step-actions .btn-xs {
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.step-actions .btn-move-up,
+.step-actions .btn-move-down,
+.step-actions .btn-clone {
+  background: var(--bg-muted);
+  border: 1px solid var(--panel-border);
+  cursor: pointer;
+  color: var(--text);
+}
+
+.step-actions .btn-move-up:hover,
+.step-actions .btn-move-down:hover,
+.step-actions .btn-clone:hover {
+  background: var(--surface-hover);
+}
+
+.step-block .step-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.step-block[draggable="true"] {
+  cursor: grab;
+}
+
+.step-block[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+/* DSL Code container styling */
+.preview-code { 
+  font-family: 'Courier New', monospace; 
+  line-height: 1.6; 
+  color: var(--text); 
+  white-space: pre-wrap; 
+  margin: 0; 
+}

@@ -1,0 +1,9 @@
+{
+  "funcEditorPlaceholder": "func-editor-placeholder.cql",
+  "funcEditorSyntaxExample": "func-editor-syntax-example.cql",
+  "funcEditorTemplate": "func-editor-template.cql",
+  "funcEditorUsageExample": "func-editor-usage-example.cql",
+  "dslEditorPlaceholder": "dsl-editor-placeholder.cql",
+  "scenarioEditorPlaceholder": "scenario-editor-placeholder.cql",
+  "scenarioEditorDefault": "scenario-editor-default.cql"
+}

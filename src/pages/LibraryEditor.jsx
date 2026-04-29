@@ -1,14 +1,43 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import SharedNav from "../components/SharedNav";
 import { useAppConfig } from "../context/AppConfigProvider";
 import { useI18n } from "../i18n/I18nProvider";
 import { useWsStatus } from "../hooks/useWsStatus";
 import { LibraryApi } from "../api/libraryApi";
+import { ScenariosApi } from "../api/scenariosApi";
+import ScenariosList from "../components/ScenariosList";
 
 const DATASETS = ["objects", "functions", "params"];
+const SAVE_DEBOUNCE_MS = 800;
+
+function toArray(value) {
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+function normalizeLibraryShape(raw) {
+  const source = raw && typeof raw === "object" ? raw : {};
+  return {
+    objects: toArray(source.objects),
+    functions: toArray(source.functions),
+    params: toArray(source.params),
+  };
+}
+
+function makeLocalId(prefix) {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
 export default function LibraryEditor() {
-  const { isReadOnly } = useAppConfig();
+  const { isReadOnly, scenario: scenarioId, patch } = useAppConfig();
   const { t } = useI18n();
   const wsOnline = useWsStatus(true);
 
@@ -20,13 +49,96 @@ export default function LibraryEditor() {
 
   const [items, setItems] = useState([]);
   const [loadStatus, setLoadStatus] = useState("idle"); // idle | loading | ready | error
+  const [saveStatus, setSaveStatus] = useState("idle"); // idle | saving | saved | error
+
+  const [activeDbId, setActiveDbId] = useState(scenarioId || null);
+  const [remoteScenario, setRemoteScenario] = useState(null);
+  const [scenarioLibrary, setScenarioLibrary] = useState(() => normalizeLibraryShape(null));
 
   const [newValue, setNewValue] = useState("");
   const [newUnits, setNewUnits] = useState("");
   const [addStatus, setAddStatus] = useState("idle");
+  const saveTimer = useRef(null);
 
-  // Load items for active dataset
   useEffect(() => {
+    setActiveDbId(scenarioId || null);
+  }, [scenarioId]);
+
+  useEffect(() => {
+    if (!scenarioId) {
+      setRemoteScenario(null);
+      setScenarioLibrary(normalizeLibraryShape(null));
+      setSaveStatus("idle");
+      return;
+    }
+
+    let cancelled = false;
+    setLoadStatus("loading");
+    ScenariosApi.get(scenarioId)
+      .then((row) => {
+        if (cancelled) return;
+        if (!row) {
+          setRemoteScenario(null);
+          setScenarioLibrary(normalizeLibraryShape(null));
+          setLoadStatus("error");
+          return;
+        }
+        const rawLibrary = (row.content && row.content.library) || row.library || {};
+        setRemoteScenario(row);
+        setScenarioLibrary(normalizeLibraryShape(rawLibrary));
+        setLoadStatus("ready");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setRemoteScenario(null);
+        setScenarioLibrary(normalizeLibraryShape(null));
+        setLoadStatus("error");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [scenarioId]);
+
+  const isScenarioMode = useMemo(() => !!remoteScenario && !!scenarioId, [remoteScenario, scenarioId]);
+
+  const scheduleScenarioSave = useCallback((nextLibrary) => {
+    if (!scenarioId || isReadOnly) return;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    setSaveStatus("saving");
+    saveTimer.current = setTimeout(async () => {
+      try {
+        const prevContent = remoteScenario?.content && typeof remoteScenario.content === "object"
+          ? remoteScenario.content
+          : {};
+        await ScenariosApi.update(scenarioId, {
+          content: {
+            ...prevContent,
+            library: nextLibrary,
+          },
+          library: JSON.stringify(nextLibrary),
+        });
+        setSaveStatus("saved");
+      } catch {
+        setSaveStatus("error");
+      }
+    }, SAVE_DEBOUNCE_MS);
+  }, [scenarioId, isReadOnly, remoteScenario]);
+
+  useEffect(() => {
+    return () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    };
+  }, []);
+
+  // Load items for active dataset (scenario-local or global DSL endpoints)
+  useEffect(() => {
+    if (isScenarioMode) {
+      setItems(scenarioLibrary[activeDataset] || []);
+      setLoadStatus("ready");
+      return;
+    }
+
     let cancelled = false;
     setLoadStatus("loading");
     const load = async () => {
@@ -53,7 +165,7 @@ export default function LibraryEditor() {
     };
     load();
     return () => { cancelled = true; };
-  }, [activeDataset]);
+  }, [activeDataset, isScenarioMode, scenarioLibrary]);
 
   // Filter and sort items
   const filteredItems = items.filter(item => {
@@ -92,6 +204,37 @@ export default function LibraryEditor() {
   const handleAdd = useCallback(async () => {
     if (!newValue.trim() || isReadOnly) return;
     setAddStatus("loading");
+
+    if (isScenarioMode) {
+      const name = newValue.trim();
+      const newItem = activeDataset === "functions"
+        ? { id: makeLocalId("fn"), name, runtime: "firmware", handler: name }
+        : activeDataset === "params"
+          ? {
+            id: makeLocalId("param"),
+            name,
+            units: newUnits
+              ? newUnits.split(",").map((s) => s.trim()).filter(Boolean)
+              : [],
+          }
+          : { id: makeLocalId("obj"), name };
+
+      setScenarioLibrary((prev) => {
+        const next = {
+          ...prev,
+          [activeDataset]: [...(prev[activeDataset] || []), newItem],
+        };
+        scheduleScenarioSave(next);
+        return next;
+      });
+
+      setNewValue("");
+      setNewUnits("");
+      setAddStatus("saved");
+      setTimeout(() => setAddStatus("idle"), 2000);
+      return;
+    }
+
     try {
       let id = "";
       if (activeDataset === "objects") {
@@ -127,11 +270,24 @@ export default function LibraryEditor() {
       setAddStatus("error");
       setTimeout(() => setAddStatus("idle"), 2000);
     }
-  }, [activeDataset, newValue, newUnits, isReadOnly]);
+  }, [activeDataset, newValue, newUnits, isReadOnly, isScenarioMode, scheduleScenarioSave]);
 
   const handleDelete = useCallback(async (id) => {
     if (!id || isReadOnly) return;
     if (!confirm(t("library.confirmDelete"))) return;
+
+    if (isScenarioMode) {
+      setScenarioLibrary((prev) => {
+        const next = {
+          ...prev,
+          [activeDataset]: (prev[activeDataset] || []).filter((item) => item.id !== id),
+        };
+        scheduleScenarioSave(next);
+        return next;
+      });
+      return;
+    }
+
     try {
       if (activeDataset === "objects") {
         await LibraryApi.deleteObject(id);
@@ -154,7 +310,17 @@ export default function LibraryEditor() {
       console.error("Failed to delete item:", err);
       alert(t("library.deleteError"));
     }
-  }, [activeDataset, isReadOnly, t]);
+  }, [activeDataset, isReadOnly, t, isScenarioMode, scheduleScenarioSave]);
+
+  const handleSelectFromDb = useCallback((row) => {
+    setActiveDbId(row.id);
+    patch({ scenario: row.id });
+  }, [patch]);
+
+  const handleCreated = useCallback((id) => {
+    setActiveDbId(id);
+    patch({ scenario: id });
+  }, [patch]);
 
   const formatUnits = (units) => {
     if (!units) return "";
@@ -173,15 +339,43 @@ export default function LibraryEditor() {
   );
 
   return (
-    <div className="dashboard">
-      <SharedNav />
-      <div className="dash-content">
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+      <ScenariosList
+        activeId={activeDbId}
+        onSelect={handleSelectFromDb}
+        onCreated={handleCreated}
+        onDeleted={(id) => {
+          if (activeDbId === id) {
+            setActiveDbId(null);
+            patch({ scenario: "" });
+          }
+        }}
+      />
+      <div className="dashboard" style={{ flex: 1, overflow: "auto" }}>
+        <SharedNav />
+        <div className="dash-content">
         <div className="section-label" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <span>{t("library.title")}</span>
           {statusBadge}
+          {scenarioId && (
+            <span style={{ fontFamily: "var(--font-mono)", color: "var(--text-muted)", fontSize: "11px" }}>
+              #{scenarioId}
+            </span>
+          )}
+          {isScenarioMode && saveStatus !== "idle" && (
+            <span style={{ fontSize: "11px", color: saveStatus === "error" ? "var(--accent-red)" : "var(--text-muted)" }}>
+              {saveStatus === "saving" && "…"}
+              {saveStatus === "saved" && "✓"}
+              {saveStatus === "error" && "✗"}
+            </span>
+          )}
         </div>
         <h2>{t("library.title")}</h2>
-        <p className="section-desc">{t("library.subtitle")}</p>
+        <p className="section-desc">
+          {isScenarioMode
+            ? `${t("library.subtitle")} (scenario-local)`
+            : `${t("library.subtitle")} (global)`}
+        </p>
 
         {isReadOnly && (
           <div
@@ -398,6 +592,7 @@ export default function LibraryEditor() {
             {t("library.noItems")}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,12 @@
+FUNC: Nazwa procedury
+  SET 'zawór 1' '1'
+  SET 'POMPA' '5 l/min'
+  SET 'zmienna' 'wartość'
+  GET 'param'
+  MIN 'param' 'wartość'
+  MAX 'param' 'wartość'
+  SET 'WAIT' '60 s'
+  SAVE 'parametr'
+  LOG 'wiadomość'
+  ALARM 'ostrzeżenie'
+  ERROR 'błąd krytyczny'
