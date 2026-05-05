@@ -1,7 +1,7 @@
 {
   "name": "oqlos-cql",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite --port ${VITE_CQL_PORT:-3001}",
@@ -16,5 +16,9 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
     "vite": "^5.4.0"
+  },
+  "author": {
+    "name": "Tom Sapletta",
+    "email": "tom@sapletta.com"
   }
 }

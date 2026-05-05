@@ -21,9 +21,11 @@ from __future__ import annotations
 import os
 import json
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from . import __version__
@@ -469,5 +471,63 @@ async def xml_split_endpoint(payload: XmlMigrateIn) -> dict[str, object]:
     """
     scenarios = split_legacy_xml_to_scenarios(payload.xml, payload.nameHint)
     return {"scenarios": scenarios, "count": len(scenarios)}
+
+
+def _get_scenarios_dir() -> Path:
+    scenarios_path = os.environ.get("SCENARIOS_DIR", "/app/scenarios")
+    return Path(scenarios_path)
+
+
+@app.get("/api/cql/scenario-files", tags=["files"])
+async def list_scenario_files() -> dict[str, object]:
+    scenarios_dir = _get_scenarios_dir()
+    if not scenarios_dir.exists():
+        return {"files": [], "count": 0, "directory": str(scenarios_dir)}
+
+    files = []
+    for file_path in sorted(scenarios_dir.glob("*.oql")):
+        stat = file_path.stat()
+        files.append(
+            {
+                "name": file_path.name,
+                "size": stat.st_size,
+                "modified": stat.st_mtime,
+                "path": str(file_path.relative_to(scenarios_dir)),
+            }
+        )
+
+    return {
+        "files": files,
+        "count": len(files),
+        "directory": str(scenarios_dir),
+    }
+
+
+@app.get("/api/cql/scenario-files/{filename}", tags=["files"])
+async def get_scenario_file(filename: str) -> FileResponse:
+    scenarios_dir = _get_scenarios_dir()
+    file_path = scenarios_dir / filename
+
+    if not file_path.resolve().is_relative_to(scenarios_dir.resolve()):
+        raise HTTPException(status_code=403, detail={"error": "invalid filename"})
+
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail={"error": "file not found", "filename": filename})
+
+    return FileResponse(file_path, media_type="text/plain", filename=filename)
+
+
+@app.post("/api/cql/scenario-files/{filename}", tags=["files"])
+async def save_scenario_file(filename: str, content: TextIn) -> dict[str, str]:
+    scenarios_dir = _get_scenarios_dir()
+    file_path = scenarios_dir / filename
+
+    if not file_path.resolve().is_relative_to(scenarios_dir.resolve()):
+        raise HTTPException(status_code=403, detail={"error": "invalid filename"})
+
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    file_path.write_text(content.text, encoding="utf-8")
+
+    return {"status": "saved", "filename": filename, "path": str(file_path)}
 
 
