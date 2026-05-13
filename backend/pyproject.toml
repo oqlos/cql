@@ -6,11 +6,10 @@ requires-python = ">=3.11"
 authors = [{ name = "OqlOS", email = "dev@oqlos.com" }]
 dependencies = [
     "fastapi>=0.115.0",
-    "uvicorn[standard,
+    "uvicorn[standard]>=0.30.0",
     "goal>=2.1.0",
     "costs>=0.1.20",
     "pfix>=0.1.60",
-]>=0.30.0",
     "pydantic>=2.6.0",
     "httpx>=0.27",
     "jsonschema>=4.21",
