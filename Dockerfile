@@ -1,6 +1,9 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json* ./
+# vendor/oqlts musi istnieć przed npm install (dependency file:vendor/oqlts);
+# stage'owany przez build-images-push-pi109.sh / krok build-cql migracji.
+COPY vendor ./vendor
 RUN npm install
 # Copy only what's needed for the build — legacy/ and node_modules are
 # excluded via .dockerignore so they never enter the image context.

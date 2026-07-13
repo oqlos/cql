@@ -81,7 +81,7 @@ function handleElseStep(s: any, _ctx: ExecContext | undefined, state: ExecutionS
 }
 
 function handleTaskStep(s: any, ctx: ExecContext | undefined, state: ExecutionState, _h: ExecutionHelpers): void {
-  const t = { function: s.function, object: s.object, ands: s.ands } as any;
+  const t = { function: s.function, object: s.object, ands: s.ands || [], ...(s.args ? { args: s.args } : {}) } as any;
   state.plan.push({ kind: 'task', task: t });
   try {
     if (ctx?.executeTasks && typeof ctx.runTask === 'function') {

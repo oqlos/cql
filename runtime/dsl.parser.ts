@@ -9,6 +9,7 @@ const RX_GOAL = /^\s*GOAL:\s*(.+)$/i;
 const RX_FUNC = /^\s*FUNC:\s*(.+)$/i;
 const RX_TASK = /^\s*TASK\s+(\d+)\s*:\s*$/i;
 const RX_TASK_INLINE = /^\s*TASK\s*(?::\s*)?(.+)$/i;
+const RX_MOTOR_MOVE = /^\s*(motor\d+|motor-tic249|tic249)\s+(left|right)\s+(\d+)\s*(?:steps?)?\s*$/i;
 const RX_ACT = /^\s*→\s*([^\["]+?)\s*(?:\[(.+?)\]|"([^"]*)")\s*$/;
 const RX_AND = /^\s*AND\s+([^\["]+?)\s*(?:\[(.+?)\]|"([^"]*)")\s*$/i;
 const RX_IF_BR = /^\s*IF\s*"([^"]+)"\s*(>=|<=|>|<|=)\s*"([^"]+)"\s*$/i;
@@ -29,7 +30,7 @@ const RX_MAX = /^\s*MAX\s*"([^"]+)"\s*"([^"]+)"\s*$/i;
 const RX_MIN = /^\s*MIN\s*"([^"]+)"\s*"([^"]+)"\s*$/i;
 const RX_DELTA_MAX = /^\s*DELTA[_ ]MAX\s*"([^"]+)"\s*"([^"]+)"(?:\s*PER\s*"([^"]+)")?\s*$/i;
 const RX_DELTA_MIN = /^\s*DELTA[_ ]MIN\s*"([^"]+)"\s*"([^"]+)"(?:\s*PER\s*"([^"]+)")?\s*$/i;
-const RX_WAIT = /^\s*(?:WAIT|SET\s*"(?:WAIT|wait)")\s*"([^"]+)"\s*$/i;
+const RX_WAIT = /^\s*(?:WAIT|SET\s*(?:"(?:WAIT|wait)"|WAIT|wait))\s*(?:"([^"]+)"|([^\s].*?))\s*$/i;
 const RX_PUMP = /^\s*(?:PUMP|SET\s*"(?:PUMP|pump|POMPA|pompa)")\s*"([^"]+)"\s*$/i;
 const RX_SAMPLE = /^\s*SAMPLE\s*"([^"]+)"\s*"(START|STOP)"(?:\s*"([^"]+)")?\s*$/i;
 const RX_CALC = /^\s*CALC\s*"([^"]+)"\s*=\s*"(AVG|SUM|MIN|MAX|COUNT|STDDEV)"\s*"([^"]+)"\s*$/i;
@@ -128,6 +129,19 @@ function parseTaskInlineLine(m: RegExpMatchArray, curGoal: any, curFunc: any, er
     else addError(errors, lineNum, 'Nieprawidłowa składnia AND');
   }
   curBlock.tasks.push(t); if (curBlock.steps) curBlock.steps.push({ type: 'task', ...t }); return true;
+}
+
+function parseMotorMoveLine(m: RegExpMatchArray, curGoal: any, curFunc: any, errors: string[], lineNum: number): boolean {
+  const curBlock = curGoal || curFunc;
+  if (!curBlock) { addError(errors, lineNum, 'MOTOR bez GOAL/FUNC'); return false; }
+  const objectName = (m[1] || '').trim().toLowerCase();
+  const direction = (m[2] || '').trim().toLowerCase();
+  const steps = parseInt(m[3], 10);
+  const args = { steps, direction };
+  const t = { function: direction, object: objectName, ands: [] as any[], args };
+  curBlock.tasks.push(t);
+  if (curBlock.steps) curBlock.steps.push({ type: 'task', function: direction, object: objectName, ands: [], args });
+  return true;
 }
 
 function parseActLine(m: RegExpMatchArray, curGoal: any, curFunc: any, errors: string[], lineNum: number, state: { curTask: any }): boolean {
@@ -287,10 +301,18 @@ function parseDeltaLine(type: 'delta_max' | 'delta_min', m: RegExpMatchArray, cu
 function parseWaitLine(m: RegExpMatchArray, curGoal: any, curFunc: any, errors: string[], lineNum: number): boolean {
   const curBlock = curGoal || curFunc;
   if (!curBlock) { addError(errors, lineNum, 'WAIT bez GOAL/FUNC'); return false; }
-  const dur = (m[1] || '').trim();
+  const dur = (m[1] || m[2] || '').trim();
   const durParts = dur.split(/\s+/);
   const step: any = { type: 'wait', duration: durParts[0] || dur };
-  if (durParts[1]) step.unit = durParts.slice(1).join(' ');
+  if (durParts.length > 1) {
+    step.unit = durParts.slice(1).join(' ');
+  } else {
+    const compact = dur.match(/^([-+]?\d+(?:\.\d+)?)([A-Za-z]+)$/);
+    if (compact) {
+      step.duration = compact[1];
+      step.unit = compact[2];
+    }
+  }
   if (curBlock.steps) curBlock.steps.push(step);
   return true;
 }
@@ -437,6 +459,7 @@ export function parseDsl(text: string): ParseResult {
     if ((m = normalizedLn.match(RX_FUNC_CALL_BR))) { parseFuncCallLine(m, state.curGoal, state.curFunc, errors, i + 1); continue; }
     if ((m = normalizedLn.match(RX_TASK))) { if (!state.curGoal && !state.curFunc) { addError(errors, i + 1, 'TASK bez GOAL/FUNC'); continue; } state.curTask = null; continue; }
     if ((m = normalizedLn.match(RX_TASK_INLINE))) { parseTaskInlineLine(m, state.curGoal, state.curFunc, errors, i + 1); continue; }
+    if ((m = normalizedLn.match(RX_MOTOR_MOVE))) { parseMotorMoveLine(m, state.curGoal, state.curFunc, errors, i + 1); continue; }
     if ((m = normalizedLn.match(RX_ACT))) { parseActLine(m, state.curGoal, state.curFunc, errors, i + 1, state); continue; }
     if ((m = normalizedLn.match(RX_AND))) { parseAndLine(m, state.curTask, errors, i + 1); continue; }
     if ((m = normalizedLn.match(RX_IF_COMPOUND_OR_IF))) { parseIfCompoundOrIfLine(m, state.curGoal, state.curFunc, errors, i + 1); continue; }

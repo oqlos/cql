@@ -220,3 +220,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# oqlts vendorowany z c2004/packages/oqlts przez sync-oqlts-vendor (build-images-push / build-cql na Pi)
+vendor/oqlts/
