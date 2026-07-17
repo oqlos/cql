@@ -157,6 +157,20 @@ export async function handleRequest(
       };
     }
     case '/api/cql/exec': {
+      // v5 `TEST:` dialect: parse via @semcod/oqlts (single language runtime),
+      // then execute the adapted AST with the shared executor — composition, no
+      // duplicate grammar. Legacy `GOAL:` text falls through to executeDsl(text).
+      const ssot = parseDslSsot(text);
+      if (ssot) {
+        if (!ssot.ok) {
+          return { status: 200, body: { ok: false, errors: ssot.errors, ast: ssot.ast, plan: [] } };
+        }
+        const v5 = executeDsl(ssot.ast as never, body.context as never);
+        return {
+          status: 200,
+          body: { ok: v5.ok, errors: v5.errors, ast: v5.ast ?? ssot.ast, plan: v5.plan },
+        };
+      }
       const result = executeDsl(text, body.context as never);
       return {
         status: 200,

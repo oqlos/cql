@@ -11,8 +11,17 @@ COPY packages/cql-runtime-server/package.json ./packages/cql-runtime-server/
 COPY packages/cql-runtime-server/src ./packages/cql-runtime-server/src/
 COPY runtime ./runtime
 
+# Mirror the dev layout: a root-level node_modules symlink so every package
+# (cql-runtime and cql-runtime-server) resolves @semcod/oqlts by walking up to
+# /app/node_modules — oqlos/cql is not an npm workspace, so a file: dependency's
+# own imports aren't covered by per-package installs alone.
+RUN mkdir -p /app/node_modules/@semcod \
+  && ln -s /app/vendor/oqlts /app/node_modules/@semcod/oqlts
+
 WORKDIR /app/packages/cql-runtime-server
-RUN npm install --omit=dev
+# `npm start` runs `node --import tsx …`, so tsx (a devDependency) must be
+# present at runtime — do NOT use --omit=dev here.
+RUN npm install
 
 ENV CQL_RUNTIME_HOST=0.0.0.0
 ENV CQL_RUNTIME_PORT=8101

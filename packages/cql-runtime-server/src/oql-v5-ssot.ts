@@ -4,10 +4,13 @@
 import { parseOql, validateOql } from '@semcod/oqlts';
 import type { OqlCommand, OqlParseResult } from '@semcod/oqlts';
 
-const VERSION_V5_RE = /^\s*VERSION\s*:\s*5\s*$/im;
+// @semcod/oqlts is the single parser for ALL supported OQL versions (v3/v4/v5).
+// Route every `VERSION: 3|4|5` document to it — not just v5 — so v4 GOAL: and v3
+// scenarios execute through the TS runtime instead of the retired legacy parser.
+const VERSION_FLAT_RE = /^\s*VERSION\s*:\s*[345]\s*$/im;
 
 export function isOqlV5Flat(text: string): boolean {
-  return VERSION_V5_RE.test(text || '');
+  return VERSION_FLAT_RE.test(text || '');
 }
 
 export type LegacyStep = Record<string, unknown>;
