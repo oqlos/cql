@@ -1,0 +1,55 @@
+[
+  {
+    "id": "resolve-task-motor2-left",
+    "endpoint": "resolve-task",
+    "body": {
+      "hardware_map": {
+        "runtimeConfig": { "motor2": { "maxStepsPerSecond": 1000 } },
+        "objectActionMap": {
+          "motor2": {
+            "left": {
+              "kind": "api",
+              "environment": "lab",
+              "usageMode": "diagnostic",
+              "body": { "peripheral_id": "motor-tic249", "command": "move_relative" },
+              "args": { "direction": "left", "steps": 1000, "offset": -1000 }
+            }
+          }
+        },
+        "actions": {}
+      },
+      "task": { "function": "left", "object": "motor2", "args": { "steps": 500, "direction": "left" } },
+      "environment": "lab",
+      "usage_mode": "diagnostic"
+    },
+    "expect": {
+      "ok": true,
+      "mappingCommand": "move_relative"
+    }
+  },
+  {
+    "id": "resolve-func-test",
+    "endpoint": "resolve-func",
+    "body": {
+      "hardware_map": {
+        "objectActionMap": {
+          "motor2": {
+            "left": {
+              "kind": "api",
+              "body": { "peripheral_id": "motor-tic249", "command": "move_relative" }
+            }
+          }
+        },
+        "actions": {},
+        "funcImplementations": {
+          "demo-func": { "steps": [{ "object": "motor2", "action": "left" }] }
+        }
+      },
+      "func_name": "demo-func"
+    },
+    "expect": {
+      "ok": true,
+      "stepsResolved": 1
+    }
+  }
+]

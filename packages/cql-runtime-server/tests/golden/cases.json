@@ -1,0 +1,98 @@
+[
+  {
+    "id": "quote-hello",
+    "endpoint": "quote",
+    "body": { "value": "hello" },
+    "expect": { "quoted": "'hello'" }
+  },
+  {
+    "id": "quote-apostrophe",
+    "endpoint": "quote",
+    "body": { "value": "O'Neill" },
+    "expect": { "quoted": "\"O'Neill\"" }
+  },
+  {
+    "id": "normalize-single-to-double",
+    "endpoint": "normalize",
+    "body": { "text": "SET 'x' '5'" },
+    "expect": { "text": "SET \"x\" \"5\"" }
+  },
+  {
+    "id": "exec-simple-set",
+    "endpoint": "exec",
+    "body": {
+      "text": "SCENARIO: Test\nGOAL: Test Goal\n  SET \"x\" \"5\"\n"
+    },
+    "expect": {
+      "ok": true,
+      "planKinds": ["goal", "var"]
+    }
+  },
+  {
+    "id": "exec-condition",
+    "endpoint": "exec",
+    "body": {
+      "text": "SCENARIO: Condition Test\nGOAL: Check\n  SET \"x\" \"5\"\n  IF \"x\" >= \"3\"\n  ELSE ERROR \"Failed\"\n"
+    },
+    "expect": {
+      "ok": true,
+      "planKindsIncludes": ["condition", "else"]
+    }
+  },
+  {
+    "id": "exec-log",
+    "endpoint": "exec",
+    "body": {
+      "text": "SCENARIO: Log Test\nGOAL: Log\n  LOG \"test message\"\n"
+    },
+    "expect": {
+      "ok": true,
+      "planKindsIncludes": ["message"]
+    }
+  },
+  {
+    "id": "exec-motor2-left",
+    "endpoint": "exec",
+    "body": {
+      "text": "SCENARIO: Motor\nGOAL: Move\n  motor2 left 1000\n"
+    },
+    "expect": {
+      "ok": true,
+      "lastTask": {
+        "object": "motor2",
+        "function": "left",
+        "args": { "steps": 1000, "direction": "left" }
+      }
+    }
+  },
+  {
+    "id": "exec-motor2-sequence",
+    "endpoint": "exec",
+    "body": {
+      "text": "SCENARIO: Motor\nGOAL: Move\n  motor2 left 1000\n  wait 1s\n  motor2 right 100\n"
+    },
+    "expect": {
+      "ok": true,
+      "planKinds": ["goal", "task", "wait", "task"]
+    }
+  },
+  {
+    "id": "parse-minimal",
+    "endpoint": "parse",
+    "body": {
+      "text": "SCENARIO: Smoke\nGOAL: G1\n  SET 'a' '1'\n"
+    },
+    "expect": {
+      "ok": true,
+      "scenario": "Smoke"
+    }
+  },
+  {
+    "id": "validate-empty-errors",
+    "endpoint": "validate",
+    "body": { "text": "SCENARIO: X\nGOAL: Y\n" },
+    "expect": {
+      "ok": true
+    }
+  }
+]

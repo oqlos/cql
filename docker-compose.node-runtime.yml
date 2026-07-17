@@ -1,0 +1,38 @@
+# Optional override: Node cql-runtime-server instead of Python cql-backend.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.node-runtime.yml up --build
+#
+# Same port 8101 and /api/cql/* contract — drop-in for cqlRuntimeApi.js.
+
+services:
+  cql-backend:
+    profiles: ["python-runtime"]
+
+  cql-runtime-server:
+    profiles: ["node-runtime"]
+    build:
+      context: .
+      dockerfile: packages/cql-runtime-server/Dockerfile
+    ports:
+      - "${CQL_BACKEND_HTTP_PORT:-8101}:8101"
+    environment:
+      CQL_RUNTIME_HOST: 0.0.0.0
+      CQL_RUNTIME_PORT: 8101
+    networks:
+      - cql-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cql-backend.rule=Host(`${DOCKER_DOMAIN_CQL_BACKEND:-api.cql.oqlos.localhost}`)"
+      - "traefik.http.routers.cql-backend.entrypoints=web"
+      - "traefik.http.services.cql-backend.loadbalancer.server.port=8101"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8101/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  cql:
+    depends_on:
+      - cql-runtime-server
+    environment:
+      CQL_BACKEND_URL: ${CQL_BACKEND_URL:-http://cql-runtime-server:8101}

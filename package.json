@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --port ${VITE_CQL_PORT:-3001}",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync:oqlts": "bash scripts/sync-oqlts-vendor.sh"
   },
   "dependencies": {
     "@semcod/oqlts": "file:vendor/oqlts",

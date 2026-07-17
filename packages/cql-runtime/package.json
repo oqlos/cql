@@ -1,0 +1,28 @@
+{
+  "name": "@oqlos/cql-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "CQL/DSL runtime — flat OQL v5 via @semcod/oqlts; legacy block DSL in ../../runtime/",
+  "dependencies": {
+    "@semcod/oqlts": "file:../../vendor/oqlts"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./oqlts": "@semcod/oqlts",
+    "./quotes": "../../../runtime/dsl.quotes.ts",
+    "./parser": "../../../runtime/dsl.parser.ts",
+    "./exec": "../../../runtime/dsl.exec.ts",
+    "./validator": "../../../runtime/dsl.validator.ts",
+    "./highlight": "../../../runtime/dsl.highlight.ts",
+    "./serialize": "../../../runtime/dsl.serialize.text.ts",
+    "./scenario-builders": "../../../runtime/dsl-scenario-builders.ts"
+  },
+  "scripts": {
+    "test": "node --import tsx --test ../../runtime/dsl.exec.test.ts ../../runtime/dsl.quotes.test.ts 2>/dev/null || node --import tsx --test ../../runtime/dsl.exec.test.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
