@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-07-18
+
+### Docs
+- Update README.md
+
+### Other
+- Update package-lock.json
+- Update packages/cql-runtime-server/src/routes.ts
+
 ## [0.1.3] - 2026-05-13
 
 ### Docs

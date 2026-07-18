@@ -16,6 +16,7 @@ import {
   validateDslFormat,
 } from '@oqlos/cql-runtime';
 import { parseDslSsot, validateDslSsot } from './oql-v5-ssot.ts';
+import { collectOqlGrants, canEditOqlLine, oqlLineTarget } from '@semcod/oqlts';
 
 const VERSION = '0.1.0';
 
@@ -211,6 +212,31 @@ export async function handleRequest(
         usageMode: (body.usage_mode as string | null | undefined) ?? (body.usageMode as string | null | undefined) ?? null,
       });
       return { status: result.ok === false ? 400 : 200, body: result };
+    }
+    case '/api/cql/access-check': {
+      // Server-side ACCESS: given the OLD scenario's inline ALLOW/DENY grants,
+      // is `role` allowed to turn old_text into new_text? Mirrors the editor's
+      // per-line lock — the single grant engine (@semcod/oqlts) is the authority.
+      const oldText = String(body.old_text ?? body.oldText ?? '');
+      const newText = String(body.new_text ?? body.newText ?? text);
+      const role = String(body.role ?? '');
+      const grants = collectOqlGrants(oldText);
+      const oldLines = oldText.split('\n');
+      const newLines = newText.split('\n');
+      const lockedIdx: number[] = [];
+      oldLines.forEach((line, i) => {
+        if (oqlLineTarget(line) && !canEditOqlLine(role, line, grants)) lockedIdx.push(i);
+      });
+      if (lockedIdx.length === 0) {
+        return { status: 200, body: { allowed: true, violations: [] } };
+      }
+      if (newLines.length !== oldLines.length) {
+        return { status: 200, body: { allowed: false, violations: [{ reason: 'line-count-changed-with-locks' }] } };
+      }
+      const violations = lockedIdx
+        .filter((i) => newLines[i] !== oldLines[i])
+        .map((i) => ({ line: i + 1, text: oldLines[i] }));
+      return { status: 200, body: { allowed: violations.length === 0, violations } };
     }
     case '/api/cql/exec-mapped': {
       const hardwareMap = (body.hardware_map ?? body.hardwareMap ?? {}) as Record<string, unknown>;
