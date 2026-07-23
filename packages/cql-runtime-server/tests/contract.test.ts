@@ -61,6 +61,59 @@ describe('cql-runtime-server routes (in-process)', () => {
     const plan = (executed?.body as { plan: unknown[] }).plan;
     assert.ok(Array.isArray(plan) && plan.length > 0);
   });
+
+  it('projects OQL source according to READ grants without exposing policy declarations', async () => {
+    const policy = [
+      "ALLOW role:administrator UPDATE *",
+      "DENY role:operator READ VAL 'secret'",
+      "VAL 'secret'",
+      "VAL 'pressure'",
+    ].join('\n');
+
+    const operator = await handleRequest('POST', '/api/cql/read-projection', {
+      role: 'operator',
+      policy_text: policy,
+      documents: [{ id: 'scenario', text: policy }],
+    });
+    assert.equal(operator?.status, 200);
+    const operatorDocument = (operator?.body as { documents: Array<{ text: string; hidden_lines: number }> }).documents[0];
+    assert.equal(operatorDocument.text, "VAL 'pressure'");
+    assert.equal(operatorDocument.hidden_lines, 3);
+
+    const system = await handleRequest('POST', '/api/cql/read-projection', {
+      role: 'system',
+      policy_text: policy,
+      documents: [{ id: 'scenario', text: policy }],
+    });
+    assert.equal(
+      (system?.body as { documents: Array<{ text: string }> }).documents[0].text,
+      policy,
+    );
+  });
+
+  it('compiles the event-driven HUI dialect through the shared OQL runtime', async () => {
+    const response = await handleRequest('POST', '/api/cql/compile-hui', {
+      system_text: [
+        'VERSION: 5',
+        'CONFIG:',
+        "  PROCESS 'measurement.read' URI 'c2004://measurement/sensors/query/read' MODE 'execute'",
+      ].join('\n'),
+      text: [
+        'VERSION: 5',
+        "EVENT 'frontend.ready':",
+        "  RUN_URI 'c2004://measurement/sensors/query/read' MODE 'execute' PAYLOAD '{}'",
+      ].join('\n'),
+    });
+
+    assert.equal(response?.status, 200);
+    const body = response?.body as {
+      ok: boolean;
+      program: { processes: Record<string, unknown>; events: Record<string, unknown> };
+    };
+    assert.equal(body.ok, true);
+    assert.ok(body.program.processes['measurement.read']);
+    assert.ok(body.program.events['frontend.ready']);
+  });
 });
 
 describe('cql-runtime-server HTTP', () => {

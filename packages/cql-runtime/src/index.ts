@@ -6,6 +6,7 @@ export {
   parseOql,
   validateOql,
   simulateOql,
+  compileOqlHuiProgram,
   migrateOqlToV5,
   migrateDslToV5,
   buildOqlV5,
@@ -21,6 +22,7 @@ export type {
   SimulationResult,
   OqlCommand,
   OqlScenario,
+  OqlHuiProgram,
 } from '@semcod/oqlts';
 export { parseDsl } from '../../../runtime/dsl.parser.ts';
 export { executeDsl, executeAst } from '../../../runtime/dsl.exec.ts';

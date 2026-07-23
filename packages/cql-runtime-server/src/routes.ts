@@ -2,6 +2,7 @@ import {
   astToDslText,
   applyMappingToExecPlan,
   canonicalizeDslQuotes,
+  compileOqlHuiProgram,
   DslScenarioBuilders,
   executeDsl,
   executeMappedDsl,
@@ -16,7 +17,13 @@ import {
   validateDslFormat,
 } from '@oqlos/cql-runtime';
 import { parseDslSsot, validateDslSsot } from './oql-v5-ssot.ts';
-import { collectOqlGrants, canEditOqlLine, oqlLineTarget } from '@semcod/oqlts';
+import {
+  collectOqlGrants,
+  canEditOqlLine,
+  canReadOqlLine,
+  isOqlGrantLine,
+  oqlLineTarget,
+} from '@semcod/oqlts';
 
 const VERSION = '0.1.0';
 
@@ -77,6 +84,9 @@ export async function handleRequest(
           '/api/cql/serialize',
           '/api/cql/validate',
           '/api/cql/exec',
+          '/api/cql/compile-hui',
+          '/api/cql/access-check',
+          '/api/cql/read-projection',
           '/api/cql/scenario-build',
           '/api/cql/resolve-task',
           '/api/cql/resolve-func',
@@ -178,6 +188,19 @@ export async function handleRequest(
         body: { ok: result.ok, errors: result.errors, ast: result.ast ?? null, plan: result.plan },
       };
     }
+    case '/api/cql/compile-hui': {
+      const systemText = String(body.system_text ?? body.systemText ?? '');
+      const program = compileOqlHuiProgram(text, { systemText });
+      return {
+        status: 200,
+        body: {
+          ok: program.errors.length === 0,
+          program,
+          errors: program.errors,
+          warnings: program.warnings,
+        },
+      };
+    }
     case '/api/cql/scenario-build': {
       const source = String(body.source ?? 'generic');
       const data = (body.data ?? {}) as Record<string, unknown>;
@@ -237,6 +260,49 @@ export async function handleRequest(
         .filter((i) => newLines[i] !== oldLines[i])
         .map((i) => ({ line: i + 1, text: oldLines[i] }));
       return { status: 200, body: { allowed: violations.length === 0, violations } };
+    }
+    case '/api/cql/read-projection': {
+      // Produce the only source projection that may be returned to an editor or
+      // browser runtime. Policy declarations are system-only; ordinary OQL
+      // lines follow DENY ... READ grants from the complete composed program.
+      const role = String(body.role ?? '').trim().toLowerCase() || 'operator';
+      const policyText = String(body.policy_text ?? body.policyText ?? text);
+      const grants = collectOqlGrants(policyText);
+      const rawDocuments = Array.isArray(body.documents)
+        ? body.documents
+        : [{ id: 'document', text }];
+
+      const documents = rawDocuments.map((raw, documentIndex) => {
+        const document = (raw ?? {}) as Record<string, unknown>;
+        const id = String(document.id ?? `document-${documentIndex}`);
+        const source = String(document.text ?? '');
+        if (role === 'system' || role === 'sys' || role === 'root' || role === 'superuser') {
+          return { id, text: source, hidden_lines: 0 };
+        }
+
+        let hiddenLines = 0;
+        const projected = source
+          .split('\n')
+          .filter((line) => {
+            // DISALLOW is reserved syntax requested by the system policy. It is
+            // hidden even before its parser semantics are introduced.
+            const policyDeclaration = isOqlGrantLine(line) || /^\s*DISALLOW\b/i.test(line);
+            const readable = !policyDeclaration && canReadOqlLine(role, line, grants);
+            if (!readable) hiddenLines += 1;
+            return readable;
+          })
+          .join('\n');
+        return { id, text: projected, hidden_lines: hiddenLines };
+      });
+
+      return {
+        status: 200,
+        body: {
+          role,
+          policy_declarations_hidden: !(role === 'system' || role === 'sys' || role === 'root' || role === 'superuser'),
+          documents,
+        },
+      };
     }
     case '/api/cql/exec-mapped': {
       const hardwareMap = (body.hardware_map ?? body.hardwareMap ?? {}) as Record<string, unknown>;
